@@ -6,10 +6,10 @@ export default function Hero() {
       id="top"
       className="relative flex h-screen w-full flex-col justify-between overflow-hidden bg-void px-5 pb-5 text-paper sm:px-8 sm:pb-6 lg:px-12 lg:pb-8"
     >
-      <div className="flex h-14 flex-none items-center justify-center text-[13px] tracking-[-0.02em] sm:h-16 sm:text-[15px] lg:h-20 lg:text-[18px] lg:tracking-[-0.07em]">
+      <div className="grid h-14 flex-none grid-cols-2 items-center gap-6 text-[13px] tracking-[-0.02em] sm:h-16 sm:text-[15px] lg:h-20 lg:grid-cols-12 lg:gap-6 lg:text-[18px] lg:tracking-[-0.07em]">
         <a
           href="mailto:hello@noaoh.com"
-          className="hidden hover:opacity-70 sm:inline"
+          className="col-span-2 hidden w-fit hover:opacity-70 sm:block lg:col-span-8 lg:col-start-5"
         >
           hello@noaoh.com
         </a>
@@ -56,7 +56,7 @@ export default function Hero() {
         </div>
 
         <div className="order-1 col-span-2 lg:order-2 lg:col-span-8 lg:col-start-5">
-          <div className="lg:min-h-[34.125vh]">
+          <div className="lg:min-h-[calc(14.375vh_+_186px)]">
             <h1 className="font-display italic leading-[0.92] tracking-[-0.02em] text-[clamp(1.6rem,min(7.5vw,8vh),72px)] lg:not-italic lg:tracking-[-0.05em]">
               <span className="not-italic">{"NOAH OH "}</span>
               <em className="italic">is a</em>
