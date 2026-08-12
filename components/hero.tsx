@@ -9,7 +9,7 @@ export default function Hero() {
       <div className="grid h-14 flex-none grid-cols-2 items-center gap-6 text-[13px] tracking-[-0.02em] sm:h-16 sm:text-[15px] lg:h-20 lg:grid-cols-12 lg:gap-6 lg:text-[18px] lg:tracking-[-0.07em]">
         <a
           href="mailto:hello@noaoh.com"
-          className="col-span-2 hidden w-fit hover:opacity-70 sm:block lg:col-span-8 lg:col-start-5"
+          className="col-span-2 hidden w-fit hover:opacity-70 sm:mx-auto sm:block lg:col-span-8 lg:col-start-5 lg:mx-0"
         >
           hello@noaoh.com
         </a>
@@ -90,7 +90,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <p className="flex-none text-[11px] tracking-[-0.02em] sm:text-[13px] lg:text-[18px] lg:tracking-[-0.07em]">
+      <p className="absolute bottom-5 left-5 text-[11px] tracking-[-0.02em] sm:bottom-6 sm:left-8 sm:text-[13px] lg:bottom-8 lg:left-12 lg:text-[18px] lg:tracking-[-0.07em]">
         © 2026 noah oh
       </p>
     </section>
