@@ -55,26 +55,28 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="order-1 col-span-2 lg:order-2 lg:col-span-8 lg:col-start-5">
-          <div className="lg:min-h-[calc(14.375vh_+_186px)]">
-            <h1 className="font-display italic leading-[0.92] tracking-[-0.02em] text-[clamp(1.6rem,min(7.5vw,8vh),72px)] lg:not-italic lg:tracking-[-0.05em]">
-              <span className="not-italic">{"NOAH OH "}</span>
-              <em className="italic">is a</em>
-              <span className="not-italic"> VISUAL DESIGNER</span>{" "}
-              <em className="italic">focused on</em>{" "}
-              <span className="not-italic">
-                PRODUCT, BRANDING, &amp; TYPOGRAPHY.
-              </span>
-            </h1>
+        <div className="order-1 col-span-2 lg:order-2 lg:col-span-8 lg:col-start-5 lg:flex lg:h-full lg:flex-col lg:justify-between">
+          <div>
+            <div className="lg:min-h-[calc(14.375vh_+_186px)]">
+              <h1 className="font-display italic leading-[0.92] tracking-[-0.02em] text-[clamp(1.6rem,min(7.5vw,8vh),72px)] lg:not-italic lg:tracking-[-0.05em]">
+                <span className="not-italic">{"NOAH OH "}</span>
+                <em className="italic">is a</em>
+                <span className="not-italic"> VISUAL DESIGNER</span>{" "}
+                <em className="italic">focused on</em>{" "}
+                <span className="not-italic">
+                  PRODUCT, BRANDING, &amp; TYPOGRAPHY.
+                </span>
+              </h1>
+            </div>
+            <p className="mt-3 font-display italic leading-[0.92] tracking-[-0.02em] text-[clamp(1.6rem,min(7.5vw,8vh),72px)] sm:mt-4 lg:mt-0 lg:not-italic">
+              <em className="italic">Based at</em>{" "}
+              <span className="not-italic">THE COOPER UNION, </span>
+              <em className="italic">New York City</em>
+              <span className="not-italic">.</span>
+            </p>
           </div>
-          <p className="mt-3 font-display italic leading-[0.92] tracking-[-0.02em] text-[clamp(1.6rem,min(7.5vw,8vh),72px)] sm:mt-4 lg:mt-0 lg:not-italic">
-            <em className="italic">Based at</em>{" "}
-            <span className="not-italic">THE COOPER UNION, </span>
-            <em className="italic">New York City</em>
-            <span className="not-italic">.</span>
-          </p>
 
-          <div className="relative mt-4 aspect-[728/125] w-full overflow-hidden select-none sm:mt-6 lg:mt-8 [-webkit-user-drag:none]">
+          <div className="relative mt-4 aspect-[728/125] w-full overflow-hidden select-none sm:mt-6 [-webkit-user-drag:none]">
             <Image
               src="/hero-vid.png"
               alt=""
