@@ -10,7 +10,7 @@ export default function WorkGrid() {
       <p className="text-[15px] text-ink/50 lg:text-[18px] lg:tracking-[-0.07em]">
         work
       </p>
-      <div className="mt-8 grid grid-flow-dense grid-cols-2 gap-3 auto-rows-[clamp(150px,18vw,230px)] sm:grid-cols-3 lg:grid-cols-4 lg:gap-4">
+      <div className="mt-8 grid grid-flow-dense grid-cols-6 gap-3 auto-rows-[clamp(150px,18vw,230px)] lg:grid-cols-12 lg:gap-6">
         {projectTiles.map((tile) => (
           <ProjectTile key={tile.id} id={tile.id} size={tile.size} />
         ))}

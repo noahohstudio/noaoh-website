@@ -1,9 +1,9 @@
 import type { TileSize } from "@/lib/projects";
 
 const spanBySize: Record<TileSize, string> = {
-  sm: "col-span-1 row-span-1",
-  tall: "col-span-1 row-span-2",
-  lg: "col-span-2 row-span-2",
+  sm: "col-span-3 row-span-1",
+  tall: "col-span-3 row-span-2",
+  lg: "col-span-6 row-span-2",
 };
 
 type ProjectTileProps = {
