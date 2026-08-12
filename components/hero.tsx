@@ -90,7 +90,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <p className="absolute bottom-5 left-5 text-[11px] tracking-[-0.02em] sm:bottom-6 sm:left-8 sm:text-[13px] lg:bottom-8 lg:left-12 lg:text-[18px] lg:tracking-[-0.07em]">
+      <p className="absolute bottom-5 left-5 text-[11px] tracking-[-0.02em] sm:bottom-6 sm:left-8 sm:text-[13px] lg:bottom-8 lg:left-12 lg:translate-y-[3px] lg:text-[18px] lg:tracking-[-0.07em]">
         © 2026 noah oh
       </p>
     </section>
