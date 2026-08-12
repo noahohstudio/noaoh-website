@@ -1,39 +1,25 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
-import Nav from "@/components/nav";
-import Footer from "@/components/footer";
+import { Instrument_Serif } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
+  weight: "400",
   style: ["normal", "italic"],
-  variable: "--font-fraunces",
+  variable: "--font-instrument-serif",
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: "Noah Oh — Design Portfolio",
-    template: "%s · Noah Oh",
-  },
+  title: "Noah Oh — Visual Designer",
   description:
-    "Noah Oh is a graphic and digital designer working across brand identity, editorial, and web design.",
+    "Noah Oh is a visual designer focused on product, branding, and typography. Based at The Cooper Union, New York City.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${inter.variable} ${fraunces.variable} h-full`}
-    >
-      <body className="flex min-h-full flex-col bg-paper font-sans text-ink antialiased selection:bg-ink selection:text-paper">
-        <Nav />
-        <main className="flex-1">{children}</main>
-        <Footer />
+    <html lang="en" className={`${instrumentSerif.variable} h-full`}>
+      <body className="min-h-full bg-paper font-grotesk text-ink antialiased">
+        {children}
       </body>
     </html>
   );

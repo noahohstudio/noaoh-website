@@ -1,45 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --color-ink: #16140f;
-  --color-ink-soft: #57534a;
-  --color-paper: #faf9f5;
-  --color-paper-dim: #f0eee6;
-  --color-line: #e3e0d6;
-
-  --color-accent: #ff4b2b;
-  --color-cobalt: #2440e8;
-  --color-pine: #1f5c48;
-  --color-gold: #e8ab2f;
-  --color-violet: #6c3ff0;
+  --color-void: #1a00e1;
+  --color-ink: #0a0a0a;
+  --color-paper: #ffffff;
+  --color-line: rgba(10, 10, 10, 0.12);
 }
 
 @theme inline {
+  --color-void: var(--color-void);
   --color-ink: var(--color-ink);
-  --color-ink-soft: var(--color-ink-soft);
   --color-paper: var(--color-paper);
-  --color-paper-dim: var(--color-paper-dim);
   --color-line: var(--color-line);
 
-  --color-accent: var(--color-accent);
-  --color-cobalt: var(--color-cobalt);
-  --color-pine: var(--color-pine);
-  --color-gold: var(--color-gold);
-  --color-violet: var(--color-violet);
-
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-instrument-serif), Georgia, serif;
+  --font-grotesk: -apple-system, "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-body {
-  font-feature-settings: "ss01" 1, "cv01" 1;
-}
-
 ::selection {
-  background: var(--color-ink);
+  background: var(--color-void);
   color: var(--color-paper);
 }
