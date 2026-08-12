@@ -3,7 +3,10 @@ import { projectTiles } from "@/lib/projects";
 
 export default function WorkGrid() {
   return (
-    <section id="work" className="scroll-mt-16 bg-paper px-6 py-16 sm:px-8 lg:px-12 lg:py-20">
+    <section
+      id="work"
+      className="scroll-mt-14 bg-paper px-6 py-16 sm:scroll-mt-16 sm:px-8 lg:scroll-mt-20 lg:px-12 lg:py-20"
+    >
       <p className="text-[15px] text-ink/50 lg:text-[18px] lg:tracking-[-0.07em]">
         work
       </p>
