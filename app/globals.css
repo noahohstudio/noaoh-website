@@ -16,6 +16,8 @@
   --font-display: var(--font-instrument-serif), Georgia, serif;
   --font-grotesk: -apple-system, "Helvetica Neue", Helvetica, Arial,
     sans-serif;
+  --font-geist: var(--font-geist-sans), -apple-system, "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
 }
 
 html {

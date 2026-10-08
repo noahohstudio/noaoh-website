@@ -1,13 +1,9 @@
-import Nav from "@/components/nav";
-import Hero from "@/components/hero";
-import WorkGrid from "@/components/work-grid";
+import FullSite from "@/components/full-site";
+import UnderConstruction from "@/components/under-construction";
+
+// Flip to false to bring the full site back (orbit hero, hero 2, work grid).
+const UNDER_CONSTRUCTION = true;
 
 export default function HomePage() {
-  return (
-    <>
-      <Nav />
-      <Hero />
-      <WorkGrid />
-    </>
-  );
+  return UNDER_CONSTRUCTION ? <UnderConstruction /> : <FullSite />;
 }

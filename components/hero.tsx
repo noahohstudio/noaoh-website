@@ -3,18 +3,9 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section
-      id="top"
+      id="hero2"
       className="relative flex h-screen w-full flex-col justify-between overflow-hidden bg-void px-5 pb-5 text-paper sm:px-8 sm:pb-6 lg:px-12 lg:pb-8"
     >
-      <div className="grid h-14 flex-none grid-cols-2 items-center gap-6 text-[13px] tracking-[-0.02em] sm:h-16 sm:text-[15px] lg:h-20 lg:grid-cols-12 lg:gap-6 lg:text-[18px] lg:tracking-[-0.07em]">
-        <a
-          href="mailto:hello@noaoh.com"
-          className="col-span-2 hidden w-fit hover:opacity-70 sm:mx-auto sm:block lg:col-span-8 lg:col-start-5 lg:mx-0"
-        >
-          hello@noaoh.com
-        </a>
-      </div>
-
       <div className="grid min-h-0 flex-1 grid-cols-2 items-start gap-6 pt-[calc(17.375vh_-_56px)] sm:pt-[calc(17.375vh_-_64px)] lg:grid-cols-12 lg:gap-6 lg:pt-[calc(17.375vh_-_80px)]">
         <div
           id="about"
