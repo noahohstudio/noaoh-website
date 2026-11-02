@@ -148,8 +148,9 @@ export const site = {
   // The about page
   about: [
     // Rewritten to fit Noah's roles (Oct 29: "from the context you know about me, rewrite to fit my roles"): Palit's
-    // founder, Kino's designer and front-end developer, BoomLoom's brand and packaging
-    "I'm Noah, a product designer and front-end developer. I founded Palit, an SVSD 2026 finalist, designed and coded for Kino, and built BoomLoom Looms its first brand system and packaging. I do my best work at the messy early stage, when a team has a product but not yet a system, a brand or a story to tell about it.",
+    // founder, Kino's designer and front-end developer, BoomLoom's brand and packaging. Its opening line in Noah's words
+    // (Nov 2): "I'm a product designer who dabbles in front-end development and design engineering."
+    "I'm a product designer who dabbles in front-end development and design engineering. I founded Palit, an SVSD 2026 finalist, designed and coded for Kino, and built BoomLoom Looms its first brand system and packaging. I do my best work at the messy early stage, when a team has a product but not yet a system, a brand or a story to tell about it.",
     // Where Noah is now, workshopped from their line (Nov 1): "I'm currently studying at the Cooper Union School of Art,
     // honing my eye for design, color, and composition through mixed design and photography courses."
     "I've helped teams launch products, rebuild design systems, and grow into better brands. I'm studying at the Cooper Union School of Art, where design and photography courses keep sharpening my eye for color and composition.",
