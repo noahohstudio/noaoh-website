@@ -1258,11 +1258,12 @@ export const projects: Project[] = [
       // banding into organisms could be more fluid"): half the shadow and blur, the atoms as one wave on gentle arcs, each
       // molecule growing out of the atoms before it. Round 5 ("Not liking how the organisms slide to reveal ... make that fade
       // slighter"): each organism resolves in place around its molecule, and nothing fades while it moves. The live build's
-      // own markup and data (20261015-2219). Round 6 (a fixed frame, cuts) misread Noah's note and went back: "no this isn't
-      // what I meant, go back".
-      video: "/work/rfc/video/rfc-card-r5.mp4",
-      webm: "/work/rfc/video/rfc-card-r5.webm",
-      poster: "/work/rfc/video/rfc-card-r5-poster.jpg",
+      // own markup and data (20261015-2219). Round 6 (a fixed frame, cuts) misread Noah's note and went back. Round 7 ("I'd
+      // rather just have them appear whole ... we could lean into it more"): every component fades in whole, never revealed
+      // edge by edge, and round 5's eased motion and camera drift return, softer and longer.
+      video: "/work/rfc/video/rfc-card-r7.mp4",
+      webm: "/work/rfc/video/rfc-card-r7.webm",
+      poster: "/work/rfc/video/rfc-card-r7-poster.jpg",
       alt: "The RFC Editor redesign's wordmark breaks apart into its design system: era dots, status marks, chips and type glide into a legend, a search field and an RFC row, which resolve into a search dropdown, an era banner and an RFC header card, before columns of the archive's real lists stream past and dissolve back into the wordmark",
     },
     slate: [
