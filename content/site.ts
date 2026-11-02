@@ -68,6 +68,19 @@ export const site = {
       video: "/lab/outcome-logos.mp4",
     },
     {
+      // Right under the Outcome Web Tool, apart from Del's Bridge, so the two short, wide pieces don't read as one (Noah,
+      // Nov 2: "Let's put one right underneath the Outcome Web Tool").
+      // Noah, Nov 2: "a fully hand-coded HTML website that studies a creative agency I look up to, trying to figure out how
+      // they did their website in code using the inspect element on it. Its a front-end code deepdive in a sense ... just
+      // scrolling through the website, then scrolling through my handwritten code". The site, then its index.html as
+      // GitHub shows code, byte for byte, then back.
+      title: "A study of the WØRKS website",
+      context: "Front-end study, 2026",
+      ratio: "16 / 10",
+      note: "A fully hand-coded website studying a creative agency I look up to. Using inspect element, I worked out how they built their site in code: a front-end deep dive, in a sense.",
+      video: "/lab/wrks-study.mp4",
+    },
+    {
       // Noah, Nov 2: "this poster series for The Hellp opening for Sombr, that was nearly picked by management. Wasn't the
       // final choice, but I was in talks with marketing management and worked with a deadline and revisions." The four
       // posters, two colorways by two layouts, with photos of The Hellp between them (Noah's picks, Nov 2: "Use these instead
@@ -110,17 +123,6 @@ export const site = {
       ratio: "17 / 22",
       note: "Script monograms from a typographic exploration I did after a deep-dive research project on Steve Jobs, asking how typography could reflect his essence.",
       video: "/lab/monograms.mp4",
-    },
-    {
-      // Noah, Nov 2: "a fully hand-coded HTML website that studies a creative agency I look up to, trying to figure out how
-      // they did their website in code using the inspect element on it. Its a front-end code deepdive in a sense ... just
-      // scrolling through the website, then scrolling through my handwritten code". The site, then its index.html as
-      // GitHub shows code, byte for byte, then back.
-      title: "A study of the WØRKS website",
-      context: "Front-end study, 2026",
-      ratio: "16 / 10",
-      note: "A fully hand-coded website studying a creative agency I look up to. Using inspect element, I worked out how they built their site in code: a front-end deep dive, in a sense.",
-      video: "/lab/wrks-study.mp4",
     },
     {
       // Noah, Nov 2: "a fully local web experience I designed that deep dives into a story about fatherhood, loss, and

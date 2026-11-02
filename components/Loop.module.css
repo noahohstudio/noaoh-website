@@ -1,6 +1,8 @@
 /* Pause and play, at the top right of a loop, after Rachel's: a small pill of
    the nav's glass. It shows while the pointer is on the picture or the control
-   has focus, and always on touch screens, which have no pointer to rest. */
+   has focus. Not on touch screens at all, where it would sit over the work
+   (Noah, Nov 2: "for mobile, let's just turn off the rewind and pause buttons
+   in total"). */
 .control {
   position: absolute;
   top: var(--space-3);
@@ -30,7 +32,7 @@
 
 @media (hover: none) {
   .control {
-    opacity: 1;
+    display: none;
   }
 }
 
