@@ -20,6 +20,9 @@ export type Credit = {
 const REDIS_URL = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
 const REDIS_TOKEN = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
 const MAX_CREDITS = 500;
+// Where the count starts: the visits counted while the site ran locally, before it went live (Noah, Nov 2: "lets restore it
+// to the amount we had during local testing"). It never shows fewer.
+const VISITS_FROM = 158;
 
 type Store = {
   list(limit: number): Promise<Credit[]>;
@@ -61,10 +64,11 @@ const redisStore: Store = {
     return true;
   },
   async countVisit() {
+    await redis(["SET", "visits", VISITS_FROM, "NX"]); // the first visit starts the count where local testing left it
     return Number(await redis(["INCR", "visits"]));
   },
   async visits() {
-    return Number((await redis<string | null>(["GET", "visits"])) ?? 0);
+    return Math.max(VISITS_FROM, Number((await redis<string | null>(["GET", "visits"])) ?? 0));
   },
   async allow(key, seconds) {
     return (await redis(["SET", `limit:${key}`, 1, "EX", seconds, "NX"])) === "OK";
@@ -84,7 +88,7 @@ async function read(): Promise<FileData> {
   try {
     return JSON.parse(await fs.readFile(FILE, "utf8")) as FileData;
   } catch {
-    return { credits: [], visits: 0 };
+    return { credits: [], visits: VISITS_FROM };
   }
 }
 
@@ -111,12 +115,12 @@ const fileStore: Store = {
   },
   async countVisit() {
     const data = await read();
-    data.visits += 1;
+    data.visits = Math.max(data.visits, VISITS_FROM) + 1;
     await write(data);
     return data.visits;
   },
   async visits() {
-    return (await read()).visits;
+    return Math.max(VISITS_FROM, (await read()).visits);
   },
   async allow(key, seconds) {
     const now = Date.now();
