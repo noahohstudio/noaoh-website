@@ -75,7 +75,7 @@ export const site = {
       title: "The Hellp + Sombr tour poster",
       context: "Tour poster pitch",
       ratio: "4 / 5",
-      note: "A poster series for The Hellp opening for Sombr, nearly picked by management. It wasn't the final choice, but I was in talks with their marketing management, working to a deadline through revisions.",
+      note: "A poster series for The Hellp opening for Sombr. It wasn't management's final pick, but it came close: I was in talks with their marketing team, working to a deadline through revisions.",
       video: "/lab/hellp-posters.mp4",
     },
     {
@@ -97,7 +97,7 @@ export const site = {
       title: "Día de los Muertos",
       context: "Announcement cards, 2026",
       ratio: "4 / 3",
-      note: "An announcement card series I did for a Día de los Muertos celebration, meant to be collected and shown together as a whole.",
+      note: "An announcement card series I did for a Día de los Muertos celebration, meant to be collected and shown as a whole.",
       video: "/lab/dia-de-los-muertos.mp4",
     },
     {
@@ -108,7 +108,7 @@ export const site = {
       title: "Monograms",
       context: "Typographic exploration, 2026",
       ratio: "17 / 22",
-      note: "Script monograms from a typographic exploration I did after a deep-dive research project on Steve Jobs, and how typography could reflect his essence.",
+      note: "Script monograms from a typographic exploration I did after a deep-dive research project on Steve Jobs, asking how typography could reflect his essence.",
       video: "/lab/monograms.mp4",
     },
     {
@@ -119,7 +119,7 @@ export const site = {
       title: "A study of the WØRKS website",
       context: "Front-end study, 2026",
       ratio: "16 / 10",
-      note: "A fully hand-coded website that studies a creative agency I look up to, figuring out how they built their site in code using inspect element. A front-end code deep dive, in a sense.",
+      note: "A fully hand-coded website studying a creative agency I look up to. Using inspect element, I worked out how they built their site in code: a front-end deep dive, in a sense.",
       video: "/lab/wrks-study.mp4",
     },
     {
@@ -131,7 +131,7 @@ export const site = {
       title: "Del's Bridge",
       context: "Interactive story, 2026",
       ratio: "16 / 10",
-      note: "A web experience I designed that deep dives into a story about fatherhood, loss, and objective goals. I engineered an algorithm that tracks your responses and replies from a giant file of handwritten lines and scenarios. In a way, it's a locally hosted AI I built, within a web experience I designed.",
+      note: "A web experience I designed that dives deep into a story about fatherhood, loss, and objective goals. An algorithm I engineered tracks your responses and replies from a giant file of handwritten lines and scenarios. In a way, it's a locally hosted AI.",
       video: "/lab/cascadia.mp4",
     },
   ] as { title: string; context: string; ratio: string; note: string; src?: string; video?: string }[],
