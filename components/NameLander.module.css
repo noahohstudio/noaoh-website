@@ -1,0 +1,172 @@
+/*
+  The lander as one main moment, then supporting text (NameLander.tsx): the name as big, heavy and tight as the
+  footer's count, the rest of the sentence under it, and three circles of glass in a triangle. It's as tall as it
+  needs to be, not a whole screen.
+*/
+
+.lander {
+  position: relative;
+  padding: calc(var(--nav-clear) + var(--space-4)) var(--gutter) 0;
+  /* The circles fade in a beat after the words, 60ms apart (Lander.module.css, fade) */
+  --settle-after: calc(var(--enter-step) * 2);
+  --settle-step: 60ms;
+}
+
+/* The footer's width, so the name is set at exactly the count's size (Footer.module.css: five places) */
+.measure {
+  container-type: inline-size;
+}
+
+.name {
+  width: max-content;
+  font-size: calc(100cqi / (5 * 0.574 + 0.05));
+  font-weight: var(--weight-medium); /* a step lighter than the count's 600 (Noah, Oct 29: "can we reduce the weight for noah?") */
+  letter-spacing: var(--tracking-tight);
+  line-height: 0.9;
+  white-space: nowrap;
+  /* The n's own margin taken back, so its stem stands on the page's edge like everything under it */
+  margin-left: -0.07em;
+  cursor: default;
+  user-select: none;
+  --hold: 160ms; /* a sweep across it leaves a short trail of mirrored letters (Flip.module.css) */
+}
+
+.rest {
+  cursor: default;
+  user-select: none;
+  --hold: 160ms;
+}
+
+/* The circles' box: the triangle is fitted into it (NameLander.tsx) */
+.box {
+  display: block;
+}
+
+/* Where a circle goes back to: a faint well, only while its circle is away (the wells that showed first as the page
+   opened went, Noah, Oct 28: "Lets remove the indents that appear before them") */
+.home {
+  position: absolute;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 0.07);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-mid) ease;
+}
+
+.home[data-empty] {
+  opacity: 1;
+}
+
+/* Clicking the name in the nav: the name's letters stay turned over longer than the ripple's other letters
+   (NameLander.tsx, NAME_RIPPLE.hold) */
+.lander[data-ripple] .name [data-glyph] {
+  animation-duration: 560ms;
+}
+
+/* Echo: the footer's count, mirrored. The circles fill the rest of the name's line, standing on its baseline; the
+   rest of the sentence sits flush right under it, as the count's caption does */
+.lander[data-variant="echo"] .top {
+  display: flex;
+  align-items: baseline;
+  gap: calc(100cqi * 0.03);
+}
+
+.lander[data-variant="echo"] .box {
+  flex: 1 1 0;
+  height: calc(100cqi / 2.92 * 0.64);
+}
+
+.lander[data-variant="echo"] .rest {
+  max-width: 21em;
+  margin: var(--space-2) 0 0 auto;
+  font-size: clamp(1.5rem, 2.5vw, 2.75rem);
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  text-align: right;
+}
+
+/* Echo, flush left: the rest starts where the name does (Noah, Oct 28: "can we try option 1 with flush left text?") */
+.lander[data-variant="echo"][data-align="left"] .rest {
+  margin-left: 0;
+  text-align: left;
+}
+
+/* Ledger: the name over a heavy rule, then the footer's four columns: the circles in the first, standing as tall as
+   the words beside them, and the rest of the sentence across the other three */
+.lander[data-variant="ledger"] .grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: 3px solid var(--ink);
+}
+
+.lander[data-variant="ledger"] .box {
+  min-height: 7rem;
+}
+
+.lander[data-variant="ledger"] .rest {
+  grid-column: 2 / -1;
+  font-size: clamp(1.75rem, 3.6vw, 3.75rem);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.02;
+}
+
+/* Stack: the rest of the sentence straight under the name, heavy and tight, and the circles low on the right, standing
+   where the words end, as tall as they are */
+.lander[data-variant="stack"] .base {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.lander[data-variant="stack"] .box {
+  flex: 1 1 0;
+  align-self: stretch;
+}
+
+.lander[data-variant="stack"] .rest {
+  flex: 0 1 auto;
+  max-width: 15em;
+  font-size: clamp(2rem, 4.6vw, 5rem);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+/* On a phone the four columns are too narrow: the circles sit over the words */
+@media (max-width: 599px) {
+  .lander[data-variant="ledger"] .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .lander[data-variant="ledger"] .box {
+    width: 40%;
+    min-height: 5rem;
+  }
+
+  .lander[data-variant="ledger"] .rest {
+    grid-column: 1;
+  }
+}
+
+/* As the page comes in, the name, then the rest of the sentence a beat later, with the site's own entrance (globals.css,
+   "Entrances"); the circles fade in after them (Lander.module.css), and Currently and Previously too (Now.module.css).
+   The opening that typed "noah" out went for a loader as the site opens (Loader.tsx; Noah, Oct 29: "a quick loader that
+   replaces our opening animations … when going between the nav afterwards, we just have a very simple fade/slide in for
+   the elements"). */
+@media (prefers-reduced-motion: no-preference) {
+  .name,
+  .rest {
+    animation: var(--enter);
+  }
+
+  .rest {
+    animation-delay: var(--enter-step);
+  }
+}

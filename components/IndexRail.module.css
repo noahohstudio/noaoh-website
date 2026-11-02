@@ -1,0 +1,118 @@
+/*
+  The site's index down the left (IndexRail.tsx), on screens 1100px and up, where the page's content sits centered on
+  its stage (globals.css, "The index and the stage"). Below that, the top bar.
+*/
+
+.rail {
+  display: none;
+}
+
+@media (min-width: 1100px) {
+  .rail {
+    display: block;
+  }
+}
+
+/* Top left: your name, or the way back from a case study */
+.crumb {
+  position: fixed;
+  top: var(--space-5);
+  left: var(--space-6);
+  z-index: 40;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.crumb a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.here {
+  color: var(--muted);
+}
+
+/* Down the left margin, its middle on the screen's */
+.side {
+  position: fixed;
+  top: 50%;
+  left: var(--space-6);
+  z-index: 40;
+  max-width: calc(var(--gutter) - var(--space-8));
+  translate: 0 -50%;
+  font-size: var(--size-small);
+  line-height: 1.6;
+}
+
+.side ul {
+  padding: 0;
+  list-style: none;
+}
+
+/* Everything off your path dims; your path stays in ink */
+.side a,
+.side li > span {
+  position: relative;
+  display: inline-block;
+  color: rgb(0 0 0 / 0.24);
+  text-decoration: none;
+  transition: color var(--dur-fast) ease;
+}
+
+.side li:is([data-at], [data-path]) > a,
+.side a:hover {
+  color: var(--ink);
+}
+
+.pages > li + li {
+  margin-top: var(--space-2);
+}
+
+/* The case studies under work, and the open one's sections under its name */
+.studies,
+.sections {
+  padding-left: var(--space-3) !important;
+}
+
+.studies {
+  margin: var(--space-1) 0;
+}
+
+.studies li[data-soon] span {
+  color: rgb(0 0 0 / 0.14);
+}
+
+.studies .sections {
+  margin: var(--space-1) 0 var(--space-2);
+}
+
+/* A group opening drops down to its full height, and its items fade and slide in a beat apart */
+@media (prefers-reduced-motion: no-preference) {
+  .drop {
+    display: grid;
+    overflow: hidden;
+    animation: drop 420ms var(--ease-flip) backwards;
+  }
+
+  .drop > li {
+    animation: item-in 360ms var(--ease) backwards;
+    animation-delay: calc(140ms + var(--i, 0) * 35ms);
+  }
+}
+
+@keyframes drop {
+  from {
+    max-height: 0;
+  }
+
+  to {
+    max-height: calc(var(--rows, 10) * 1.6em + 0.75em); /* the list's own height: its rows at the rail's line height */
+  }
+}
+
+@keyframes item-in {
+  from {
+    opacity: 0;
+    translate: -6px -4px;
+  }
+}

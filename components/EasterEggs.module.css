@@ -1,0 +1,150 @@
+/* The Konami code: a soft gradient of warm colors slides across the screen
+   once. `lighten` keeps the white page white and turns anything darker under
+   it into its color, so text and shapes change color as it passes. Pictures
+   are raised above it while it runs, so they never change. Only `translate`
+   moves, so it stays smooth. */
+.bands,
+.navBands {
+  overflow: hidden;
+  pointer-events: none;
+  mix-blend-mode: lighten;
+  animation: in 300ms ease-out both;
+}
+
+.bands {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+}
+
+/* The nav sits above the pictures, so it gets its own copy, lined up with the page's */
+.navBands {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+/* Under the bands, a faint pink blush over the white page */
+.blush,
+.navBlush {
+  pointer-events: none;
+  background: var(--blush);
+  mix-blend-mode: multiply;
+  animation: in 300ms ease-out both;
+}
+
+.blush {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+}
+
+.navBlush {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.bands[data-out],
+.navBands[data-out],
+.blush[data-out],
+.navBlush[data-out] {
+  animation: out 500ms ease-in both;
+}
+
+/* The size of the screen, wherever its layer sits */
+.field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.navBands .field {
+  left: calc(-1px - var(--nav-inset));
+}
+
+/* Tilted, and big enough to cover the screen at that tilt */
+.stripes {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 130vmax;
+  height: 130vmax;
+  margin: -65vmax 0 0 -65vmax;
+  rotate: -16deg;
+}
+
+/* The colors, from a strip painted in EasterEggs.tsx: each color once, in
+   wide fields, flowing left to right across the page a single time while the
+   effect runs, slow at the start and end. It opens on the cool periwinkle and
+   rose, warms through red, and comes to rest on the strong gold as it fades. */
+.stripes::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -226vmax;
+  width: 380vmax;
+  background-image: var(--wash);
+  background-size: 380vmax 180vmax;
+  background-repeat: repeat-y;
+  animation: drift 3600ms cubic-bezier(0.37, 0, 0.63, 1) both;
+  will-change: translate;
+}
+
+@keyframes drift {
+  to {
+    translate: 206vmax 0;
+  }
+}
+
+@keyframes in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes out {
+  to {
+    opacity: 0;
+  }
+}
+
+/* The burst: big pieces of glass, above the bands, the pictures and the nav */
+.burst {
+  position: fixed;
+  inset: 0;
+  z-index: 63;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Starts just below the bottom of the screen */
+.toss {
+  position: absolute;
+  top: 100%;
+}
+
+.chip {
+  display: block;
+  background-color: color-mix(in srgb, var(--c) 72%, transparent);
+  background-image: var(--glass-grain);
+  background-blend-mode: soft-light;
+  box-shadow:
+    inset 0 0 0 1px rgb(0 0 0 / 0.05),
+    inset 0 -6px 14px rgb(0 0 0 / 0.08);
+}
+
+.chip[data-shape="circle"] {
+  border-radius: 50%;
+}
+
+.chip[data-shape="square"] {
+  border-radius: 14%;
+}
+
+.chip[data-shape="triangle"] {
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}

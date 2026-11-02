@@ -1,0 +1,108 @@
+/* Its own page; runs between the same edges as the lander and the work */
+.lab {
+  position: relative;
+  padding: calc(var(--nav-clear) + var(--space-9)) var(--gutter) var(--space-10);
+}
+
+.caption {
+  font-size: var(--size-body);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-body);
+  line-height: var(--leading-title);
+  transition: opacity var(--dur-fast) ease;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* Two columns that fill top to bottom, so tiles of different heights pack */
+.grid {
+  columns: 2;
+  column-gap: var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  margin-bottom: var(--space-6);
+  break-inside: avoid;
+  transition:
+    filter var(--dur-mid) ease,
+    opacity var(--dur-mid) ease;
+}
+
+.tile {
+  display: grid;
+  gap: var(--space-3);
+}
+
+/* Clears quickly, the moment the page starts to move */
+.grid:not([data-active]) .item {
+  transition-duration: var(--dur-fast);
+}
+
+/* Spotlight: rest on a piece while the page is still and the rest go soft
+   and faint, like seen through frosted glass. Its own caption steps aside
+   for the note. */
+@media (hover: hover) {
+  .grid[data-active] .item:not([data-on]) {
+    filter: blur(6px);
+    opacity: 0.4;
+  }
+
+  .grid[data-active] .item[data-on] .caption {
+    opacity: 0;
+  }
+}
+
+/* The note beside the piece you're on: frosted glass, like the nav. It slides
+   along as you move, and appears in place rather than flying in. */
+.note {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: grid;
+  gap: var(--space-1);
+  width: 18rem;
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-nav);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  font-size: var(--size-small);
+  pointer-events: none;
+  opacity: 0;
+  translate: var(--x, 0) var(--y, 0);
+  transition:
+    opacity var(--dur-fast) ease,
+    translate 260ms var(--ease);
+}
+
+.note[data-side="left"] {
+  translate: calc(var(--x, 0px) - 100%) var(--y, 0);
+}
+
+.note[data-on] {
+  opacity: 1;
+}
+
+.note[data-entering] {
+  transition: opacity var(--dur-fast) ease;
+}
+
+.noteTitle {
+  font-size: var(--size-title);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-title);
+}
+
+.noteBody {
+  padding-top: var(--space-2);
+  font-size: var(--size-body);
+  line-height: var(--leading-title);
+}

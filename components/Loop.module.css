@@ -1,0 +1,64 @@
+/* Pause and play, at the top right of a loop, after Rachel's: a small pill of
+   the nav's glass. It shows while the pointer is on the picture or the control
+   has focus, and always on touch screens, which have no pointer to rest. */
+.control {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-pill);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  color: var(--ink);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--dur-fast) ease;
+}
+
+*:hover > .control,
+.control:focus-visible {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .control {
+    opacity: 1;
+  }
+}
+
+.control svg {
+  width: 10px;
+  height: 10px;
+  fill: currentColor;
+}
+
+/* Replay: the same pill, just left of pause and play */
+.replay {
+  right: calc(var(--space-3) + 28px + var(--space-2));
+}
+
+.replay svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The frame a replay fades from, laid exactly over the loop */
+.still {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}

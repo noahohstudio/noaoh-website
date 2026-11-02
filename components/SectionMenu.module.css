@@ -1,0 +1,186 @@
+/* The page's sections in the middle of the nav, one at a time (SectionMenu.tsx). The section you're reading, in
+   black, with a small chevron; click it and the menu of the nav's own glass drops under it. */
+.sections {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  translate: -50% 0;
+}
+
+.current {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: min(320px, 34vw);
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.current:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* A new section's name fades up in place of the last */
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: swap 220ms var(--ease);
+}
+
+@keyframes swap {
+  from {
+    opacity: 0;
+    translate: 0 3px;
+  }
+}
+
+.chevron {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  fill: none;
+  stroke: var(--muted);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: rotate var(--dur-fast) var(--ease);
+}
+
+.sections[data-open] .chevron {
+  rotate: 180deg;
+}
+
+/* The menu: the nav's glass, hung under the nav and centered on the section's name */
+.menu {
+  position: fixed;
+  top: var(--y);
+  left: var(--x);
+  z-index: 51;
+  min-width: 220px;
+  max-height: min(70vh, 560px);
+  margin: 0;
+  padding: 6px;
+  overflow-y: auto;
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-nav);
+  /* The nav's frost, made denser: the menu is bigger than the bar, and it often opens over a dark loop */
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.9), rgb(244 248 255 / 0.84));
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  font-size: var(--size-body);
+  font-weight: var(--weight-medium);
+  line-height: 1.2;
+  list-style: none;
+  translate: -50% 0;
+  animation: drop 200ms var(--ease);
+}
+
+/* Above the pictures while the Konami code runs, like the nav */
+:global(html[data-bands]) .menu {
+  z-index: 63;
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    translate: -50% -4px;
+  }
+}
+
+.menu a {
+  display: block;
+  padding: 9px 14px;
+  border-radius: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    color var(--dur-fast) ease,
+    background-color var(--dur-fast) ease;
+}
+
+.menu a:hover,
+.menu a:focus-visible {
+  background: rgb(0 0 0 / 0.04);
+  color: var(--ink);
+  outline: none;
+}
+
+.menu a[aria-current] {
+  color: var(--ink);
+}
+
+/* The desk's tree (Photoshop-style): the page you're on, gray, before the section you're in */
+.page {
+  color: var(--muted);
+}
+
+.page::after {
+  content: "/";
+  margin-left: 6px;
+  color: rgb(0 0 0 / 0.2);
+}
+
+/* Each page has a ▸ and flies its sections out beside the menu; the one open stays lit */
+.tree a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+}
+
+.tree a[data-open] {
+  background: rgb(0 0 0 / 0.04);
+  color: var(--ink);
+}
+
+.more {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.6;
+}
+
+/* The flyout hangs beside the menu, its top row level with the page it belongs to */
+.flyout {
+  min-width: 200px;
+  translate: 0 0;
+  animation: fly 180ms var(--ease);
+}
+
+@keyframes fly {
+  from {
+    opacity: 0;
+    translate: -4px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name,
+  .menu {
+    animation: none;
+  }
+}
+
+/* Desktop first: on narrow screens the nav keeps just its name and links, as the dial did */
+@media (max-width: 719px) {
+  .sections {
+    display: none;
+  }
+}

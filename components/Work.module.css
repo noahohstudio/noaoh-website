@@ -1,0 +1,58 @@
+.work {
+  padding: var(--space-8) var(--gutter) var(--space-10);
+}
+
+/* Cards run between the same edges as the lander's lines */
+.list {
+  display: grid;
+  gap: var(--space-7);
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  display: grid;
+  gap: var(--space-3);
+  text-decoration: none;
+}
+
+.card:focus-visible {
+  outline-offset: 6px;
+}
+
+/* Resting on a card while the page is still lifts it a little: up 3px, its
+   shadow a touch deeper and wider, as if it came off the page (CardLift.tsx;
+   Noah, Oct 29: "a very subtle lift"). Keyboard focus lifts it too. */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: translate var(--dur-mid) var(--ease);
+  }
+
+  .card > :first-child {
+    transition: box-shadow var(--dur-mid) var(--ease);
+  }
+
+  .list > li[data-on] .card,
+  .card:focus-visible {
+    translate: 0 -3px;
+  }
+
+  .list > li[data-on] .card > :first-child,
+  .card:focus-visible > :first-child {
+    box-shadow:
+      0 2px 4px rgb(0 0 0 / 0.035),
+      0 10px 24px rgb(0 0 0 / 0.045),
+      0 32px 72px rgb(0 0 0 / 0.06);
+  }
+}
+
+.caption {
+  font-size: var(--size-body);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-body);
+  line-height: var(--leading-title);
+}
+
+.discipline {
+  color: var(--muted);
+}

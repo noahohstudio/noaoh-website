@@ -1,0 +1,98 @@
+/* Runs between the same edges as the home page, on the same four-column rhythm
+   as "Currently". What matters comes first: the bio, then how to reach you.
+   The photos follow (Photos.module.css). */
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-7);
+  padding: calc(var(--nav-clear) + var(--space-9)) var(--gutter) var(--space-8);
+}
+
+/* Your portrait, beside the bio and level with its first line; on phones, above it */
+.portrait {
+  width: clamp(180px, 20vw, 280px);
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .intro {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .portrait {
+    order: -1;
+    width: min(60%, 260px);
+  }
+}
+
+.details {
+  display: grid;
+  gap: var(--space-8);
+  padding-inline: var(--gutter);
+}
+
+.bio {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 34ch;
+  font-size: var(--size-title);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-title);
+}
+
+/* Opening the page: the paragraphs rise in a beat apart, then contact
+   (globals.css, "Entrances"). The photos come in as each shows. */
+@media (prefers-reduced-motion: no-preference) {
+  .bio > *,
+  .details > * {
+    animation: var(--enter);
+  }
+
+  .bio > :nth-child(2) {
+    animation-delay: var(--enter-step);
+  }
+
+  .bio > :nth-child(3) {
+    animation-delay: calc(var(--enter-step) * 2);
+  }
+
+  .bio > :nth-child(n + 4),
+  .details > * {
+    animation-delay: calc(var(--enter-step) * 3);
+  }
+
+  /* A picture takes the entrance's quietest form: from 35%, rising 6px */
+  .portrait {
+    --enter-from: 0.35;
+    --enter-rise: 6px;
+    animation: var(--enter);
+    animation-delay: var(--enter-step);
+  }
+}
+
+.block {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.label {
+  color: var(--muted);
+  font-size: var(--size-small);
+  font-weight: var(--weight-regular);
+}
+
+.contact {
+  grid-column: span 3;
+  display: grid;
+  gap: var(--space-2);
+  padding: 0;
+  font-weight: var(--weight-medium);
+  list-style: none;
+}
+
+.contact a {
+  text-decoration: none;
+}

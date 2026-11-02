@@ -1,0 +1,25 @@
+/* Your address, with a quiet button that copies it */
+.email {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.email a {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+.email button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: var(--size-small);
+  transition: color var(--dur-fast) ease;
+}
+
+.email button:hover {
+  color: var(--ink);
+}

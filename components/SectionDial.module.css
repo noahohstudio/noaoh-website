@@ -1,0 +1,84 @@
+/* The case study's sections, as a dial in the middle of the nav (SectionDial.tsx). The strip
+   slides so the section you're reading sits in the center. The rest turn away like the face of a
+   drum, fading and blurring the further they are, and the dial's edges fade out. */
+.dial {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(320px, 34vw);
+  height: 100%;
+  /* Clipped, never scrolled: the strip alone decides what's in the center */
+  overflow: hidden;
+  overflow: clip;
+  translate: -50% 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+  touch-action: pan-y;
+  user-select: none;
+  cursor: grab;
+  opacity: 0;
+  transition: opacity var(--dur-mid) ease;
+}
+
+/* Shown once the labels are measured, so it never opens out of place */
+.dial[data-ready] {
+  opacity: 1;
+}
+
+.dial[data-sliding] {
+  cursor: grabbing;
+}
+
+.track {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  height: 100%;
+  white-space: nowrap;
+  transition: transform var(--dur-mid) var(--ease);
+}
+
+.track a {
+  color: var(--muted);
+  text-decoration: none;
+  backface-visibility: hidden;
+  transition:
+    opacity var(--dur-mid) var(--ease),
+    filter var(--dur-mid) var(--ease),
+    transform var(--dur-mid) var(--ease),
+    color var(--dur-fast) ease;
+}
+
+.track a[aria-current],
+.track a:hover {
+  color: var(--ink);
+}
+
+/* A label reached with the keyboard reads clearly wherever it sits */
+.track a:focus-visible {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* While it's being slid, it follows the pointer with no lag */
+.dial[data-sliding] .track,
+.dial[data-sliding] .track a {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .track a {
+    transition: none;
+  }
+}
+
+/* Desktop first: on narrow screens the nav keeps just its name and links */
+@media (max-width: 719px) {
+  .dial {
+    display: none;
+  }
+}

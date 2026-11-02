@@ -1,0 +1,58 @@
+/* Runs between the same edges as the lander and the work */
+.now {
+  padding: var(--space-8) var(--gutter) 0;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.wide {
+  grid-column: span 2;
+}
+
+.list dt {
+  padding-bottom: var(--space-1);
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.list dd {
+  max-width: 44ch;
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-title);
+}
+
+/* In the two middle columns, one each */
+.list[data-center] > :first-child {
+  grid-column: 2;
+}
+
+.list[data-center] > .wide {
+  grid-column: 3;
+}
+
+/* On a phone the four columns are too narrow for a line each: Currently, then Previously, one under the other
+   (Noah, Oct 28: "Yes, stack them") */
+@media (max-width: 599px) {
+  .list,
+  .list[data-center] {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .wide,
+  .list[data-center] > * {
+    grid-column: 1;
+  }
+}
+
+/* It comes in with the lander's words, a beat after them (NameLander.module.css) */
+@media (prefers-reduced-motion: no-preference) {
+  .now {
+    animation: var(--enter);
+    animation-delay: calc(var(--enter-step) * 2);
+  }
+}

@@ -1,0 +1,90 @@
+/*
+  The loader (Loader.tsx): the page's white over everything, and in its middle the glass's three circles in their
+  triangle, blue on top, red and yellow under it, popping in a beat apart. Then they fade out in the order they came
+  (Noah, Oct 29: "could the loader dots, instead of exploding outwards, disappear/fade in the same order they
+  appeared?"); a beat of plain white ("just a little more time after the small dots disappear, before the rest of the
+  page appears"); and the white clears to the page. About 1.7 seconds in all.
+*/
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 2147482000; /* over everything but the grain */
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  pointer-events: none;
+  animation: clear 340ms var(--ease-flip) 1380ms forwards; /* after the circles have gone and a beat of white */
+}
+
+.mark {
+  position: relative;
+  width: 44px;
+  height: 40px;
+}
+
+.mark i {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  opacity: 0;
+  scale: 0.4;
+  animation:
+    pop 360ms cubic-bezier(0.34, 1.4, 0.64, 1) forwards,
+    out 200ms ease-in forwards;
+}
+
+/* the glass's colors at the glass's strength (content/site.ts, Lander.module.css) */
+.mark i:nth-child(1) {
+  top: 0;
+  left: 12px;
+  background: color-mix(in srgb, #5b77e8 62%, white);
+  animation-delay: 120ms, 720ms;
+}
+
+.mark i:nth-child(2) {
+  bottom: 0;
+  left: 0;
+  background: color-mix(in srgb, #e8604f 62%, white);
+  animation-delay: 230ms, 830ms;
+}
+
+.mark i:nth-child(3) {
+  right: 0;
+  bottom: 0;
+  background: color-mix(in srgb, #f2c94c 62%, white);
+  animation-delay: 340ms, 940ms;
+}
+
+@keyframes pop {
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+/* out in the order they came, a touch smaller as they go */
+@keyframes out {
+  from {
+    opacity: 1;
+    scale: 1;
+  }
+
+  to {
+    opacity: 0;
+    scale: 0.7;
+  }
+}
+
+@keyframes clear {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader {
+    display: none;
+  }
+}

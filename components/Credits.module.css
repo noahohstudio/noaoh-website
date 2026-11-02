@@ -1,0 +1,324 @@
+/* End credits: the lights go down again */
+.credits {
+  position: relative;
+  background: var(--house);
+  color: var(--house-ink);
+}
+
+.credits::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+.inner {
+  position: relative;
+  display: grid;
+  gap: var(--space-8);
+  padding-block: var(--section) var(--space-6);
+}
+
+.head {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.title {
+  font-size: var(--text-3xl);
+  font-stretch: var(--wdth-display);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-title);
+}
+
+.lede {
+  max-width: 36ch;
+  color: var(--house-dim);
+}
+
+/* The roll */
+.window {
+  position: relative;
+}
+
+.window[data-rolling="true"] {
+  height: min(62vh, 560px);
+  overflow: hidden;
+  mask-image: linear-gradient(transparent, #000 16%, #000 84%, transparent);
+}
+
+.roll {
+  display: grid;
+  gap: var(--space-8);
+  padding-block: var(--space-4);
+}
+
+.window[data-rolling="true"] .roll {
+  animation: roll var(--roll-duration, 40s) linear var(--roll-delay, 0s) infinite;
+  animation-play-state: paused;
+  will-change: transform;
+}
+
+.window[data-playing="true"] .roll {
+  animation-play-state: running;
+}
+
+.window[data-playing="true"]:hover .roll,
+.window[data-playing="true"]:focus-within .roll {
+  animation-play-state: paused;
+}
+
+@keyframes roll {
+  from {
+    transform: translateY(var(--window-h, 0px));
+  }
+  to {
+    transform: translateY(calc(var(--roll-h, 0px) * -1));
+  }
+}
+
+.block {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.blockTitle {
+  padding-bottom: var(--space-2);
+  color: var(--house-dim);
+  font-size: var(--text-s);
+  text-align: center;
+}
+
+.block dl {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: baseline;
+}
+
+.row dt {
+  color: var(--house-dim);
+  font-size: var(--text-s);
+  font-stretch: var(--wdth-meta);
+  text-align: right;
+}
+
+.row dd {
+  display: grid;
+  gap: 2px;
+  font-size: var(--text-l);
+  font-weight: 500;
+  font-stretch: var(--wdth-title);
+  line-height: var(--leading-snug);
+  overflow-wrap: anywhere;
+}
+
+.row[data-mine] dd {
+  color: var(--house-key);
+}
+
+.note {
+  max-width: 36ch;
+  color: var(--house-dim);
+  font-size: var(--text-s);
+  font-weight: 400;
+  font-style: italic;
+  font-stretch: var(--wdth-text);
+}
+
+.empty,
+.final {
+  color: var(--house-dim);
+  text-align: center;
+}
+
+.final {
+  color: var(--house-ink);
+  font-size: var(--text-l);
+}
+
+.rollControls {
+  display: flex;
+  justify-content: center;
+  margin-top: calc(var(--space-6) * -1);
+}
+
+.rollControls button {
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  background: none;
+  color: var(--house-dim);
+  font-size: var(--text-xs);
+}
+
+.rollControls button:hover {
+  color: var(--house-ink);
+}
+
+/* Sign the credits */
+.form {
+  display: grid;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 880px;
+  margin-inline: auto;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--house-rule);
+}
+
+.formTitle {
+  font-size: var(--text-xl);
+  font-stretch: var(--wdth-title);
+  letter-spacing: var(--tracking-title);
+}
+
+.fields {
+  display: grid;
+  gap: var(--space-3);
+  align-items: end;
+}
+
+@media (min-width: 760px) {
+  .fields {
+    grid-template-columns: 1.1fr 1fr 2fr auto;
+  }
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+  color: var(--house-dim);
+  font-size: var(--text-xs);
+}
+
+.field input,
+.field select {
+  width: 100%;
+  height: 44px;
+  padding-inline: var(--space-4);
+  border: 1px solid var(--house-rule);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--house-ink);
+  font-size: var(--text-s);
+  transition: border-color var(--dur-1) ease;
+}
+
+.field select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--house-dim) 50%),
+    linear-gradient(135deg, var(--house-dim) 50%, transparent 50%);
+  background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.field select option {
+  background: var(--house);
+  color: var(--house-ink);
+}
+
+.field input::placeholder {
+  color: color-mix(in srgb, var(--house-dim) 70%, transparent);
+}
+
+.field input:hover,
+.field select:hover {
+  border-color: var(--house-dim);
+}
+
+.field input:focus-visible,
+.field select:focus-visible {
+  outline: none;
+  border-color: var(--house-key);
+  box-shadow: 0 0 0 1px var(--house-key);
+}
+
+.trap {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.submit {
+  height: 44px;
+  padding-inline: var(--space-5);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--house-ink);
+  color: var(--house);
+  font-size: var(--text-s);
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color var(--dur-2) ease;
+}
+
+.submit:hover {
+  background: var(--house-key);
+}
+
+.submit:focus-visible {
+  outline-color: var(--house-key);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.message {
+  min-height: 1.5em;
+  font-size: var(--text-s);
+  color: var(--house-dim);
+}
+
+.message[data-state="saved"] {
+  color: var(--house-ink);
+}
+
+.message[data-state="error"] {
+  color: #ff8a7a;
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--house-rule);
+  color: var(--house-dim);
+  font-size: var(--text-s);
+}
+
+.footer a {
+  color: var(--house-dim);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: var(--house-ink);
+}
+
+.footer :focus-visible {
+  outline-color: var(--house-key);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window[data-rolling="true"] .roll {
+    animation: none;
+  }
+}

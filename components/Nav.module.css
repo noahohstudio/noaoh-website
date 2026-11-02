@@ -1,0 +1,77 @@
+/* Hangs from the top of the screen: square top corners, rounded bottom ones */
+.nav {
+  position: fixed;
+  top: 0;
+  left: var(--nav-inset);
+  right: var(--nav-inset);
+  z-index: 50;
+  border: 1px solid var(--glass-edge);
+  border-top: 0;
+  border-radius: 0 0 var(--radius-nav) var(--radius-nav);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Above the pictures while the Konami code runs; it carries its own copy of the colors */
+:global(html[data-bands]) .nav {
+  z-index: 62;
+}
+
+/* Easter egg: glass thrown up into the nav leaves its color, which fades */
+.nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--tint, transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav[data-tint]::before {
+  animation: tint 1800ms ease-in;
+}
+
+@keyframes tint {
+  from {
+    opacity: 0.7;
+  }
+}
+
+/* Padding lines the nav's text up with the page edge below it */
+.inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  height: calc(var(--nav-h) - 1px);
+  padding-inline: max(14px, calc(var(--gutter) - var(--nav-inset) - 1px));
+  font-size: var(--size-body);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+}
+
+.links {
+  display: flex;
+  gap: var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+
+/* Gray until it's where you are, or under the pointer */
+.name,
+.links a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color var(--dur-fast) ease;
+}
+
+.name:hover,
+.name[aria-current],
+.links a:hover,
+.links a[aria-current] {
+  color: var(--ink);
+}

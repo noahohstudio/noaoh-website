@@ -1,0 +1,207 @@
+/* The first screen, top to bottom */
+.lander {
+  position: relative;
+  min-height: 100svh;
+  padding-top: calc(var(--nav-clear) + var(--space-4));
+  padding-bottom: var(--gutter);
+  --line-step: 60ms; /* between one line rising in and the next */
+}
+/* Measures one screen's height (the stable, small-viewport height on phones) */
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100svh;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.sentence {
+  font-size: var(--size, var(--size-display));
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-display);
+  text-align: justify;
+  text-wrap: wrap;
+  /* A toy, not a text field: plain arrow, and letters can't be selected */
+  cursor: default;
+  user-select: none;
+  /* A letter stays mirrored this long after the pointer leaves it, so a
+     sweep across the sentence leaves a short trail (Flip.module.css) */
+  --hold: 160ms;
+}
+
+/* Hidden until it has been set. Then it rises in line by line: each line, and
+   the glass in it, fades and slides up a little, quickly, a beat after the one
+   above. */
+:global(html.js) .sentence:not([data-ready]) {
+  opacity: 0;
+  animation: failsafe 0s 2s forwards;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sentence[data-ready] .row,
+  .glass {
+    animation: rise 600ms var(--ease) backwards;
+    animation-delay: calc(var(--line, 0) * var(--line-step));
+  }
+}
+
+/* Settle (GlassField's entrance="settle"): each piece in its turn comes into its place from a soft blur, a little big,
+   quickly (Noah, Oct 28: "fade in the indents first, then the orbs a little slower, subtly one a time, but a quick
+   animation when they do. Not just a simple fade in, but a slight blur in too? Make it feel elevated"). Its turn is
+   --line; the lander sets when the first starts and the beat between them. */
+@media (prefers-reduced-motion: no-preference) {
+  .glass[data-entrance="settle"] {
+    animation: settle 440ms var(--ease) backwards;
+    animation-delay: calc(var(--settle-after, 0ms) + var(--line, 0) * var(--settle-step, 170ms));
+  }
+}
+
+/* None (GlassField's entrance="none"): already in place, as on coming back home */
+.glass[data-entrance="none"] {
+  animation: none;
+}
+
+/* Fade (GlassField's entrance="fade"): each piece simply fades in, in its turn (Noah, Oct 28: "lets just fade in the
+   orbs too"), in step with the lander's words */
+@media (prefers-reduced-motion: no-preference) {
+  .glass[data-entrance="fade"] {
+    animation: glass-fade 800ms var(--ease) backwards;
+    animation-delay: calc(var(--settle-after, 0ms) + var(--line, 0) * var(--settle-step, 60ms));
+  }
+}
+
+@keyframes glass-fade {
+  from {
+    opacity: 0;
+    transform: translateY(10px); /* with a little motion, as the words join (Noah, Oct 29) */
+  }
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    filter: blur(4px); /* just slight (Noah, Oct 28: "lets go softer on the blur in"); it was 12px */
+    transform: scale(1.06);
+  }
+
+  55% {
+    opacity: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.08em);
+  }
+}
+
+@keyframes failsafe {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Before the lines are set: a word and its glass spot stay together */
+.bind {
+  white-space: nowrap;
+}
+
+/* Set lines: each one runs edge to edge */
+.rows {
+  display: block;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-start;
+  column-gap: 0.22em;
+}
+
+.row[data-mode="justify"] {
+  justify-content: space-between;
+}
+
+/* A glass piece's spot: as tall as the letters, a touch over. Empty, it's a faint mark */
+.slot {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 1.6em;
+  height: 0.78em;
+  vertical-align: -0.04em;
+  border-radius: 0.14em;
+  transition: background-color var(--dur-mid) ease;
+}
+
+.row .slot {
+  top: 0.04em;
+}
+
+.row[data-mode="elastic"] .slot {
+  flex: 1 1 auto;
+}
+
+.slot[data-empty] {
+  background: rgb(0 0 0 / 0.07);
+}
+
+/* Glass: tinted, see-through, lightly frosted. Whatever is behind it is
+   magnified like under a strong lens and slightly blurred (the lens is Chrome
+   only; elsewhere it's just frosted). */
+.glass {
+  position: absolute;
+  z-index: 2;
+  font-size: var(--size);
+  background-color: color-mix(in srgb, var(--c) 62%, transparent);
+  background-image: var(--glass-grain);
+  background-blend-mode: soft-light;
+  box-shadow:
+    inset 0 0 0 1px rgb(0 0 0 / 0.05),
+    inset 0 -0.04em 0.1em rgb(0 0 0 / 0.08);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: var(--lens);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  /* A plain rectangle, written as a four-point shape so it can morph into a triangle */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  transition:
+    scale 700ms var(--ease),
+    border-radius 700ms var(--ease),
+    clip-path 700ms var(--ease);
+}
+
+.glass:active {
+  cursor: grabbing;
+}
+
+/* Easter egg, typed "bauhaus": Kandinsky's blue circle, red square, yellow triangle */
+.glass[data-shape] {
+  scale: var(--square) 1;
+}
+
+.glass[data-shape="triangle"] {
+  clip-path: polygon(50% 0, 50% 0, 100% 100%, 0 100%);
+}
+
+/* Easter egg: thrown hard into an edge or another piece, the glass squashes
+   and pops into soft blobs of the same glass, which find each other again
+   (GlassField.tsx). Moved by `translate`, squashed and stretched by `transform`. */
+.blob {
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  animation: none;
+  transition: none;
+}

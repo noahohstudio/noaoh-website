@@ -1,0 +1,91 @@
+/* The zine fills a 16:9 box, and frames itself for phones under 720px. The glyph viewer sets its own height. */
+.zine {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+/* The canvas, past the box on every side (ZineBook.tsx, BLEED): 3% of its width each side, 14% of its height above and
+   below, so a turning page and its shadow have room. The header above and the words below are drawn over it. */
+.stage {
+  position: absolute;
+  inset: -14% -3%;
+}
+
+.glyphs {
+  width: 100%;
+}
+
+/*
+  The glyph viewer in the site's own look. Its code stays the frozen copy from the
+  BoomLoom handoff (glyph-viewer.js); these rules restyle what it draws: a white box
+  with no dashed rules, and the Outline/Fill switch as a glass pill like the nav.
+*/
+.glyphs :global(.bl-gv) {
+  border: 0;
+  background: var(--bg);
+  font-size: var(--size-small);
+}
+
+.glyphs :global(.bl-gv .win),
+.glyphs :global(.bl-gv.narrow .win),
+.glyphs :global(.bl-gv .grid > *) {
+  border: 0;
+}
+
+/* The picker: bare letters, the current one on a soft rounded ground */
+.glyphs :global(.bl-gv .grid button) {
+  border-radius: var(--radius-nav);
+  transition: background-color var(--dur-fast) ease;
+}
+
+.glyphs :global(.bl-gv .grid button:hover) {
+  background: rgb(0 0 0 / 0.04);
+}
+
+.glyphs :global(.bl-gv .grid button[aria-current="true"]) {
+  background: rgb(0 0 0 / 0.07);
+}
+
+/* Handles are open circles on the page's white */
+.glyphs :global(.bl-gv .pt.control i) {
+  background: var(--bg);
+}
+
+/* Outline / Fill: a glass pill, the pressed side a brighter piece of glass */
+.glyphs :global(.bl-gv .toggle) {
+  top: var(--space-4);
+  left: var(--space-4);
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-pill);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+
+.glyphs :global(.bl-gv .toggle button) {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+  font-size: var(--size-small);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-body);
+}
+
+.glyphs :global(.bl-gv .toggle button[aria-pressed="true"]) {
+  background: rgb(255 255 255 / 0.92);
+  color: var(--ink);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    0 1px 2px rgb(0 0 0 / 0.06),
+    0 2px 8px rgb(0 0 0 / 0.06);
+}
+
+/* The counts' labels, in the same glass, fully rounded */
+.glyphs :global(.bl-gv .stat::after) {
+  border-radius: var(--radius-pill);
+  font-size: var(--size-small);
+}

@@ -1,0 +1,584 @@
+/*
+  Case study: text keeps to the work list's column, pictures run out to the
+  page edge. Told the way case-studies/FORMAT.md describes: a gray label, a
+  headline that makes a claim, a line or two of gray text, then the pictures.
+*/
+
+.page {
+  padding: calc(var(--nav-clear) + var(--space-9)) var(--gutter) 0;
+}
+
+.head,
+.index {
+  width: min(100%, var(--column));
+  margin-inline: auto;
+}
+
+.head {
+  display: grid;
+  gap: var(--space-4);
+  padding-bottom: var(--space-7);
+}
+
+.title {
+  font-size: var(--size-display);
+  letter-spacing: var(--tracking-tight);
+  line-height: 0.95; /* as the chapter headers (Noah, Oct 28: "is the line spacing on the main header the same as the other headers? If not, lets match it") */
+}
+
+/* The facts in one quiet line under the title, each label beside its value, after Roy's (Noah, Oct 27: of three
+   options, "One row"). They wrap to more lines on a narrow screen. */
+.slate {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+}
+
+.slate > div {
+  display: flex;
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.slate dt {
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.slate dd {
+  font-size: var(--size-small);
+  line-height: 1.35;
+}
+
+.cover {
+  padding-bottom: var(--space-9);
+}
+
+
+/* Opening the page: the title, summary and facts rise in a beat apart, then
+   the cover, quieter, as pictures are, then the rest (globals.css, "Entrances").
+   A little slower than the site's other pages, so the story settles as the
+   index's last section does, around 0.8s in (Noah, Oct 29: "case studies could
+   fade in slightly slower, just as the index finishes up, to create the
+   cleanest transition between pages possible") */
+@media (prefers-reduced-motion: no-preference) {
+  .head > *,
+  .cover,
+  .body {
+    --study-step: 90ms;
+    animation: var(--enter);
+    animation-duration: 950ms;
+  }
+
+  .head > :nth-child(2) {
+    animation-delay: var(--study-step);
+  }
+
+  .head > :nth-child(3) {
+    animation-delay: calc(var(--study-step) * 2);
+  }
+
+  .cover {
+    --enter-from: 0.35;
+    --enter-rise: 6px;
+    animation-delay: calc(var(--study-step) * 3);
+  }
+
+  .body {
+    animation-delay: calc(var(--study-step) * 4);
+  }
+}
+
+/* The section index sits in the column, above the story */
+.body {
+  display: grid;
+  gap: var(--space-9);
+}
+
+.indexTitle {
+  padding-bottom: var(--space-2);
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.index ol {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: var(--space-1) var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+
+.index a {
+  display: block;
+  color: var(--muted);
+  font-size: var(--size-small);
+  text-decoration: none;
+  transition: color var(--dur-fast) ease;
+}
+
+.index a:hover,
+.index a[aria-current="location"] {
+  color: var(--ink);
+}
+
+/* Each section keeps its text to the column and lets its pictures run out to the page edge */
+.story {
+  display: grid;
+  gap: var(--space-9);
+}
+
+.story > * {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(0, 1fr)
+    [column-start] min(100%, var(--column))
+    [column-end] minmax(0, 1fr)
+    [full-end];
+}
+
+.story > * > * {
+  grid-column: column;
+}
+
+.story > * > :is(.chapter, .grid, .options, .steps, .interactive, .beside) {
+  grid-column: full;
+}
+
+/* A change of topic: a header at display size, in Noah's words, with room above it. Centered on the page, on the
+   column's middle, and free to run wider than the column; it breaks only where the page makes it (Noah, Oct 28: "the
+   very middle of the screen is where the headers should be centred… No need to cut the sentence early"). It ran from
+   the page's edge at first, then for a while started in the column. */
+.story > [data-chapter] {
+  padding-top: var(--space-9);
+}
+
+.chapter {
+  padding-bottom: var(--space-8);
+  text-align: center;
+  font-size: var(--size-display);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: 0.95; /* tighter, so a header on two lines reads as one (Noah, Oct 28: "reduce the line spacing a little") */
+  text-wrap: balance;
+}
+
+/* A section: its visual first, then its words, together (Noah, Oct 26): the small header, the headline, any text,
+   and Read more, right under the visual they belong to. A step more room between the two (Noah, Oct 28: "our visuals
+   should be able to breath, but at the same, the page should be concise") */
+.words[data-after] {
+  padding-top: var(--space-6);
+}
+
+/* The words and chapter headers sit over anything a visual draws past its box (the zine's turning pages and shadows) */
+.words,
+.chapter {
+  position: relative;
+  z-index: 1;
+}
+
+.label {
+  padding-bottom: var(--space-2);
+  color: var(--muted);
+  font-size: var(--size-small);
+  font-weight: var(--weight-regular);
+}
+
+.headline {
+  font-size: var(--size-title);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-title);
+}
+
+.text {
+  max-width: 62ch;
+  padding-top: var(--space-3);
+  color: var(--muted);
+}
+
+
+.proof {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+
+
+/* Two to a row. An odd number of pictures leads with a wide one (set in StorySection) */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.grid > [data-wide] {
+  grid-column: 1 / -1;
+}
+
+/* One row at one height: each tile takes the width its shape needs, so a portrait beside a landscape comes out
+   narrower and what's in it reads at a like size */
+.grid[data-row] {
+  display: flex;
+  align-items: flex-start;
+}
+
+.grid[data-row] > .figure {
+  flex: var(--share, 1) 1 0;
+  min-width: 0;
+}
+
+@media (max-width: 719px) {
+  .grid[data-row] {
+    flex-direction: column;
+  }
+}
+
+/* One tile with its notes beside it, after Rachel's: the tile is the size of one
+   in a pair, and its notes run down the other half from its top */
+.beside {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: var(--space-4);
+}
+
+/* Explorations sit side by side, however many there are */
+.options {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: var(--space-4);
+}
+
+/* A flow: small tiles in one row, each with its one line (two to a row on phones) */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(var(--count, 3), minmax(0, 1fr));
+  gap: var(--space-6) var(--space-4);
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 719px) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Tall tiles are never bigger than four to a row: a row of three keeps the flow tiles' size, centered, so a phone
+   isn't taller than the screen (Kino's vote, Oct 28) */
+@media (min-width: 720px) {
+  .steps[data-portrait] {
+    width: 100%;
+    max-width: calc(var(--count) * (100% - 3 * var(--space-4)) / 4 + (var(--count) - 1) * var(--space-4));
+    margin-inline: auto;
+  }
+}
+
+/* A signature dot under tiles that take turns (TurnDot.tsx), in the gap between the tiles and their lines: it slides to
+   the one playing, with the small settle Kino may have, and stretches with its speed on the way. Off on phones, where
+   the tiles go two to a row. */
+.steps:has(> .turnDot) {
+  position: relative;
+  container-type: inline-size;
+}
+
+.steps:has(> .turnDot) .figure figcaption {
+  padding-top: 30px;
+}
+
+/* One pause and one replay for a row of loops that play as one (RowControls.tsx), at the row's top right, showing
+   while the pointer is on the row, as a single loop's do */
+.steps:has(> .rowControls) {
+  position: relative;
+}
+
+.rowControls {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.steps:hover > .rowControls > button {
+  opacity: 1;
+}
+
+.turnDot {
+  --w: calc((100cqw - (var(--count) - 1) * var(--space-4)) / var(--count));
+  position: absolute;
+  top: calc(var(--w) * var(--tall) + 9px);
+  left: calc(var(--i) * (var(--w) + var(--space-4)) + var(--w) / 2 - 6px);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--dot);
+  opacity: 0;
+  transition:
+    left 650ms cubic-bezier(0.34, 1.3, 0.64, 1),
+    opacity var(--dur-fast) ease;
+}
+
+.turnDot[data-on] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .turnDot {
+    transition: none;
+  }
+}
+
+@media (max-width: 719px) {
+  .turnDot {
+    display: none;
+  }
+
+  .steps:has(> .turnDot) .figure figcaption {
+    padding-top: 10px;
+  }
+}
+
+.figure figcaption {
+  padding-top: 10px;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.beside figcaption {
+  padding-top: 0;
+}
+
+.beside dl {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.role {
+  color: var(--ink);
+}
+
+/* A headline with the Interactive mark (InteractiveMark.tsx) right after its last word */
+.headRow {
+  font-size: var(--size-title);
+  line-height: var(--leading-title);
+  text-wrap: balance;
+}
+
+.headRow .headline {
+  display: inline;
+}
+
+.verdict {
+  display: block;
+}
+
+/* Read more: the specifics behind a piece. Centered on a hairline across the column, in ink, after Roy's centered
+   "Read more" (Noah, Oct 26: "the read more buttons keep getting lost … I'm thinking we somehow centre them"; then,
+   of a glass pill, "out of our visual language, and stick out too much. They also aren't centred"). The hairline is
+   the site's own, and ties the centered label to the flush-left words above it. */
+.more {
+  margin-top: var(--space-5);
+}
+
+.more summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  color: var(--ink);
+  font-size: var(--size-small);
+  list-style: none;
+  cursor: pointer;
+}
+
+.more summary::-webkit-details-marker {
+  display: none;
+}
+
+.more summary::before,
+.more summary::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgb(0 0 0 / 0.1);
+  transition: background-color var(--dur-fast) ease;
+}
+
+.more summary:hover::before,
+.more summary:hover::after {
+  background: rgb(0 0 0 / 0.22);
+}
+
+.more summary:focus-visible {
+  outline: none;
+}
+
+.more summary:focus-visible .moreLabel {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.moreLabel {
+  display: inline-flex;
+  gap: 6px;
+}
+
+/* The word as it retypes itself (ReadMore.tsx), in a slot as wide as the wider of "more" and "less", so the sign
+   beside it holds still while letters go and come */
+.moreWord {
+  display: inline-grid;
+  justify-items: start;
+}
+
+.moreWord > * {
+  grid-area: 1 / 1;
+}
+
+.moreRoom {
+  visibility: hidden;
+}
+
+/* The sign, quieter than the words */
+.moreLabel::after {
+  content: "+";
+  color: var(--muted);
+}
+
+.more[open] .moreLabel::after {
+  content: "−";
+}
+
+/* While it closes, the sign turns back at once (ReadMore.tsx) */
+.more[data-closing] .moreLabel::after {
+  content: "+";
+}
+
+.more dl {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 62ch;
+  padding-top: var(--space-4);
+}
+
+.more dl > div {
+  display: grid;
+  grid-template-columns: 11em minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--space-5);
+}
+
+.more dt {
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+/* The close, in one panel: the lessons as short numbered rules at headline size,
+   side by side, then what I owned and contributed to, a line each, lined up
+   with Read more's notes below */
+.rules {
+  display: grid;
+  grid-template-columns: repeat(var(--count, 2), minmax(0, 1fr));
+  gap: var(--space-5) var(--space-7);
+  padding: 0;
+  font-size: var(--size-title);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-title);
+  list-style: none;
+}
+
+/* Each rule's number hangs to its left, outside the text, the same size, in gray (Noah, Oct 26: "1. Constraints are
+   the interface"; no leading zeros) */
+.rules > li {
+  position: relative;
+}
+
+.count {
+  position: absolute;
+  right: 100%;
+  padding-right: 0.3em;
+  color: var(--muted);
+}
+
+.roles {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+}
+
+.roles > div {
+  display: grid;
+  grid-template-columns: 11em minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--space-5);
+}
+
+.roles dt {
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+/* Inside Read more, the brief-to-launch steps follow the lessons' reasoning */
+.moreHead {
+  padding-top: var(--space-6);
+  font-size: var(--size-small);
+}
+
+/* The case study's last line: credit to the people and tools it borrows from */
+.footnote {
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.footnote a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+@media (max-width: 599px) {
+  .grid,
+  .beside,
+  .proof,
+  .rules,
+  .roles > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Under the tile, its notes sit where a caption would */
+  .beside {
+    row-gap: 0;
+  }
+
+  .beside figcaption {
+    padding-top: 10px;
+  }
+
+  .options {
+    grid-auto-flow: row;
+  }
+}
+
+/* Next */
+.next {
+  padding-block: var(--space-10);
+}
+
+.nextLink {
+  display: grid;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.nextCaption {
+  font-size: var(--size-title);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-title);
+}
+
+.nextLabel {
+  color: var(--muted);
+}

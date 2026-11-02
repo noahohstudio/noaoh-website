@@ -1,0 +1,73 @@
+.word {
+  white-space: nowrap;
+}
+
+/* The letter's box stays put, so hovering never jitters; only the glyph inside mirrors */
+.char {
+  display: inline-block;
+}
+
+.glyph {
+  display: inline-block;
+  /* Mirror through the middle of the letter's own ink, so it turns over in
+     place (lib/mirror.ts). Until that's measured, the middle of the lowercase. */
+  transform-origin: 50% var(--axis, 59%);
+  /* Instant, but the Konami wave can make each letter wait its turn, and the
+     lander's letters stay mirrored a moment after the pointer moves on
+     (--hold, Lander.module.css) */
+  transition: transform 0s var(--k-delay, var(--hold, 0s));
+}
+
+.char:hover .glyph {
+  transform: scaleY(-1);
+  transition-delay: 0s;
+}
+
+/* In big type, only the letter itself flips it: its own height, not the
+   whole line around it (lib/mirror.ts measures it). Side to side a letter
+   still meets the next, so running along a word flips each in turn. */
+:global([data-exact]) .char,
+:global([data-exact]) .glyph {
+  pointer-events: none;
+}
+
+:global([data-exact]) .glyph {
+  position: relative;
+}
+
+:global([data-exact]) .glyph::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--ink-top, 0);
+  height: var(--ink-height, 100%);
+  pointer-events: auto;
+}
+
+/* Inside [data-turn], like a counter: a letter that appears or changes turns over for a beat */
+:global([data-turn]) .glyph {
+  animation: ripple 260ms steps(1, end);
+}
+
+/* Easter egg: a ripple of instant mirrors runs through the text, letter by
+   letter. Each letter is mirrored for a beat on its turn, then rights itself. */
+:global([data-ripple]) .glyph {
+  animation: ripple 220ms steps(1, end);
+  animation-delay: var(--ripple-delay, 0ms);
+}
+
+@keyframes ripple {
+  from {
+    transform: scaleY(-1);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Easter egg, the Konami code: the letters on screen turn over in a wave,
+   then turn back (EasterEggs.tsx) */
+:global(html[data-konami]) .glyph[data-wave] {
+  transform: scaleY(-1);
+}

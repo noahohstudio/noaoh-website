@@ -1,0 +1,16 @@
+The iPhone frames in these files are Apple's iPhone 17 Pro product bezels, from Apple Design Resources
+(developer.apple.com/design/resources). They appear in:
+
+  video/iteration-reel-light (.mp4, .webm, -poster.jpg, -still.jpg)
+  video/vote-flow, video/splash and video/its-settled (.mp4, .webm, -poster.jpg, -still.jpg)
+  home-iphone-front (every size, .avif and .webp)
+
+Apple's licence allows them only for mock-ups of user interfaces for software that runs only on Apple's
+macOS, iOS, watchOS, tvOS and/or visionOS operating systems. Here they hold only Kino's iOS app.
+They may not be extracted, copied, modified, distributed or repackaged as content of their own
+(clip art, stock animation or similar assets), or used in any other way.
+
+Anyone given these files must be told of these restrictions (the licence, section 2C). The licence itself
+is in case-studies/kino/licences/Apple-Design-Resources-License.rtf in this site's source.
+
+The laptop in home-laptop-m5 is a third-party render (Good Mockups), not an Apple-made frame.

@@ -1,0 +1,168 @@
+/* Closes every page: the count, as big as it gets, then the small print */
+.footer {
+  padding: var(--space-8) var(--gutter) var(--space-5);
+}
+
+/* Needs JavaScript to know the number */
+:global(html:not(.js)) .count {
+  display: none;
+}
+
+.count {
+  container-type: inline-size;
+}
+
+/* Edge to edge, like the lander's lines. Count.tsx fits it exactly; until
+   then, Geist's figures are 0.574em apart. */
+.number {
+  width: max-content;
+  font-size: calc(100cqi / (var(--places) * 0.574 + 0.05));
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: var(--tracking-tight);
+  line-height: 0.9;
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+}
+
+/* Places the count hasn't reached yet: barely there, so the number speaks
+   for itself, but it keeps the count at one size as it grows */
+.zeros {
+  color: rgb(0 0 0 / 0.02);
+}
+
+/* Flush right, so it ends where the number's last digit does (Count.tsx measures its ink) */
+.caption {
+  margin-top: calc(var(--space-2) * -1); /* a little closer to the number (Noah, Oct 26) */
+  padding-right: var(--ink-end, 0);
+  text-align: right;
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-title);
+}
+
+.caption:not([data-ready]) {
+  visibility: hidden;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* The small print, on the four-column rhythm */
+.small {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-5);
+  padding-top: var(--space-8); /* the year and the links, closer to the count too */
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.since {
+  cursor: default;
+  user-select: none;
+}
+
+.links {
+  display: flex;
+  gap: var(--space-5);
+}
+
+.links a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color var(--dur-fast) ease;
+}
+
+.links a:hover {
+  color: var(--ink);
+}
+
+/* At the very bottom right, barely there. Hovered, it turns into "Try it."
+   and a small glass card above it shows the keys. */
+.hint {
+  position: relative;
+  grid-column: 4;
+  justify-self: end;
+  color: rgb(0 0 0 / 0.2);
+  cursor: default;
+  user-select: none;
+  transition: color var(--dur-fast) ease;
+}
+
+/* Where there's room, it may use the empty third column too, so it stays on
+   one line. On phones the links already spill into that column. */
+@media (min-width: 600px) {
+  .hint {
+    grid-column: 3 / -1;
+  }
+}
+
+.hint[data-on] {
+  color: var(--muted);
+}
+
+/* Both wordings share one cell; the hidden question holds its size */
+.hintText {
+  display: grid;
+  justify-items: end;
+}
+
+.hintText > * {
+  grid-area: 1 / 1;
+}
+
+.hintSize {
+  visibility: hidden;
+}
+
+/* Just the keys, no card around them: each a small piece of the nav's glass,
+   quieter than the nav. They fade in evenly, one after another from the
+   left, and go together. */
+.keys {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + var(--space-3));
+  display: flex;
+  gap: var(--space-1);
+  pointer-events: none;
+}
+
+.keys kbd {
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding-inline: 5px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 7px;
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.9),
+    0 1px 2px rgb(0 0 0 / 0.04),
+    0 4px 12px rgb(0 0 0 / 0.04);
+  color: rgb(0 0 0 / 0.38); /* the symbols stay quiet */
+  font: inherit;
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  opacity: 0;
+  transition:
+    opacity 280ms linear,
+    background-color 240ms linear,
+    color 240ms linear;
+}
+
+.hint[data-on] .keys kbd {
+  opacity: 1;
+  transition-delay: calc(var(--i) * 22ms), 0s, 0s;
+}
+
+/* Pressed in the right order: filled in, quietly. When the code is done they
+   stay filled, and the effect's colors pass over them as over everything else. */
+.keys kbd[data-pressed] {
+  background-color: color-mix(in srgb, var(--ink) 12%, transparent);
+  color: rgb(0 0 0 / 0.62);
+}
