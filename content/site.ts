@@ -58,10 +58,13 @@ export const site = {
       // the saved tabs, and I want the lab overview card to be just that - the morphing, fluid logos changing colors, as
       // the backgrounds change colors too." Noah's own tabs live only in their browser, so it runs the tool's six built-in
       // designs ("Use built-in designs"), each in one of the color pairs from Noah's logos, through the tool's own morph.
-      title: "Outcome logo generator",
+      title: "Outcome Web Tool", // Noah, Nov 2: "rename Outcome Logo Gen into Outcome Web Tool"
       context: "Web tool, 2026",
       ratio: "1 / 1",
-      note: "My Outcome logo generator, a web tool I built for Outcome-style logos. My favorite part is how the logos fluidly morph into each other when you swap between saved tabs.",
+      // Noah's own copy, Nov 2, a touch more concise: "Inspired by circular, organic logos associated with the Japanese trance
+      // DJ's "Minna No Kimochi", I built a web tool that fluidly mimics the style, allowing users to create exportable versions
+      // of their own. Reach out to me if you'd like to try it."
+      note: "Inspired by the circular, organic logos associated with Japanese trance DJs Minna No Kimochi, I built a web tool that fluidly mimics the style, letting anyone create exportable versions of their own. Reach out if you'd like to try it.",
       video: "/lab/outcome-logos.mp4",
     },
     {
