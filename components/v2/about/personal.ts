@@ -69,7 +69,23 @@ function filmRoll(): PersonalRow {
 
 const rows: PersonalRow[] = [
   { id: "me", title: site.name, kind: "Me", context: "[A longer line about me]", pics: [site.portrait] },
-  { id: "mentor-1", title: "[Mentor's name]", kind: "Mentor", context: "[What they taught me, and how we met]", pics: [] },
+  // Noah, Nov 11: "this is Naheel, the founder of the Silicon Valley School of Design, and a good mentor of mine"; then
+  // "let's give a little bit more than just the founder. He's a good inspiration for all of my product design
+  // practices. This is us on the train"
+  {
+    id: "naheel",
+    title: "Naheel",
+    kind: "Mentor",
+    context: "Founder of the Silicon Valley School of Design, and an inspiration for all of my product design practice",
+    pics: [
+      {
+        src: "/about/naheel.jpg",
+        ratio: "2000 / 1344",
+        alt: "Noah and Naheel side by side on a subway bench, under a Priority Seating sign",
+        caption: "Us on the train",
+      },
+    ],
+  },
   { id: "mentor-2", title: "[Mentor's name]", kind: "Mentor", context: "[What they taught me, and how we met]", pics: [] },
   // Noah, Nov 9: "this is me and my bestfriend natalie! ... i think bestfriend would be more professional, and maybe
   // even sweeter?" Best friend first among the friends
@@ -92,6 +108,24 @@ const rows: PersonalRow[] = [
       { src: "/about/kaya-3.jpg", ratio: "2000 / 1328", alt: "Noah and Kaya in black and white, each with a hand on their chin" },
       { src: "/about/kaya-1.jpg", ratio: "2000 / 1326", alt: "Noah and Kaya in a selfie, cartoon bluebirds circling their heads" },
       { src: "/about/kaya-2.jpg", ratio: "2000 / 1333", alt: "Noah and Kaya pulling faces through a warping filter" },
+    ],
+  },
+  // Noah, Nov 11: "this is Daeun and I presenting Palit at SVSD 2026 as finalists. Under moments, perhaps. The other is
+  // the crowd". A parent and its child, like the parade below
+  {
+    id: "svsd",
+    title: "Presenting Palit at SVSD 2026",
+    kind: "Moment",
+    context: "With Daeun, as finalists",
+    pics: [{ src: "/about/svsd-presenting.jpg", ratio: "1333 / 2000", alt: "Noah and Daeun at a lectern by a brick wall, a laptop and a tablet in front of them" }],
+    children: [
+      {
+        id: "svsd-crowd",
+        title: "The crowd",
+        kind: "",
+        context: "",
+        pics: [{ src: "/about/svsd-crowd.jpg", ratio: "1333 / 2000", alt: "A room of people in armchairs and booths, watching the presentation" }],
+      },
     ],
   },
   // A parent and its child (Noah, Nov 9: "the knicks game, me DJing could be a parent, with the crowd that night being a
