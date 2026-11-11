@@ -2,7 +2,7 @@
 
 Noah Oh's portfolio: product design, front-end and visual work.
 
-Built with Next.js and TypeScript, with plain CSS and design tokens. The type is Geist.
+Built with Next.js and TypeScript, with plain CSS and design tokens. The type is Geist, with Neue Haas Grotesk Display for headers.
 
 ```bash
 npm install

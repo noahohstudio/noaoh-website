@@ -1,24 +1,15 @@
-import { site } from "@/content/site";
 import { Nav } from "@/components/Nav";
-import { NameLander } from "@/components/NameLander";
-import { Now } from "@/components/Now";
-import { Work } from "@/components/Work";
+import { HomeB2 } from "@/components/v2/home/HomeB2";
 import { Footer } from "@/components/Footer";
 
+// Home, v2 since Nov 11 (Noah: "v2 replaces the site"): the line, Currently and Previously, then Selected work, the
+// case studies with the lab between them (components/v2/home/HomeB2.tsx). The home before it, the name lander with its
+// glass and the work column, is components/NameLander.tsx, Now.tsx and Work.tsx, unused now.
 export default function Home() {
   return (
     <>
-      <Nav />
-      <main id="main">
-        {/* "intro" is what the nav highlights as your name */}
-        <div id="intro">
-          {/* One main moment, then supporting text, in the footer's manner (Noah, Oct 28, of the options: "lets keep the
-              left align, go with A2"). The sentence-filling lander before it is components/Lander.tsx, unused now. */}
-          <NameLander sentence={site.lander.sentence} glass={site.lander.glass} variant="echo" align="left" />
-          <Now />
-        </div>
-        <Work />
-      </main>
+      <Nav current="intro" />
+      <HomeB2 />
       <Footer />
     </>
   );

@@ -1,0 +1,32 @@
+/*
+  v2 about, rendition B (AboutB.tsx): the page's field. While its main is on the page, the whole page, the rail and the
+  footer included, sits on the glass's blue, with near-black type. Scoped by `main[data-about-b]`, so no other page
+  is touched, and nothing in the rail's or footer's own files changes; they read these variables.
+
+  Contrast on #5b77e8: #0d0d0d text 5.0:1 (WCAG AA for body text); a row turned to ink, its text in the blue, the same.
+  There's no room for a gray that passes on this blue, so "muted" is a hair off the ink and hierarchy comes from size.
+*/
+html:has(main[data-about-b]) {
+  --bg: #5b77e8;
+  --ink: #0d0d0d;
+  --muted: color-mix(in srgb, #0d0d0d 90%, #5b77e8);
+  --placeholder: color-mix(in srgb, #0d0d0d 16%, #5b77e8);
+}
+
+/* Highlights: ink behind blue letters, since the glass's own tints vanish on its blue */
+html:has(main[data-about-b]) ::selection {
+  background: #0d0d0d;
+  color: #5b77e8;
+}
+
+/* The rail (IndexRail.tsx) dims what's off your path in a black at 24%, which sinks into the blue. Here it dims less,
+   so its pages stay readable; your path and the one under the pointer stay in ink. */
+html:has(main[data-about-b]) nav[aria-label="Index"] a,
+html:has(main[data-about-b]) nav[aria-label="Index"] li > span {
+  color: rgb(13 13 13 / 0.55);
+}
+
+html:has(main[data-about-b]) nav[aria-label="Index"] li:is([data-at], [data-path]) > a,
+html:has(main[data-about-b]) nav[aria-label="Index"] a:hover {
+  color: var(--ink);
+}

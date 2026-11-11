@@ -1,0 +1,11 @@
+/*
+  v2 about, round 2 (AboutB2.tsx, PictureCursor): while a row's picture stands in for the pointer, the pointer is hidden
+  everywhere, not only over the rows, so it can't flash through the hairlines between rows, a row's edge, a cross-fade,
+  or a row that scrolls under a still pointer (Noah, Nov 9: "sometimes, the cursor is visible for a split second, taking
+  me out of the experience"). The attribute is on the page only while a picture is up; it comes off when the pointer
+  reaches a row without one or leaves the index, and when the page goes.
+*/
+html[data-picture-cursor],
+html[data-picture-cursor] * {
+  cursor: none !important;
+}

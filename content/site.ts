@@ -20,13 +20,15 @@ export const site = {
   // that?"); hover the © in the footer to see days since
   launched: "2026-10-23",
   title: "Noah Oh, product designer",
-  description:
-    "Noah Oh is a product designer who helps early-stage startups scale, focused on systems and interactions.",
+  description: "Noah Oh is a product designer who tinkers and builds tools, focused on systems and interactions.", // as the line
 
   lander: {
     // Fills the first screen. " " (a no-break space) keeps words on one line.
-    sentence:
-      "noah oh is a product designer who helps early-stage startups scale, focused on systems and interactions.",
+    // Noah, Nov 11: "I want it to reflect my tinkering and tool-building nature as well as my kind of interaction and
+    // systems focal point. Maybe we even do it something like Noah Oh is a product designer who tinkers and tool-builds
+    // focused on systems and interactions"; "tool-builds" set as "builds tools". It was "…who helps early-stage
+    // startups scale, focused on systems and interactions."
+    sentence: "noah oh is a product designer who tinkers and builds tools, focused on systems and interactions.",
     // Top to bottom: the first piece sits near the top, the last near the bottom.
     glass: [
       { id: "blue", color: "#5b77e8" },
@@ -37,7 +39,7 @@ export const site = {
 
   // `section` is what the nav highlights while you're in it.
   nav: [
-    { label: "work", href: "/#work", section: "work" },
+    { label: "work", href: "/work", section: "work" }, // the Work bento since Nov 11 (v2)
     { label: "lab", href: "/lab", section: "lab" },
     { label: "about", href: "/about", section: "about" },
   ],
@@ -152,7 +154,10 @@ export const site = {
     // Rewritten to fit Noah's roles (Oct 29: "from the context you know about me, rewrite to fit my roles"): Palit's
     // founder, Kino's designer and front-end developer, BoomLoom's brand and packaging. Its opening line in Noah's words
     // (Nov 2): "I'm a product designer who dabbles in front-end development and design engineering."
-    "I'm a product designer who dabbles in front-end development and design engineering. I founded Palit, an SVSD 2026 finalist, designed and coded for Kino, and built BoomLoom Looms its first brand system and packaging. I do my best work at the messy early stage, when a team has a product but not yet a system, a brand or a story to tell about it.",
+    // Its last sentence, Noah, Nov 11: "I want to say that I do my best work within a system, and when I don't see one, I
+    // like to build one ... reword it to make it professional and elegant and clean." It was "I do my best work at the
+    // messy early stage, when a team has a product but not yet a system, a brand or a story to tell about it."
+    "I'm a product designer who dabbles in front-end development and design engineering. I founded Palit, an SVSD 2026 finalist, designed and coded for Kino, and built BoomLoom Looms its first brand system and packaging. I do my best work within a system, and where there isn't one, I build it.",
     // Where Noah is now, workshopped from their line (Nov 1): "I'm currently studying at the Cooper Union School of Art,
     // honing my eye for design, color, and composition through mixed design and photography courses."
     "I've helped teams launch products, rebuild design systems, and grow into better brands. I'm studying at the Cooper Union School of Art, where design and photography courses keep sharpening my eye for color and composition.",

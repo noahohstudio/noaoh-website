@@ -1,6 +1,6 @@
 /*
   noaoh.com design tokens
-  White page, black type, gray placeholders. One typeface, four sizes.
+  White page, black type, gray placeholders. Geist, with v2's display face for headers; five sizes, six text styles.
   The work supplies the color. See DESIGN.md.
 */
 
@@ -24,10 +24,26 @@
   /* Fine frosted grain for the lander's glass pieces */
   --glass-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='.55'/%3E%3C/svg%3E");
 
-  /* Type: Geist only, four sizes */
+  /* Type: Geist, with v2's display face for headers; five sizes since Nov 9 (the statement size, below) */
   --font: var(--font-geist), "Helvetica Neue", Arial, sans-serif;
+  /* v2's display face for headers, after Palit (Noah, Nov 8: "I am in love with the neue haas grotesk display pro light,
+     and maybe would like to change headers to reflect that"): Neue Haas Grotesk Display Pro, 45 Light, tracked -3%, as
+     Palit's wordmark. Locally it's the copy Adobe Fonts installs on this Mac (globals.css, "Display face"); for visitors
+     it comes from Noah's Adobe Fonts web project "noaoh.com" (igq6nlv, loaded in app/layout.tsx; Nov 9), family
+     "neue-haas-grotesk-display", 45 Light only (Adobe declares it at weight 400, which the 300 asked for here resolves to).
+     Geist stands in otherwise. */
+  --font-display: "NHG Display", "neue-haas-grotesk-display", var(--font);
+  --weight-display: 300;
+  /* -2%, opened a touch from Palit's -3% wordmark tracking for reading at statement and display sizes (Noah, Nov 9:
+     "The text is very close together, with little letter spacing. Should we bump it up just very slightly??") */
+  --tracking-display: -0.02em;
 
   --size-display: clamp(2.75rem, 9.7vw, 8.75rem);          /* 44 → 140. The lander fits itself to the screen */
+  /* The fifth size (Noah, Nov 9, choosing it over the display size for Home's line: "make the header slightly bigger.
+     Don't guess a value though, follow our design system"). The sizes sit on a 1.25 ratio from the body (16, 20, 25 …
+     95, the lander at 1440), and this is its 4th to 6th steps, 39 at 390px wide to 61 at 1440, for v2's one-sentence
+     leads: Home's line and About's opening sentence */
+  --size-statement: clamp(2.441rem, 1.931rem + 2.093vw, 3.815rem); /* 39 → 61 */
   --size-title: clamp(1.25rem, 1.1rem + 0.4vw, 1.5rem);    /* 20 → 24 */
   --size-body: 1rem;                                         /* 16 */
   --size-small: 0.8125rem;                                   /* 13 */
@@ -40,6 +56,7 @@
   --tracking-body: -0.01em;
 
   --leading-display: 1;
+  --leading-statement: 1.08; /* the statement size's several lines: 1 is too tight there, 1.25 too loose (Nov 9) */
   --leading-title: 1.25;
   --leading-body: 1.5;
 

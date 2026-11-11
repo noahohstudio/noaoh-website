@@ -1,0 +1,95 @@
+/*
+  v2's text styles (Noah, Nov 9: "I want consistency throughout my portfolio, and a handful of necessary text styles
+  and sizes. Whatever is similar enough, lets solve so that the site uses a handful of consistent ones"; chose
+  rendition A, everything around the work at 13, the same day). DESIGN.md, "Text styles".
+
+  Every line of text names one of these with data-text and takes all of its type from it: face, size, weight, tracking
+  and line height. Whatever sits inside it takes the same, so a card's name, its line and its year can't drift apart.
+  Within a line, only color (ink or muted) tells one part from another, never size or weight.
+
+  Six styles on the five sizes (tokens.css), with nothing guessed:
+    display    the display face at the display size: a case study's title
+    statement  the display face at the statement size: Home's line, About's contact, a case study's chapter headers
+    title      Geist medium at the title size: a section's name, a case study's headlines and lessons, a lab piece's name
+    lead       Geist regular at the title size: About's bio
+    body       Geist regular at the body size: a case study's paragraphs
+    small      Geist regular at the small size: everything around the work and the fine print. Your name and the rail,
+               the nav, every card's name, line and year (the Next card's too), the note beside a section's name,
+               Currently and Previously, About's index, a section's small header, Read more, Close, the footer; figure
+               captions, the caption under About's pictures, a case study's footnotes
+
+  On for the whole site since Nov 11, when v2 replaced the pages (TypeScope.tsx, in app/layout.tsx); the desk has no
+  data-text, and its figure captions are left alone.
+*/
+
+/* What every style shares */
+[data-type] [data-text] {
+  font-family: var(--font);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-body);
+  word-spacing: normal;
+}
+
+/* Everything inside a style takes it whole, unless it names its own */
+[data-type] [data-text] :not([data-text]) {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  word-spacing: inherit;
+}
+
+[data-type] [data-text="display"],
+[data-type] [data-text="statement"] {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+}
+
+[data-type] [data-text="display"] {
+  font-size: var(--size-display);
+  line-height: var(--leading-display);
+}
+
+[data-type] [data-text="statement"] {
+  font-size: var(--size-statement);
+  line-height: var(--leading-statement);
+  /* In whole pixels where it can, so a line set across several never shimmers as it softens (JokeLead.tsx) */
+  line-height: round(calc(var(--leading-statement) * 1em), 1px);
+}
+
+[data-type] [data-text="title"] {
+  font-size: var(--size-title);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-title);
+}
+
+[data-type] [data-text="lead"] {
+  font-size: var(--size-title);
+  line-height: var(--leading-title);
+}
+
+[data-type] [data-text="body"] {
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+}
+
+[data-type] [data-text="small"],
+/* A case study's figure captions, which StorySection.tsx draws in several places */
+[data-type] main:not([data-desk]) figcaption:not([data-text]) {
+  font-family: var(--font);
+  font-size: var(--size-small);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-body);
+  line-height: var(--leading-body);
+}
+
+/* A case study's chapter headers: the site's stage sets them at a size of their own (globals.css, "Chapter headers fit
+   the stage", 40 to 72px, off the scale) and the nav stage tracks their words apart (Display.module.css); both more
+   specific than a style, so the statement size and spacing are restated here, as specific as they need to be */
+[data-type] [data-chapter] > p[data-text="statement"]:first-child {
+  font-size: var(--size-statement);
+  word-spacing: normal;
+}

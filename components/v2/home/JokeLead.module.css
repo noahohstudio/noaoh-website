@@ -1,0 +1,55 @@
+/*
+  Home's line and its joke (JokeLead.tsx). The real line stays in place and keeps the space, made see-through while a
+  joke shows, so nothing below it moves; the joke sits over it from the same top left corner.
+*/
+
+/* The line keeps one layer of its own the whole time (Noah, Nov 9: "the "focused" line jumps slightly when
+   hovering/restoring"). Without it, the browser lifts the line onto a layer only while its blur or fade runs and drops
+   it back after, drawing the text again each time on a pixel grid that can sit a fraction off the page's; a row whose
+   baseline falls between pixels then rounds the other way and hops. Kept on its layer, the text is drawn once and
+   only blurred and faded as a whole. */
+.lead {
+  position: relative;
+  width: fit-content;
+  will-change: filter, opacity;
+  transition:
+    filter 180ms linear,
+    opacity 180ms linear;
+}
+
+/* The softest point of a swap: a little out of focus, nearly gone (Noah, Nov 9: "a little more subtle with the
+   blurs") */
+.lead[data-soft] {
+  filter: blur(2.5px);
+  opacity: 0.2;
+}
+
+.real[data-away] {
+  opacity: 0;
+}
+
+.joke {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.jokeLine {
+  display: block;
+  will-change: filter, opacity; /* the second line resolves on a layer it keeps, for the same reason */
+}
+
+/* The second line resolves in under the first, which stays sharp: as soft as a swap's softest point, over a swap's
+   length */
+@keyframes late {
+  from {
+    opacity: 0;
+    filter: blur(2.5px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .jokeLine[data-late] {
+    animation: late 360ms linear backwards;
+  }
+}

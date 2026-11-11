@@ -146,7 +146,7 @@ export function Count() {
         </span>
         <Letters text={digits} />
       </p>
-      <p className={styles.caption} data-ready={total !== null || undefined}>
+      <p className={styles.caption} data-text="small" data-ready={total !== null || undefined}>
         {total !== null && <span className="visually-hidden">{total.toLocaleString("en-US")} </span>}
         people have stopped by.
         {mine !== null && <span className={styles.muted}> You&apos;re number {mine.toLocaleString("en-US")}.</span>}

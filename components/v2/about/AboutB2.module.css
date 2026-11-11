@@ -1,0 +1,452 @@
+/*
+  v2 about, round 2 (AboutB2.tsx): one statement, a personal index and the contact, on the site's white and between the
+  stage's gutters, centered like the rest of the site. One grid runs through the page, the index's three columns (who
+  or what, kind, context), so the address starts where the kind column does. The statement and the contact are the
+  statement size in the display face, light (tokens.css, --size-statement, --font-display): the page's one
+  announcement size. Everything else is Geist at body and small size.
+
+  Motion, subtle and elevated (Noah, Nov 8): one response for everything you can act on, 220ms on a standard ease-out
+  (--out): text comes up to ink, and a row's title eases 8px right with it. The picture that stands in for the pointer
+  appears and leaves over 180ms and cross-fades in 170ms, on the same curve (AboutB2.tsx, PictureCursor). Entrances keep the site's own
+  curve (--ease). Hairlines lighter than the site's own, at 6.5% black.
+*/
+.page {
+  --cols: 3fr 2fr 5fr; /* who or what, kind, and the context taking the rest */
+  --rule: rgb(0 0 0 / 0.065);
+  --t: 220ms; /* every hover response */
+  --out: cubic-bezier(0.33, 1, 0.68, 1); /* a standard ease-out (cubic), for every hover response */
+  --respond: color var(--t) var(--out);
+  padding: calc(var(--nav-clear) + var(--space-9)) var(--gutter) 0;
+}
+
+@media (min-width: 1100px) {
+  .page {
+    padding-top: 152px;
+  }
+}
+
+/* ---------- The bio: the opening sentence and the rest as one, in content/site.ts's words ---------- */
+
+/* At the title size, the next step down from the statement (Noah, Nov 9: "we need to make the about text smaller, so
+   that it all fits nicer"), so in Geist, the display face being only for the statement and display sizes; tracked as
+   running text and set at the title's leading, on a comfortable measure */
+.statement {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 36em;
+  font-size: var(--size-title);
+  letter-spacing: var(--tracking-body);
+  line-height: var(--leading-title);
+}
+
+.statement p {
+  text-wrap: pretty;
+}
+
+/* The second paragraph a step quieter, so the first reads as the lead */
+.statement p + p {
+  color: var(--muted);
+}
+
+/* ---------- The index ---------- */
+
+.index {
+  margin-top: var(--space-10);
+}
+
+.head,
+.row {
+  display: grid;
+  grid-template-columns: var(--cols);
+  column-gap: var(--space-4);
+  align-items: baseline;
+}
+
+/* What each column is, small and gray */
+.head {
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.list {
+  position: relative;
+}
+
+.rows {
+  padding: 0;
+  list-style: none;
+}
+
+.rows > li {
+  border-bottom: 1px solid var(--rule);
+}
+
+/* At rest only the title is in ink; reached, the whole row comes up to it and the title eases 8px right */
+.row {
+  padding-block: var(--space-3);
+  color: var(--muted);
+  text-decoration: none;
+  transition: var(--respond);
+}
+
+.row:hover,
+.row:focus-visible {
+  color: var(--ink);
+}
+
+.row:focus-visible {
+  outline-offset: 2px;
+}
+
+.title {
+  color: var(--ink);
+  transition: translate var(--t) var(--out);
+}
+
+.row:hover .title,
+.row:focus-visible .title {
+  translate: 8px 0;
+}
+
+/* Children: one indent step in under their parent, as a case study's sections sit under its title in the rail, and
+   lighter: the name in gray too, the rows closer, no rule between them, so the family reads as one group. The group
+   ends with the parent's rule. They answer the pointer just as their parent does. */
+.children {
+  padding: 0 0 var(--space-2);
+  list-style: none;
+}
+
+.rows > li[data-parent] > .row {
+  padding-bottom: var(--space-2);
+}
+
+.child {
+  padding-block: var(--space-1);
+}
+
+.child .title {
+  padding-left: var(--space-3);
+  color: var(--muted);
+  transition:
+    translate var(--t) var(--out),
+    color var(--t) var(--out);
+}
+
+.child:hover .title,
+.child:focus-visible .title {
+  color: var(--ink);
+}
+
+/* The context can run to a second line; the name and kind sit level with its first */
+.context {
+  text-wrap: pretty;
+}
+
+/* The hovered row's picture as the pointer itself (AboutB2.tsx, PictureCursor). Over a row with a picture the pointer
+   is hidden; the script puts the picture's center exactly on it. It appears from 98.5% and fades in over 180ms, and
+   leaves the same way. Between pictures the new one fades in over the old in 170ms while the frame takes its shape in
+   140ms. Opacity, scale and size only. */
+.list[data-cursor] .row[data-pic] {
+  cursor: none;
+}
+
+.pointer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  pointer-events: none;
+}
+
+/* The frame is the picture's size, so its middle is the picture's middle, on the pointer; the caption hangs below it
+   and doesn't move that middle */
+.frame {
+  position: relative;
+  opacity: 0;
+  scale: 0.985;
+  translate: -50% -50%;
+  transition:
+    opacity 180ms var(--out),
+    scale 180ms var(--out);
+}
+
+.frame[data-on] {
+  opacity: 1;
+  scale: 1;
+}
+
+.picture {
+  position: relative;
+  overflow: hidden;
+}
+
+.frame[data-on][data-steady] .picture {
+  transition:
+    width 140ms var(--out),
+    height 140ms var(--out);
+}
+
+/* A print's caption: a strip of the page's white under the picture, as wide as it, the words in gray, flush with its
+   left edge. Opaque, so it reads over the rows beneath. Its words change with the picture, inside the same 170ms: the
+   old words go first (70ms), then the new ones come in (110ms, from 60ms), so two captions never sit on top of each
+   other half-read. The strip comes in with the first caption and goes when a picture has none. */
+.caption {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding-block: var(--space-2);
+  background: var(--bg);
+  color: var(--muted);
+  font-family: var(--font);
+  font-size: var(--size-small);
+  line-height: var(--leading-body);
+  animation: layer-in 170ms var(--out) both;
+}
+
+.captionText {
+  display: block;
+  animation: layer-in 110ms var(--out) 60ms both;
+}
+
+/* The caption before fades out where it was, out of the strip's flow, so the strip is always the new caption's height */
+.captionText[data-out] {
+  position: absolute;
+  top: var(--space-2);
+  left: 0;
+  right: 0;
+  animation: layer-out 70ms linear forwards;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: layer-in 170ms var(--out) both;
+}
+
+/* The one before stays whole underneath while the new one fades in over it, so the frame never thins to see-through */
+.layer[data-out] {
+  animation: none;
+}
+
+@keyframes layer-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes layer-out {
+  to {
+    opacity: 0;
+  }
+}
+
+/* With reduced motion the picture sits still in the margin right of the index, level
+   with its row (at 1440 it ends 32px from the screen's edge, as the rail starts from the other) */
+.margin {
+  position: absolute;
+  left: calc(100% + var(--space-4));
+  z-index: 2;
+  translate: 0 -50%;
+  pointer-events: none;
+}
+
+.marginPicture {
+  overflow: hidden;
+  background: var(--placeholder);
+}
+
+.marginCaption {
+  padding-top: var(--space-2);
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+@media (max-width: 1099px) {
+  .margin {
+    left: auto;
+    right: 0;
+  }
+}
+
+.marginPicture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Contact: one statement, the address under it, from the kind column ---------- */
+
+.contact {
+  display: grid;
+  grid-template-columns: var(--cols);
+  column-gap: var(--space-4);
+  padding-block: var(--space-10);
+  margin-top: var(--space-9);
+}
+
+.say,
+.email {
+  font-family: var(--font-display);
+  font-size: var(--size-statement);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-statement);
+}
+
+.say {
+  grid-column: 1 / -1;
+  text-wrap: pretty;
+}
+
+/* Each sentence starts its own line */
+.say > .line {
+  display: block;
+}
+
+.email {
+  grid-column: 2 / -1;
+  margin-top: var(--space-7);
+}
+
+.email a {
+  text-decoration: none;
+  transition: var(--respond);
+}
+
+.elsewhere {
+  grid-column: 2 / -1;
+  display: flex;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+  font-size: var(--size-small);
+}
+
+.elsewhere a,
+.elsewhere button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  text-decoration: none;
+  transition: var(--respond);
+}
+
+.elsewhere a:hover,
+.elsewhere button:hover,
+.elsewhere a:focus-visible,
+.elsewhere button:focus-visible {
+  color: var(--ink);
+}
+
+/* ---------- Coming into focus (motion.ts): text from a soft blur, pictures from faint; short and small ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .page [data-resolve] {
+    transition:
+      opacity 600ms var(--ease),
+      filter 600ms var(--ease),
+      translate 600ms var(--ease);
+    transition-delay: calc(var(--resolve-i, 0) * 40ms);
+  }
+
+  :global(html.js) .page [data-resolve]:not([data-shown]) {
+    opacity: 0;
+    filter: blur(6px);
+    translate: 0 6px;
+  }
+
+  :global(html.js) .page [data-resolve="pic"]:not([data-shown]) {
+    opacity: 0.35;
+    filter: none;
+    translate: 0 6px;
+  }
+
+  /* Already scrolled past when first seen (a reload partway down): there at once */
+  .page [data-instant],
+  .page [data-instant] .line {
+    transition: none;
+  }
+}
+
+/* ---------- The contact's lines come into focus one after another as the section shows (AboutB2.tsx) ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .line {
+    transition:
+      opacity 700ms var(--ease),
+      filter 700ms var(--ease),
+      translate 700ms var(--ease);
+    transition-delay: calc(var(--line, 0) * 90ms);
+  }
+
+  :global(html.js) .contact:not([data-shown]) .line {
+    opacity: 0;
+    filter: blur(6px);
+    translate: 0 10px;
+  }
+}
+
+/* With reduced motion, a reached row only comes up to ink */
+@media (prefers-reduced-motion: reduce) {
+  .row:hover .title,
+  .row:focus-visible .title {
+    translate: none;
+  }
+}
+
+/* ---------- Phones: each row is its name and kind, then its context ---------- */
+
+@media (max-width: 720px) {
+  .head {
+    display: none;
+  }
+
+  .rows {
+    border-top: 1px solid var(--rule);
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 2px;
+  }
+
+  .title {
+    grid-column: 1;
+  }
+
+  .kind {
+    grid-column: 2;
+    text-align: right;
+  }
+
+  .context {
+    grid-column: 1 / -1;
+    font-size: var(--size-small);
+  }
+
+  /* A child's context keeps its indent step, under its name */
+  .child .context {
+    padding-left: var(--space-3);
+  }
+
+  .contact {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: var(--space-9);
+    margin-top: var(--space-7);
+  }
+
+  .email,
+  .elsewhere {
+    grid-column: 1;
+  }
+
+  .email {
+    margin-top: var(--space-6);
+  }
+}

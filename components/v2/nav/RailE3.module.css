@@ -1,0 +1,73 @@
+/*
+  Nav E3, Carry (RailE3.tsx). E's focus as you read (1, 0.5, 0.35, 0.3 by distance). Between case studies, the
+  sections travel: the block of names lifts from under the last study and is carried to under the next, over the
+  lists' own 580ms and curve, while the study between them passes through it. Each row trades its name as the title
+  passes: the old name softens out through a 1.5px blur just before the title reaches it (from 2.5 rows away, gone a
+  whole row ahead), and the new one resolves once it has passed (from a row behind, whole by 2.5), so the title only
+  ever moves through empty space and the block re-forms under it (RailShell.tsx, lift). On landing the real names take
+  over in the same places. Other jumps (into a study from the work, out to lab, about or home, where the work list
+  folds away) resolve in place. The page fades out as the jump starts (160ms) and back in a beat after the rail has
+  landed, from 640ms (Stage.module.css). The crumb in a case study is "← back to work", and resolves as it changes.
+*/
+
+.side {
+  --glide: cubic-bezier(0.45, 0, 0.2, 1); /* the carry's own, in RailE3.tsx */
+  --lists: 580ms; /* the carry's own, in RailE3.tsx */
+}
+
+/* The focal point: each section's opacity by its distance from the one being read */
+.side .sections a {
+  color: rgb(0 0 0 / var(--o, 0.35));
+}
+
+.side .sections a:hover {
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .side .panel,
+  .side .panel[data-open] {
+    transition: grid-template-rows var(--lists) var(--glide);
+  }
+
+  .side .item {
+    transition:
+      opacity 200ms linear,
+      filter 200ms linear;
+    transition-delay: calc(var(--i) * 6ms);
+  }
+
+  .side .panel:not([data-open]) > .clip > ul > .item {
+    filter: blur(1.5px);
+  }
+
+  .side .panel[data-open] > .clip > ul > .item {
+    transition-duration: 320ms, 340ms;
+    transition-delay: calc(100ms + var(--i) * 16ms);
+  }
+
+  /* While the block is carried, it stands in for both lists' names; as it lands, the real ones are there at once */
+  .side[data-carry="flying"] [data-list="sections"] .item {
+    opacity: 0 !important;
+    transition: none !important;
+  }
+
+  .side[data-carry="landed"] [data-list="sections"] .item {
+    transition: none !important;
+  }
+
+  .side .sections a {
+    transition: color 280ms linear;
+  }
+
+  .here {
+    animation: here-in 300ms linear backwards;
+  }
+}
+
+@keyframes here-in {
+  from {
+    opacity: 0;
+    filter: blur(1.5px);
+  }
+}

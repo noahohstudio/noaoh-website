@@ -5,8 +5,10 @@ import { site } from "@/content/site";
 import { EasterEggs } from "@/components/EasterEggs";
 import { SelectionColor } from "@/components/SelectionColor";
 import { Loader } from "@/components/Loader";
-import { IndexRail } from "@/components/IndexRail";
-import { projects } from "@/content/projects";
+import { SiteRail } from "@/components/v2/nav/SiteRail";
+import { railStudies } from "@/components/v2/nav/stage";
+import { TypeScope } from "@/components/v2/type/TypeScope";
+import stage from "@/components/v2/nav/Stage.module.css";
 import { Scroll } from "@/components/Scroll";
 import "./globals.css";
 
@@ -42,6 +44,15 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={geist.variable} data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        {/* v2's display face for visitors: Neue Haas Grotesk Display Pro from Noah's Adobe Fonts web project "noaoh.com"
+            (Nov 9), family "neue-haas-grotesk-display" (tokens.css, --font-display). On Noah's Mac the installed copy
+            ("NHG Display", globals.css) comes first. */}
+        <link rel="preconnect" href="https://use.typekit.net" crossOrigin="" />
+        <link rel="preconnect" href="https://p.typekit.net" crossOrigin="" />
+        {/* eslint-disable-next-line @next/next/no-css-tags */}
+        <link rel="stylesheet" href="https://use.typekit.net/igq6nlv.css" />
+      </head>
       <body>
         {/* Runs before first paint so CSS can tell when JavaScript is available.
             Prototype: /?caps previews the whole page in capitals. */}
@@ -52,11 +63,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        {children}
+        {/* v2 since Nov 11 (Noah: "v2 replaces the site"): its six text styles everywhere (TypeScope.tsx), and the page
+            held through each of the rail's jumps (Stage.module.css) */}
+        <TypeScope>
+          <div className={stage.stage}>{children}</div>
+        </TypeScope>
         <Scroll />
         <EasterEggs />
         <SelectionColor />
-        <IndexRail studies={projects.map((p) => ({ slug: p.slug, title: p.title, soon: p.soon }))} />
+        <SiteRail studies={railStudies} />
       </body>
     </html>
   );

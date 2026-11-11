@@ -1,0 +1,213 @@
+/*
+  v2's work page, rendition A: the library bento (WorkA.tsx). The title and captions in Geist, as the live site sets
+  them, the same as the home's Selected work; the tiles on the site's twelve columns. Each tile is two rows, its picture and its caption, shared
+  across the tiles beside it (subgrid), so pictures side by side end on one line and their captions start on one.
+*/
+
+.page {
+  --rule: rgb(0 0 0 / 0.12);
+  padding: calc(var(--nav-clear) + var(--space-9)) var(--gutter) var(--space-10);
+}
+
+/* The page's title on the left, what it holds from the seventh column, on one baseline under a hairline */
+.head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  align-items: baseline;
+  margin-bottom: var(--space-7);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+/* In Geist, as the live case studies' headlines: the display face is for the statement and display sizes only (Nov 9) */
+.heading {
+  grid-column: 1 / span 6;
+  font-size: var(--size-title);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-title);
+}
+
+.sub {
+  grid-column: 7 / -1;
+  max-width: 52ch;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+/* The bento: Kino on eight columns, BoomLoom on four beside it, as tall as Kino's picture; Palit and RFC Editor on
+   six each under them */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(4, auto);
+  column-gap: var(--space-5);
+  padding: 0;
+  list-style: none;
+}
+
+.tile,
+.reveal,
+.card {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2;
+}
+
+.reveal,
+.card {
+  grid-row: 1 / -1;
+}
+
+.lead {
+  grid-column: 1 / span 8;
+  grid-row: 1 / span 2;
+  margin-bottom: var(--space-8);
+}
+
+.tall {
+  grid-column: 9 / span 4;
+  grid-row: 1 / span 2;
+  margin-bottom: var(--space-8);
+}
+
+.half {
+  grid-row: 3 / span 2;
+  grid-column: span 6;
+}
+
+.card {
+  text-decoration: none;
+}
+
+.card:focus-visible {
+  outline-offset: 6px;
+}
+
+.frame {
+  position: relative;
+  min-height: 0;
+}
+
+/* The tall tile takes the row's height from Kino's picture, and its own picture fills it */
+.tall .frame > * {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  aspect-ratio: auto !important;
+}
+
+/* Its name, one line beside it, the year or "Coming soon" at the far edge */
+.caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding-top: var(--space-3);
+}
+
+.name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  min-width: 0;
+}
+
+/* As the live work cards' captions: the name in Geist at body size, medium, its line beside it in gray */
+.title {
+  font-size: var(--size-body);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-body);
+  line-height: var(--leading-title);
+}
+
+.line {
+  color: var(--muted);
+  font-size: var(--size-body);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-body);
+  line-height: var(--leading-title);
+}
+
+.meta {
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.meta {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Resting on a case study lifts it a little, as on today's home (CardLift.tsx, Work.module.css) */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: translate var(--dur-mid) var(--ease);
+  }
+
+  .frame > * {
+    transition: box-shadow var(--dur-mid) var(--ease);
+  }
+
+  .tile[data-on] .card,
+  .card:focus-visible {
+    translate: 0 -3px;
+  }
+
+  .tile[data-on] .frame > *,
+  .card:focus-visible .frame > * {
+    box-shadow:
+      0 2px 4px rgb(0 0 0 / 0.035),
+      0 10px 24px rgb(0 0 0 / 0.045),
+      0 32px 72px rgb(0 0 0 / 0.06);
+  }
+
+  /* The title and its line come in as the site's pages do, a beat apart */
+  .heading,
+  .sub {
+    animation: var(--enter);
+  }
+
+  .sub {
+    animation-delay: var(--enter-step);
+  }
+}
+
+/* A phone: one tile after another, each picture at its own shape */
+@media (max-width: 759px) {
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-1);
+  }
+
+  .heading,
+  .sub {
+    grid-column: 1;
+  }
+
+  .bento {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .tile,
+  .reveal,
+  .card {
+    display: block;
+  }
+
+  .lead,
+  .tall {
+    margin-bottom: 0;
+  }
+
+  .tall .frame > * {
+    position: relative;
+    inset: auto;
+    height: auto;
+    aspect-ratio: 4 / 5 !important;
+  }
+}

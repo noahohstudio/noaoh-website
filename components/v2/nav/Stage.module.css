@@ -1,0 +1,20 @@
+/*
+  The page under a rail that holds it through a jump (RailShell.tsx, options.hold; the nav-e1, e2 and e3 layouts).
+  The page fades out as the jump starts and back in once the rail has mostly landed, by opacity alone, so nothing in
+  it is blurred or moved. With reduced motion it simply changes.
+*/
+
+.stage {
+  transition: opacity 300ms linear;
+}
+
+:global(html[data-stage="out"]) .stage {
+  opacity: 0;
+  transition-duration: 160ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage {
+    transition: none;
+  }
+}

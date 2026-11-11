@@ -46,7 +46,7 @@ export function StorySection({ section }: { section: Section }) {
 
   return (
     <section id={section.id} data-chapter={section.chapter ? "" : undefined}>
-      {section.chapter && <p className={styles.chapter}>{section.chapter}</p>}
+      {section.chapter && <p className={styles.chapter} data-text="statement">{section.chapter}</p>}
 
       {interactive && (
         <figure className={`${styles.figure} ${styles.interactive}`}>
@@ -129,17 +129,17 @@ export function StorySection({ section }: { section: Section }) {
       )}
 
       <div className={styles.words} data-after={visual || undefined}>
-        <p className={styles.label}>{section.label}</p>
+        <p className={styles.label} data-text="small">{section.label}</p>
         {interactive ? (
           <div className={styles.headRow}>
-            <h2 className={styles.headline}>{section.headline}</h2>
+            <h2 className={styles.headline} data-text="title">{section.headline}</h2>
             <InteractiveMark how={interactive.how} />
           </div>
         ) : (
-          <h2 className={styles.headline}>{section.headline}</h2>
+          <h2 className={styles.headline} data-text="title">{section.headline}</h2>
         )}
 
-        {section.body && <p className={styles.text}>{section.body}</p>}
+        {section.body && <p className={styles.text} data-text="body">{section.body}</p>}
 
         {more && more.length > 0 && (
           <ReadMore>

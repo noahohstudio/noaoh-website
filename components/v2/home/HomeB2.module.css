@@ -1,0 +1,299 @@
+/*
+  Home, rendition B, round 2 (HomeB2.tsx). The line in the display face, light, as Palit's wordmark (tokens.css,
+  --font-display), the one statement on the page; everything else in Geist, as the live site sets it, at the site's
+  five sizes. Selected work sits between two hairlines, its title at the top, the way into the lab at the bottom.
+*/
+
+.page {
+  --rule: rgb(0 0 0 / 0.12);
+  padding: 0 var(--gutter);
+}
+
+/* The opening: a line or two, a third of the way down, with lots of air */
+.opening {
+  display: grid;
+  gap: var(--space-7);
+  padding-top: max(calc(var(--nav-clear) + var(--space-9)), 30svh);
+  padding-bottom: var(--space-10);
+}
+
+/* The one line (Noah, Nov 9: "one liner is too small", then "make the header slightly bigger. Don't guess a value
+   though, follow our design system"): the statement size, 39 to 61px, the display face at its own tracking, about
+   three lines on a desktop */
+.lead {
+  max-width: 18em;
+  font-family: var(--font-display);
+  font-size: var(--size-statement);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-statement);
+  /* Each row on whole pixels, so no row rounds differently from the others (JokeLead.module.css) */
+  line-height: round(calc(var(--leading-statement) * 1em), 1px);
+  text-wrap: balance;
+}
+
+.now {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: var(--space-5) var(--space-8);
+  font-size: var(--size-small);
+  line-height: 1.45;
+}
+
+.now dt {
+  padding-bottom: var(--space-1);
+  color: var(--muted);
+}
+
+.now dd {
+  max-width: 38ch;
+}
+
+/* Selected work */
+
+.work {
+  padding-bottom: var(--space-10);
+}
+
+/* Its title on the left, what it holds from the seventh column, on one baseline under a hairline */
+.head {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  align-items: baseline;
+  margin-bottom: var(--space-7);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+/* In Geist, as the live case studies' headlines: the display face is for the statement and display sizes only (Nov 9) */
+.heading {
+  grid-column: 1 / span 6;
+  font-size: var(--size-title);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-title);
+}
+
+.sub {
+  grid-column: 7 / -1;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--space-5);
+  row-gap: var(--space-9);
+  padding: 0;
+  list-style: none;
+}
+
+.study {
+  grid-column: 1 / -1;
+}
+
+.lab {
+  grid-column: var(--col);
+  align-self: start;
+  margin-top: var(--drop, 0);
+}
+
+/* A case study: lifted off the page, its name and one line beside it, the year at the far edge */
+.card {
+  display: grid;
+  gap: var(--space-3);
+  text-decoration: none;
+}
+
+.card:focus-visible {
+  outline-offset: 6px;
+}
+
+.caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-4);
+}
+
+.name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+  min-width: 0;
+}
+
+/* As the live work cards' captions: the name in Geist at body size, medium, its line beside it in gray */
+.title {
+  font-size: var(--size-body);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-body);
+  line-height: var(--leading-title);
+}
+
+.line {
+  color: var(--muted);
+  font-size: var(--size-body);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-body);
+  line-height: var(--leading-title);
+}
+
+.meta {
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.meta {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A lab piece: flat on the page, with only a small "Lab" and its title */
+.box {
+  width: 100%;
+  background: var(--placeholder);
+}
+
+/* Pictures stay out of the Konami code's colors, as Media's do */
+:global(html[data-bands]) .box {
+  position: relative;
+  z-index: 61;
+}
+
+.labCaption {
+  display: flex;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+  font-size: var(--size-small);
+  line-height: 1.45;
+}
+
+.mark {
+  color: var(--muted);
+}
+
+/* The way into the whole lab, under the section's closing hairline */
+.foot {
+  margin-top: var(--space-9);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.more {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  text-decoration: none;
+}
+
+.arrow {
+  display: inline-block;
+  transition: translate var(--dur-fast) linear;
+}
+
+.more:hover .arrow,
+.more:focus-visible .arrow {
+  translate: 3px 0;
+}
+
+/* Resting on a case study lifts it a little, as on today's home (CardLift.tsx, Work.module.css) */
+@media (prefers-reduced-motion: no-preference) {
+  .card {
+    transition: translate var(--dur-mid) var(--ease);
+  }
+
+  .card > :first-child {
+    transition: box-shadow var(--dur-mid) var(--ease);
+  }
+
+  .study[data-on] .card,
+  .card:focus-visible {
+    translate: 0 -3px;
+  }
+
+  .study[data-on] .card > :first-child,
+  .card:focus-visible > :first-child {
+    box-shadow:
+      0 2px 4px rgb(0 0 0 / 0.035),
+      0 10px 24px rgb(0 0 0 / 0.045),
+      0 32px 72px rgb(0 0 0 / 0.06);
+  }
+}
+
+/* A phone: the section's title over its line, six columns, every lab piece on a row of its own */
+@media (max-width: 759px) {
+  .opening {
+    padding-top: max(calc(var(--nav-clear) + var(--space-9)), 26svh);
+    padding-bottom: var(--space-9);
+  }
+
+  .now {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .head {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-1);
+  }
+
+  .heading,
+  .sub {
+    grid-column: 1;
+  }
+
+  .list {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: var(--space-3);
+    row-gap: var(--space-8);
+  }
+
+  .lab {
+    grid-column: var(--col-phone);
+    margin-top: 0;
+  }
+
+  .foot {
+    margin-top: var(--space-8);
+  }
+}
+
+/* Motion, quick and plain. Words resolve from a soft blur: the opening as the page opens, a beat apart; the section's
+   title, the captions and the way into the lab as they come into view. Pictures keep the site's own quiet entrance
+   (Reveal, globals.css "Entrances") and are never blurred. With reduced motion, all of it is still. */
+@keyframes words {
+  from {
+    opacity: 0;
+    filter: blur(3px); /* 6px until Noah's "a little more subtle with the blurs" (Nov 9) */
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lead,
+  .now {
+    animation: words 480ms var(--ease) backwards;
+  }
+
+  .now {
+    animation-delay: var(--enter-step);
+  }
+
+  /* The section's title and its last line are words only, so they take the blur in place of the rise */
+  :global(html.js) :is(.head, .foot)[data-reveal]:not([data-shown]) {
+    opacity: 0;
+  }
+
+  :is(.head, .foot)[data-reveal][data-shown] {
+    animation: words 480ms var(--ease) backwards;
+  }
+
+  /* A caption follows its picture in, a moment behind it */
+  .item[data-shown] :is(.caption, .labCaption) {
+    animation: words 420ms var(--ease) backwards;
+    animation-delay: calc(var(--enter-step) * var(--reveal-i, 0) + 120ms);
+  }
+}

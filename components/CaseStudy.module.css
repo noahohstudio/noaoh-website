@@ -6,6 +6,10 @@
 
 .page {
   padding: calc(var(--nav-clear) + var(--space-9)) var(--gutter) 0;
+  /* The Interactive mark's card waits, unseen, to the right of its icon (InteractiveMark.module.css); on a phone that
+     ran past the screen and widened BoomLoom's page to 436px (Nov 11). Clipped here, so the page stays the screen's
+     width; sticky parts still stick */
+  overflow-x: clip;
 }
 
 .head,

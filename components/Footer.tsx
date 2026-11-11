@@ -26,6 +26,7 @@ export function Footer() {
       <div className={styles.small}>
         <p
           className={styles.since}
+          data-text="small"
           data-turn={turning || undefined}
           onPointerEnter={() => {
             setTurning(true);
@@ -40,7 +41,7 @@ export function Footer() {
             <Letters text={since} />
           </span>
         </p>
-        <p className={styles.links}>
+        <p className={styles.links} data-text="small">
           <a href={`mailto:${site.email}`}>
             <FlipText text={site.email} />
           </a>
@@ -90,7 +91,7 @@ function Hint() {
       }}
       onPointerLeave={() => setTrying(false)}
     >
-      <p className={styles.hintText}>
+      <p className={styles.hintText} data-text="small">
         <span className="visually-hidden">{ASK}</span>
         {/* Keeps the question's size, so neither the hover area nor the footer's height changes with
             the words. Set in the same letters, so it wraps exactly where the question does. */}

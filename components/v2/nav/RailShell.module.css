@@ -1,0 +1,140 @@
+/*
+  The shared rail for nav renditions C, D and E (RailShell.tsx): the site's index tree, on screens 1100px and up, with
+  no rule and no mark. Each rendition's own CSS moves it. Here: where it sits, its type and states, and lists that
+  open and close without taking room when closed.
+*/
+
+.rail {
+  display: none;
+}
+
+@media (min-width: 1100px) {
+  .rail {
+    display: block;
+  }
+}
+
+/* Top left: your name, or the way back from a case study */
+.crumb {
+  position: fixed;
+  top: var(--space-5);
+  left: var(--space-6);
+  z-index: 40;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.crumb a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.here {
+  display: inline-block;
+  color: var(--muted);
+  white-space: pre;
+}
+
+/* Down the left margin. Its top stays put, so as lists open and close, nothing above them moves and everything below
+   glides; centered, the whole index would shift with every jump */
+.side {
+  position: fixed;
+  top: max(var(--space-9), calc(50vh - 200px));
+  left: var(--space-6);
+  z-index: 40;
+  font-size: var(--size-small);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.side ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Everything off your path dims; your path stays in ink */
+.side a,
+.side li > span {
+  position: relative;
+  display: inline-block;
+  color: rgb(0 0 0 / 0.24);
+  text-decoration: none;
+  transition: color var(--dur-fast) ease;
+}
+
+.side li:is([data-at], [data-path]) > a,
+.side a:hover {
+  color: var(--ink);
+}
+
+.pages > li + li {
+  margin-top: var(--space-2);
+}
+
+/* A list under its parent: closed, it takes no room and its items are out of sight; open, its full height */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+}
+
+.panel[data-open] {
+  grid-template-rows: 1fr;
+}
+
+.clip {
+  min-height: 0;
+  overflow-x: visible;
+  overflow-y: clip;
+}
+
+.panel:not([data-open]) > .clip > ul > .item {
+  opacity: 0;
+}
+
+/* The case studies a step in from work, and the open one's sections a step in from it, at the same size */
+.side .studies {
+  padding: var(--space-1) 0 var(--space-1) var(--step, 12px);
+}
+
+.side .sections {
+  padding: var(--space-1) 0 var(--space-2) var(--step, 12px);
+}
+
+.studies > li[data-soon] > span {
+  color: rgb(0 0 0 / 0.14);
+}
+
+.sections a {
+  color: rgb(0 0 0 / 0.3);
+}
+
+/* A block of section names carried between case studies (options.carry): over the rail, out of the way of the
+   pointer and of screen readers, each row the name it leaves with and, over it, the name it lands with */
+.carrier {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+
+.carrier li {
+  position: relative;
+}
+
+.carrier [data-b] {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* With reduced motion, every state arrives at once, and only color changes */
+@media (prefers-reduced-motion: reduce) {
+  .side *,
+  .crumb * {
+    transition-property: color !important;
+    transition-delay: 0s !important;
+    animation: none !important;
+  }
+}

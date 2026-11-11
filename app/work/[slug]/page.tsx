@@ -53,8 +53,8 @@ export default async function CaseStudy({ params }: Props) {
         {/* The title, then its facts in one quiet line, each label beside its value, after Roy's (Noah kept this of
             three options, Oct 27) */}
         <header className={styles.head}>
-          <h1 className={styles.title}>{project.title}</h1>
-          <dl className={styles.slate}>
+          <h1 className={styles.title} data-text="display">{project.title}</h1>
+          <dl className={styles.slate} data-text="small">
             {project.slate.map((item) => (
               <div key={item.label}>
                 <dt>{item.label}</dt>
@@ -68,9 +68,15 @@ export default async function CaseStudy({ params }: Props) {
         <div className={styles.body}>
           <article className={styles.story}>
             <section id="impact">
-              <p className={styles.label}>Impact</p>
-              <h2 className={styles.headline}>{impact.headline}</h2>
-              <p className={styles.text}>{impact.context}</p>
+              <p className={styles.label} data-text="small">
+                Impact
+              </p>
+              <h2 className={styles.headline} data-text="title">
+                {impact.headline}
+              </h2>
+              <p className={styles.text} data-text="body">
+                {impact.context}
+              </p>
               {impact.proof.length > 0 && (
                 <ul className={styles.proof}>
                   {impact.proof.map((point, i) => (
@@ -100,8 +106,10 @@ export default async function CaseStudy({ params }: Props) {
                 owned and contributed to, a line each. The reasoning and the brief-to-launch steps wait
                 behind Read more, after Roy's. */}
             <section id="looking-back">
-              <h2 className={styles.label}>What I learned</h2>
-              <ol className={styles.rules} style={{ "--count": lessons.length } as CSSProperties}>
+              <h2 className={styles.label} data-text="small">
+                What I learned
+              </h2>
+              <ol className={styles.rules} data-text="title" style={{ "--count": lessons.length } as CSSProperties}>
                 {lessons.map((lesson, i) => (
                   <li key={lesson.rule}>
                     <span className={styles.count}>{i + 1}.</span>
@@ -150,7 +158,7 @@ export default async function CaseStudy({ params }: Props) {
 
             {project.footnote && (
               <div>
-                <p className={styles.footnote}>
+                <p className={styles.footnote} data-text="small">
                   {project.footnote.map((part, i) =>
                     typeof part === "string" ? (
                       part
@@ -170,7 +178,7 @@ export default async function CaseStudy({ params }: Props) {
           <Reveal>
             <Link href={`/work/${next.slug}`} className={styles.nextLink}>
               <Media media={next.cover} ratio={next.card} shadow controls={false} />
-              <p className={styles.nextCaption}>
+              <p className={styles.nextCaption} data-text="small">
                 <span className={styles.nextLabel}>
                   <FlipText text="Next" />
                 </span>{" "}

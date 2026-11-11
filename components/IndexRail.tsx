@@ -62,7 +62,8 @@ export function IndexRail({ studies }: { studies: Study[] }) {
     };
   }, [study, pathname]);
 
-  if (pathname.startsWith("/desk")) return null;
+  // Not on the desk, nor on the v2 workshop's nav and type renditions, which draw their own
+  if (pathname.startsWith("/desk") || /^\/workshop\/v2\/(nav|type)/.test(pathname)) return null;
 
   const go = (id: string) => (event: React.MouseEvent) => {
     event.preventDefault();

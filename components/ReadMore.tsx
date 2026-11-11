@@ -131,7 +131,7 @@ export function ReadMore({ children }: { children: ReactNode }) {
       className={styles.more}
       onToggle={(event) => setOpen(event.currentTarget.open && !event.currentTarget.dataset.closing)}
     >
-      <summary onClick={toggle}>
+      <summary onClick={toggle} data-text="small">
         <span className={styles.moreLabel}>
           <span>
             <span className="visually-hidden">{open ? "Read less" : "Read more"}</span>

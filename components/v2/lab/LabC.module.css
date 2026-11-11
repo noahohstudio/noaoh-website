@@ -1,0 +1,200 @@
+/*
+  v2 lab, rendition C (LabC.tsx): the pieces still, in three loose columns on the page's paper, with no words; one
+  opens over everything else. Between the same edges as the rest of the site; on wide screens, the stage beside the
+  index.
+*/
+
+.lab {
+  --col-gap: var(--space-6);
+  --row-gap: var(--space-7);
+  padding: calc(var(--nav-clear) + clamp(var(--space-7), 7vw, var(--space-9))) var(--gutter) var(--space-10);
+}
+
+@media (max-width: 1099px) {
+  .lab {
+    --col-gap: var(--space-5);
+    --row-gap: var(--space-6);
+  }
+}
+
+@media (max-width: 719px) {
+  .lab {
+    --col-gap: var(--space-4);
+    --row-gap: var(--space-5);
+  }
+}
+
+.grid {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--col-gap);
+}
+
+/* A column starts a little lower than its neighbor */
+.column {
+  display: grid;
+  flex: 1 1 0;
+  gap: var(--row-gap);
+  min-width: 0;
+  margin: 0;
+  padding: var(--phase, 0px) 0 0;
+  list-style: none;
+}
+
+/* With three columns, some pieces take a little less than their column and sit to one side */
+.item {
+  width: 100%;
+}
+
+@media (min-width: 720px) {
+  .item {
+    width: calc(var(--scale, 1) * 100%);
+  }
+
+  .item[data-end] {
+    margin-left: auto;
+  }
+}
+
+/* A piece is a button with no words: square corners, like the site's cards */
+.tile {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.box {
+  display: block;
+  width: 100%;
+}
+
+/* Hovered or reached with the keyboard, it rises 2px, nothing more */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .tile {
+    transition: translate var(--dur-mid) var(--ease);
+  }
+
+  .tile:hover,
+  .tile:focus-visible {
+    translate: 0 -2px;
+  }
+}
+
+/* While it's open, its spot stands empty */
+.tile[data-away] .box {
+  opacity: 0;
+}
+
+/* The open piece, over everything: the site's nav and index included (LabC.tsx moves them all) */
+.layer {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  touch-action: none;
+  overscroll-behavior: contain;
+}
+
+/* Everything behind goes soft under a wash of the page's own paper. The one blur on the page, and never on the piece. */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+}
+
+.dialog {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  outline: none;
+}
+
+/* As large as the screen allows with its words under it: at most 880px wide, and short enough to leave room above and
+   below. --ar is the piece's width over its height. */
+.figure {
+  --room: 248px;
+  width: min(880px, calc(100vw - 2 * var(--gutter)), calc((100svh - var(--room)) * var(--ar, 1)));
+  margin: 0;
+}
+
+@media (max-width: 719px) {
+  .figure {
+    --room: 196px;
+  }
+}
+
+/* The piece itself: it grows from and goes back into its tile from its top left corner. Opaque, the same gray as a
+   tile on the paper, so nothing behind shows through it. */
+.figure .frame {
+  display: block;
+  width: 100%;
+  background: color-mix(in srgb, var(--ink) 6%, var(--bg));
+  transform-origin: 0 0;
+}
+
+/* One quiet line under it, after Bruce's: the title in the display face, what it is and when on the right, then a line
+   about it. Its box starts right at the piece's bottom edge and cuts off anything above it, so the words come out from
+   under the piece (LabC.tsx, TUCK) and never show over it; to the sides and below, their soft edges show whole. */
+.meta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-5);
+  padding-top: var(--space-4);
+  clip-path: inset(0 -32px -32px -32px);
+}
+
+/* The piece's name in Geist, as the site sets a title (Nov 9: the display face is only for the statement and display
+   sizes now) */
+.title {
+  font-size: var(--size-title);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-title);
+}
+
+.kind {
+  color: var(--muted);
+  font-size: var(--size-small);
+  letter-spacing: 0;
+}
+
+.note {
+  grid-column: 1 / -1;
+  max-width: 52ch;
+  font-size: var(--size-small);
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+
+/* Close, small and quiet in the top right corner, across from the site's name */
+.close {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-6);
+  margin: calc(-1 * var(--space-2));
+  padding: var(--space-2);
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: var(--size-small);
+  letter-spacing: 0;
+  transition: color var(--dur-fast) ease;
+}
+
+.close:hover,
+.close:focus-visible {
+  color: var(--ink);
+}
+
+@media (max-width: 719px) {
+  .close {
+    top: var(--space-3);
+    right: var(--space-4);
+  }
+}

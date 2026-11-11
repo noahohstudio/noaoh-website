@@ -1,0 +1,196 @@
+/*
+  What the v2 lab renditions share (shared.tsx): a piece, the spotlight, the glass note and the edge blur.
+  Small, quiet type, so the work gets the room; the note's title is v2's display face (tokens.css, --font-display).
+*/
+
+/* A piece: a soft gray box at its own proportions, a small caption under it */
+.piece {
+  width: 100%;
+  list-style: none;
+  transition:
+    filter var(--dur-mid) var(--ease),
+    opacity var(--dur-mid) var(--ease);
+}
+
+/* With three columns, some pieces take a little less than their column, so the columns stay loose */
+@media (min-width: 720px) {
+  .piece {
+    width: calc(var(--scale, 1) * 100%);
+  }
+
+  .piece[data-end] {
+    margin-left: auto;
+  }
+}
+
+.inner {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.box {
+  background: rgb(0 0 0 / 0.06);
+}
+
+.caption {
+  font-size: var(--size-small);
+  line-height: 1.4;
+  letter-spacing: 0;
+  transition: opacity var(--dur-fast) ease;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* The spotlight, on the pieces' container: rest on a piece and the rest go soft and faint, as if behind frosted
+   glass. Its own caption steps aside for the note. It clears quickly, the moment it lets go. */
+.spotlight:not([data-active]) .piece {
+  transition-duration: var(--dur-fast);
+}
+
+.spotlight[data-active] .piece:not([data-on]) {
+  filter: blur(6px);
+  opacity: 0.4;
+}
+
+.spotlight[data-active] .piece[data-on] .caption {
+  opacity: 0;
+}
+
+/* The pieces resolve out of a soft blur as the page opens, a beat apart. They wait, unseen, until their columns are
+   set (only with JavaScript, which is what sets them). */
+:global(html.js) .spotlight:not([data-ready]) .inner {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spotlight[data-ready] .inner {
+    animation: resolve 1100ms var(--ease) backwards;
+    animation-delay: calc(80ms + var(--order, 0) * 55ms);
+  }
+}
+
+@keyframes resolve {
+  from {
+    opacity: 0;
+    filter: blur(14px);
+    translate: 0 8px;
+  }
+}
+
+/* The note on the piece in focus: frosted glass, like the nav */
+.note {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 35;
+  display: grid;
+  width: min(17rem, calc(100vw - 32px));
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-nav);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  font-size: var(--size-small);
+  line-height: 1.4;
+  letter-spacing: 0;
+  pointer-events: none;
+  opacity: 0;
+  translate: var(--x, 0px) var(--y, 0px);
+  transition:
+    opacity var(--dur-fast) ease,
+    translate 260ms var(--ease);
+}
+
+.note[data-side="left"] {
+  translate: calc(var(--x, 0px) - 100%) var(--y, 0px);
+}
+
+.note[data-on] {
+  opacity: 1;
+}
+
+/* Appears where it is, rather than flying in from where it last was */
+.note[data-entering] {
+  transition: opacity var(--dur-fast) ease;
+}
+
+/* v2's display face: light, a little tight, with room around it */
+.noteTitle {
+  margin-bottom: var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--size-title);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+  word-spacing: 0.06em; /* the display face's own word space is narrow once tracked in */
+  line-height: 1.1;
+}
+
+.noteBody {
+  padding-top: var(--space-4);
+}
+
+/* The edges: a progressive blur along the top and bottom of the screen. Four layers of frosted glass, each blurring
+   more than the last and masked closer to the edge, then a faint white veil, so a piece dissolves as it reaches the
+   edge and resolves as it comes away from it. */
+/* Over the pieces' stretch of the screen, a little wider, not out under the index */
+.edge {
+  position: fixed;
+  inset-inline: max(0px, calc(var(--gutter) - var(--space-5)));
+  z-index: 30;
+  height: clamp(72px, 13vh, 136px);
+  pointer-events: none;
+}
+
+.edge[data-edge="top"] {
+  top: 0;
+  --dir: to top;
+}
+
+.edge[data-edge="bottom"] {
+  bottom: 0;
+  --dir: to bottom;
+}
+
+.edge > i {
+  position: absolute;
+  inset: 0;
+}
+
+.edge > i:nth-child(1) {
+  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1px);
+  -webkit-mask-image: linear-gradient(var(--dir), transparent 0%, #000 25%, #000 50%, transparent 75%);
+  mask-image: linear-gradient(var(--dir), transparent 0%, #000 25%, #000 50%, transparent 75%);
+}
+
+.edge > i:nth-child(2) {
+  -webkit-backdrop-filter: blur(2.5px);
+  backdrop-filter: blur(2.5px);
+  -webkit-mask-image: linear-gradient(var(--dir), transparent 25%, #000 50%, #000 75%, transparent 100%);
+  mask-image: linear-gradient(var(--dir), transparent 25%, #000 50%, #000 75%, transparent 100%);
+}
+
+.edge > i:nth-child(3) {
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  -webkit-mask-image: linear-gradient(var(--dir), transparent 50%, #000 75%);
+  mask-image: linear-gradient(var(--dir), transparent 50%, #000 75%);
+}
+
+.edge > i:nth-child(4) {
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  -webkit-mask-image: linear-gradient(var(--dir), transparent 75%, #000 100%);
+  mask-image: linear-gradient(var(--dir), transparent 75%, #000 100%);
+}
+
+.edge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--dir), rgb(255 255 255 / 0) 20%, rgb(255 255 255 / 0.78));
+}

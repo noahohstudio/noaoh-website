@@ -90,11 +90,11 @@ export function Nav({
 
   return (
     <header ref={bar} className={styles.nav} data-nav>
-      <nav className={styles.inner} aria-label="Main">
+      <nav className={styles.inner} data-text="small" aria-label="Main">
         {/* Inside a case study, the way back out to the work, where your name sits elsewhere (Noah, Oct 29: "Can we
             make a back button for when you're inside the case studies?") */}
         {pathname.startsWith("/work/") ? (
-          <Link href="/#work" className={styles.name} aria-label="Back to the work">
+          <Link href="/work" className={styles.name} aria-label="Back to the work">
             <FlipText text="← work" />
           </Link>
         ) : (

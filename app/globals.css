@@ -123,6 +123,14 @@ html.caps body {
   transform: none;
 }
 
+/* Display face (tokens.css, --font-display): Neue Haas Grotesk Display Pro by the names Adobe Fonts installs it under, as
+   Palit does (design/brand/brand.js). Only a visitor with it installed sees it this way; the live site will load it
+   from an Adobe Fonts web project instead. */
+@font-face { font-family: "NHG Display"; font-weight: 200; src: local("Neue Haas Grotesk Display Pro 35 Extra Light"), local("NeueHaasDisplay-XLight"); }
+@font-face { font-family: "NHG Display"; font-weight: 300; src: local("Neue Haas Grotesk Display Pro 45 Light"), local("NeueHaasDisplay-Light"); }
+@font-face { font-family: "NHG Display"; font-weight: 400; src: local("Neue Haas Grotesk Display Pro 55 Roman"), local("NeueHaasDisplay-Roman"); }
+@font-face { font-family: "NHG Display"; font-weight: 500; src: local("Neue Haas Grotesk Display Pro 65 Medium"), local("NeueHaasDisplay-Mediu"); }
+
 /* Entrances. As a page opens, its first blocks rise into place a beat apart,
    small and quick, with no bounce; each page's CSS sets the order with
    --enter-step. Pictures move less: they start faint instead of from nothing
