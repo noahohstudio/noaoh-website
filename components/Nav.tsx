@@ -12,7 +12,8 @@ import styles from "./Nav.module.css";
 const HOME_SECTIONS = ["intro", "work"];
 
 // Where you are. On the home page, it's the last section whose top has passed
-// a line a third of the way down the screen; elsewhere, the page you're on.
+// the middle of the screen, so the work once it fills more of it than not, as on the rail (Noah, Nov 11: "work should
+// only open up its sections when its moreso in the viewport"); elsewhere, the page you're on.
 function useSection() {
   const pathname = usePathname();
   const [section, setSection] = useState("intro");
@@ -20,7 +21,7 @@ function useSection() {
   useEffect(() => {
     if (pathname !== "/") return;
     const pick = () => {
-      const line = window.innerHeight * 0.35;
+      const line = window.innerHeight * 0.5;
       let current = HOME_SECTIONS[0];
       for (const id of HOME_SECTIONS) {
         const top = document.getElementById(id)?.getBoundingClientRect().top;
@@ -94,7 +95,7 @@ export function Nav({
         {/* Inside a case study, the way back out to the work, where your name sits elsewhere (Noah, Oct 29: "Can we
             make a back button for when you're inside the case studies?") */}
         {pathname.startsWith("/work/") ? (
-          <Link href="/work" className={styles.name} aria-label="Back to the work">
+          <Link href="/#work" className={styles.name} aria-label="Back to the work">
             <FlipText text="← work" />
           </Link>
         ) : (

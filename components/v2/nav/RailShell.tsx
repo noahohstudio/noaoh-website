@@ -80,18 +80,21 @@ function timeAt(easing: string, progress: number) {
 }
 
 // Where a page of the rail lives, and which page a path is. On a stage (app/workshop/v2/nav-e3) every page sits under
-// its root; on the site itself (root "", app/layout.tsx since Nov 11) they're the real pages: home at /, the work at
-// /work, each case study at /work/<slug>, the lab and about
+// its root; on the site itself (root "", app/layout.tsx since Nov 11) they're the real pages: each case study at
+// /work/<slug>, the lab and about, and home and the work one page at / (Noah, Nov 11: "for now lets make noah oh and
+// work the same - selected work doesn't need its own zone"), the work being home's Selected work, at #work. So home
+// is "work" on the rail, marked with its list open only while Selected work fills most of the screen (RailShell)
 export function hrefOf(root: string, page: string, studies: RailStudy[]) {
   if (root) return `${root}/${page}`;
   if (page === "home") return "/";
+  if (page === "work") return "/#work";
   return studies.some((s) => s.slug === page) ? `/work/${page}` : `/${page}`;
 }
 
 export function pageOf(root: string, path: string, studies: RailStudy[]): string | null {
   if (root) return path.startsWith(`${root}/`) ? path.slice(root.length + 1).split("/")[0] : null;
-  if (path === "/") return "home";
-  if (path === "/work" || path === "/lab" || path === "/about") return path.slice(1);
+  if (path === "/" || path === "/work") return "work";
+  if (path === "/lab" || path === "/about") return path.slice(1);
   const slug = path.match(/^\/work\/([^/]+)\/?$/)?.[1];
   return slug && studies.some((s) => s.slug === slug) ? slug : null;
 }
@@ -134,11 +137,17 @@ export function RailShell({
 
   // Each page opens at its top. Next leaves the scroll where it was when a page's first element has no box of its
   // own, as a case study's display-face wrapper does (Display.module.css), so the stage does it, before the paint
+  // A jump to a part of a page (the work, home's #work) opens there instead
   const shown = useRef(onScreen);
+  const arriving = useRef("");
   useLayoutEffect(() => {
     if (shown.current === onScreen) return;
     shown.current = onScreen;
-    if (!location.hash) window.scrollTo({ top: 0, behavior: "instant" });
+    const hash = arriving.current;
+    arriving.current = "";
+    const part = hash ? document.getElementById(hash.slice(1)) : null;
+    if (part) part.scrollIntoView({ behavior: "instant", block: "start" });
+    else if (!location.hash) window.scrollTo({ top: 0, behavior: "instant" });
   }, [onScreen]);
 
   // Everything starts closed and opens a frame after the rail is on screen, so the first page unfolds it too
@@ -148,7 +157,34 @@ export function RailShell({
     return () => cancelAnimationFrame(frame);
   }, []);
 
-  const studiesOpen = ready && (listed(page) || Boolean(study));
+  // On the site, the work is home's Selected work (hrefOf), so at home "work" is marked and its list open only while
+  // that section fills more of the screen than not: its top above the middle (Noah, Nov 11: "work should only open up
+  // its sections when its moreso in the viewport"). On the way there, it's open if the jump is to the work (#work)
+  // and folded if to the top of home (your name)
+  const homeWork = !root && page === "work";
+  const [workInView, setWorkInView] = useState(false);
+  useEffect(() => {
+    if (root || onScreen !== "work") return;
+    let frame = 0;
+    const pick = () => {
+      frame = 0;
+      const top = document.getElementById("work")?.getBoundingClientRect().top;
+      setWorkInView(top !== undefined && top <= innerHeight * 0.5);
+    };
+    const onScroll = () => (frame ||= requestAnimationFrame(pick));
+    frame = requestAnimationFrame(pick);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [root, onScreen]);
+  const [heading, setHeading] = useState(""); // the hash a held jump is going to, as "#work"
+  const folded = homeWork && (target ? heading !== "#work" : !workInView);
+
+  const studiesOpen = ready && ((listed(page) && !folded) || Boolean(study));
   const openSlug = ready && study ? study.slug : null;
   const left = live(track.from)?.slug ?? null;
   const studiesExit = moving && !studiesOpen && (listed(track.from) || left) ? "right" : undefined;
@@ -201,9 +237,13 @@ export function RailShell({
     arriveTimer.current = 0;
   };
   const stage = (state: "out" | "in") => (document.documentElement.dataset.stage = state);
+  // The page and the part of it a jump is going to: the link's own hash, not the rail's (your name and "work" are the
+  // same page on the site, at its top and at #work)
+  const headingRef = useRef("");
   const push = (to: string) => {
     pushed.current = to;
-    router.push(href(to), { scroll: false });
+    arriving.current = headingRef.current;
+    router.push(href(to).split("#")[0] + headingRef.current, { scroll: false });
   };
 
   // The carried block (options.carry)
@@ -299,9 +339,11 @@ export function RailShell({
   };
 
   // Go to a page of the stage
-  const travel = (to: string) => {
+  const travel = (to: string, hash = "") => {
+    headingRef.current = hash;
+    setHeading(hash);
     if (!hold || reduced()) {
-      router.push(href(to));
+      router.push(href(to).split("#")[0] + hash);
       return;
     }
     if (to === page && to === screen.current) return;
@@ -368,6 +410,8 @@ export function RailShell({
   useEffect(() => {
     if (!hold) return;
     const onPop = () => {
+      headingRef.current = "";
+      arriving.current = "";
       clear();
       want.current = null;
       setTarget(null);
@@ -453,7 +497,7 @@ export function RailShell({
       const page = url.origin === location.origin && !(url.pathname === location.pathname && url.hash) ? to(url.pathname) : null;
       if (!page) return;
       event.preventDefault();
-      travelRef.current(page);
+      travelRef.current(page, url.hash);
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
@@ -465,10 +509,17 @@ export function RailShell({
   };
   // Easter egg, as the top bar has it: your name, clicked at home, ripples the lander and pops the glass
   const poke = (event: React.MouseEvent) => {
-    if (page !== "home") return;
+    if (pathname !== href("home")) return;
     event.preventDefault();
     window.scrollTo({ top: 0, behavior: "smooth" });
     window.dispatchEvent(new CustomEvent("noaoh:egg", { detail: "name" }));
+  };
+  // "work" at home on the site: glide down to Selected work (the page's own link to its #work is left to this)
+  const toWork = (event: React.MouseEvent) => {
+    const [path, hash] = href("work").split("#");
+    if (!hash || pathname !== path) return;
+    event.preventDefault();
+    document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   const row = (n: number, i: number, extra?: Record<string, number>) => ({ "--n": n, "--i": i, ...extra }) as React.CSSProperties;
 
@@ -517,8 +568,8 @@ export function RailShell({
         data-carry={carrying ?? undefined}
       >
         <ul className={cx("pages")}>
-          <li data-at={page === "work" || undefined} data-path={study ? true : undefined}>
-            <Link href={href("work")}>
+          <li data-at={(page === "work" && !folded) || undefined} data-path={study ? true : undefined}>
+            <Link href={href("work")} onClick={toWork}>
               <FlipText text="work" />
             </Link>
             <div

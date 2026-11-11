@@ -8,7 +8,8 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      <Nav current="intro" />
+      {/* Your name at the top, "work" once Selected work fills most of the screen (Nav.tsx) */}
+      <Nav />
       <HomeB2 />
       <Footer />
     </>

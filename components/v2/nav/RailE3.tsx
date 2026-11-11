@@ -10,7 +10,8 @@ import styles from "./RailE3.module.css";
 // The carry runs on the lists' own 580ms and curve (RailE3.module.css), each name gone a whole row ahead of a title
 // passing it and resolving a row behind it, over a row and a half (Noah, Nov 9: "Slightly more time? Really just to make
 // sure nothing even gives the illusion of a clash"). The page fades out over 160ms as the jump starts and arrives a beat
-// after the rail lands, from 640ms. At home the work list folds away, and in a case study the crumb is "← back to work"
+// after the rail lands, from 640ms. At home the work list folds away, and in a case study the crumb is "← back to work".
+// On the site itself home is the work for now (hrefOf, RailShell.tsx, Nov 11), so its list stays open there
 const options: RailOptions = {
   falloff: [1, 0.5, 0.35, 0.3],
   hold: { out: 160, arrive: 640 },

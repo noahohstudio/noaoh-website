@@ -39,7 +39,9 @@ export const site = {
 
   // `section` is what the nav highlights while you're in it.
   nav: [
-    { label: "work", href: "/work", section: "work" }, // the Work bento since Nov 11 (v2)
+    // Home, where the selected work is (Noah, Nov 11: "for now lets make noah oh and work the same - selected work
+    // doesn't need its own zone"); the Work bento (components/v2/work/WorkA.tsx) is set aside until it's wanted again
+    { label: "work", href: "/#work", section: "work" },
     { label: "lab", href: "/lab", section: "lab" },
     { label: "about", href: "/about", section: "about" },
   ],
