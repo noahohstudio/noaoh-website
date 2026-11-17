@@ -20,8 +20,18 @@ export type Piece = {
   context: string;
   note: string;
   video?: string; // a real piece's loop (content/site.ts `lab`)
+  webm?: string; // the same loop as WebM
+  poster?: string; // its first frame
+  still?: string; // what it rests on with reduced motion, when that isn't its poster
   src?: string; // or its image
+  tryIt?: string; // where to try it: "Try it" in its open frame
+  window?: boolean; // in a desktop window: `ratio` and `tall` are then the window's, title bar and all
+  media?: string; // the loop's or image's own ratio, when it isn't `ratio` (in a window)
 };
+
+// A desktop window's title bar, as macOS draws it over a 1280-wide page: 28px tall. The window around a piece is drawn
+// at that real scale for the recording's 1280 width (LabC.module.css, "A desktop window"), so its height over the width
+export const WINDOW_BAR = 28 / 1280;
 
 // Fourteen gray boxes at the proportions the lab's pieces come in, some a little narrower than their column so the
 // columns stay loose
@@ -56,25 +66,34 @@ export const PIECES: Piece[] = SHAPES.map(([shape, scale, end], id) => {
   };
 });
 
-// The real pieces, the live lab's seven (content/site.ts `lab`), in Noah's order, until the new lab projects are built
-// (Noah, Nov 11, choosing "The live lab's seven" for v2's lab). Each keeps its own proportions; the share of its
+// The real pieces (content/site.ts `lab`), in their order there: four since Nov 14, Flipbook Scroll, the first of the
+// new lab projects, with the three Noah kept ("other than outcome logo generator, the monograms, and dels bridge"); the
+// live lab's seven filled it from Nov 11 until then. Each keeps its own proportions; the share of its
 // column it takes and the side it sits on follow the placeholders' pattern, so the columns stay as loose.
 export const LAB_PIECES: Piece[] = site.lab
   .filter((piece) => piece.src || piece.video)
   .map((piece, id) => {
     const [w, h] = piece.ratio.split("/").map((n) => Number(n.trim()));
     const [, scale, end] = SHAPES[id % SHAPES.length];
+    // In a window, the piece is the window: its title bar adds to the height
+    const tall = h / w + (piece.window ? WINDOW_BAR : 0);
     return {
       id,
-      ratio: `${w} / ${h}`,
-      tall: h / w,
+      ratio: piece.window ? `1 / ${tall}` : `${w} / ${h}`,
+      tall,
+      window: piece.window,
+      media: `${w} / ${h}`,
       scale,
       end: Boolean(end),
       title: piece.title,
       context: piece.context,
       note: piece.note,
       video: piece.video,
+      webm: piece.webm,
+      poster: piece.poster,
+      still: piece.still,
       src: piece.src,
+      tryIt: piece.tryIt,
     };
   });
 

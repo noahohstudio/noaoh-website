@@ -77,6 +77,26 @@ function restingOf(el: Element): Rect {
 // everything else, the page and the site's nav, shrinks a little and goes soft behind frosted paper. Click anywhere
 // else, press Escape or Close, and it goes back into its spot as the page comes back. The arrow keys step to the
 // piece before or after it. It's a dialog: focus goes into it and back to the piece after.
+// A desktop window around a piece that asks for one (Noah, Nov 14: "Maybe it's shown on a surface, maybe as a desktop
+// window"): a quiet title bar with three gray dots, rounded corners and the cards' soft shadow, drawn at macOS's own
+// scale for the 1280-wide page it holds (WINDOW_BAR in shared.tsx), so it stays the same window at any size. The one
+// frame on a piece in the lab, and only where it's asked for; everything else stays square and bare.
+function Framed({ window: framed, children }: { window?: boolean; children: React.ReactNode }) {
+  if (!framed) return <>{children}</>;
+  return (
+    <span className={styles.window}>
+      <span className={styles.pane}>
+        <span className={styles.bar} aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </span>
+        {children}
+      </span>
+    </span>
+  );
+}
+
 export function LabC() {
   const cols = useColumns();
   const reduced = useReducedMotion();
@@ -337,12 +357,22 @@ export function LabC() {
                     data-away={shown === p.id || undefined}
                     onClick={() => open(p.id)}
                   >
-                    <span className={`${shared.box} ${styles.box}`} style={{ aspectRatio: p.ratio }}>
-                      <Media
-                        media={{ ratio: p.ratio, src: p.src, video: p.video, alt: "" }}
-                        sizes="(min-width: 720px) 33vw, 50vw"
-                        controls={false}
-                      />
+                    <span className={`${shared.box} ${styles.box}`} style={{ aspectRatio: p.ratio }} data-window={p.window || undefined}>
+                      <Framed window={p.window}>
+                        <Media
+                          media={{
+                            ratio: p.media ?? p.ratio,
+                            src: p.src,
+                            video: p.video,
+                            webm: p.webm,
+                            poster: p.poster,
+                            still: p.still,
+                            alt: "",
+                          }}
+                          sizes="(min-width: 720px) 33vw, 50vw"
+                          controls={false}
+                        />
+                      </Framed>
                     </span>
                   </button>
                 </Reveal>
@@ -363,14 +393,40 @@ export function LabC() {
             <div ref={backdrop} className={styles.backdrop} />
             <div ref={dialog} className={styles.dialog} role="dialog" aria-modal="true" aria-labelledby="lab-c-title" tabIndex={-1}>
               <figure ref={figure} className={styles.figure} data-keep style={{ "--ar": 1 / piece.tall } as React.CSSProperties}>
-                <span ref={frame} className={`${shared.box} ${styles.frame}`} style={{ aspectRatio: piece.ratio }}>
-                  <Media media={{ ratio: piece.ratio, src: piece.src, video: piece.video, alt: piece.title }} sizes="80vw" />
+                <span
+                  ref={frame}
+                  className={`${shared.box} ${styles.frame}`}
+                  style={{ aspectRatio: piece.ratio }}
+                  data-window={piece.window || undefined}
+                >
+                  <Framed window={piece.window}>
+                    <Media
+                      media={{
+                        ratio: piece.media ?? piece.ratio,
+                        src: piece.src,
+                        video: piece.video,
+                        webm: piece.webm,
+                        poster: piece.poster,
+                        still: piece.still,
+                        alt: piece.title,
+                      }}
+                      sizes="80vw"
+                    />
+                  </Framed>
                 </span>
                 <figcaption ref={meta} className={styles.meta}>
                   <h2 id="lab-c-title" className={styles.title} data-text="title">
                     {piece.title}
                   </h2>
-                  <p className={styles.kind} data-text="small">{piece.context}</p>
+                  <p className={styles.kind} data-text="small">
+                    <span>{piece.context}</span>
+                    {/* A way to try the piece itself, in a new tab, in the glass's blue (tokens.css, --link) */}
+                    {piece.tryIt && (
+                      <a className={styles.try} href={piece.tryIt} target="_blank" rel="noopener noreferrer">
+                        <FlipText text="Try it ↗" />
+                      </a>
+                    )}
+                  </p>
                   <p className={styles.note} data-text="small">{piece.note}</p>
                 </figcaption>
               </figure>

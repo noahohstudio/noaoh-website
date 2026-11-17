@@ -10,6 +10,16 @@
   --ink: #000000;
   --muted: #737373;        /* secondary text, 4.7:1 on white */
   --placeholder: #cfcfcf;  /* empty media, from the Figma */
+  /* A way out to try a piece: the glass's blue, in the deeper shade highlighted text takes (globals.css, "Highlights"),
+     6:1 on white. The lab's "Try it" alone (Noah, Nov 14: "maybe we can add a quick try it, which is colored so that
+     users can try clicking on it, opens a new tab") */
+  --link: color-mix(in srgb, #5b77e8 78%, black);
+  /* The project cards' lift: a very soft, low shadow on the card, never on the mockup inside it (Media.module.css), and on
+     the window a lab piece can sit in (LabC.module.css) */
+  --shadow-card:
+    0 1px 2px rgb(0 0 0 / 0.03),
+    0 6px 16px rgb(0 0 0 / 0.035),
+    0 24px 56px rgb(0 0 0 / 0.045);
 
   /* Glass: the nav. White frost with a faint cool tint */
   --glass-fill: linear-gradient(180deg, rgb(255 255 255 / 0.72), rgb(238 245 255 / 0.5));
@@ -60,7 +70,8 @@
   --leading-title: 1.25;
   --leading-body: 1.5;
 
-  /* Shape. Pictures stay square, so nothing frames the work */
+  /* Shape. Pictures stay square, so nothing frames the work; the one asked-for exception is the desktop window a lab
+     piece can sit in (LabC.module.css, Noah, Nov 14) */
   --radius-nav: 14px;
   --radius-pill: 999px;
 

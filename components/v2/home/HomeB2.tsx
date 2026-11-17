@@ -39,6 +39,11 @@ type Item = { kind: "study"; study: Study } | { kind: "lab"; piece: LabPiece; sl
 // true to bring them back: two after each case study but the last, the line about them, and the way into the lab.
 const LAB_IN_WORK = false;
 
+// Selected work's heading, its line and the hairline over them: off (Noah, Nov 11: "im not sure if the selected work
+// title, line, and caption is needed"); the rail's "work" names the section once it's on screen. The heading stays for
+// screen readers. Set to true to bring them back.
+const WORK_HEAD = false;
+
 // A case study, then (with the lab on) two lab pieces, and so on; the last case study closes the list
 const items: Item[] = studies.flatMap((study, i): Item[] => [
   { kind: "study", study },
@@ -95,16 +100,22 @@ export function HomeB2({ joke = "two" }: { joke?: JokeMode }) {
 
       <section id="work" className={styles.work} aria-labelledby="selected-work">
         <CardLift />
-        <Reveal className={styles.head}>
-          <h2 id="selected-work" className={styles.heading} data-text="title">
+        {WORK_HEAD ? (
+          <Reveal className={styles.head}>
+            <h2 id="selected-work" className={styles.heading} data-text="title">
+              Selected work
+            </h2>
+            <p className={styles.sub} data-text="small">
+              {LAB_IN_WORK
+                ? "Case studies, with experiments and side projects from the lab in between."
+                : "Case studies in product design, front-end development, packaging and visual design."}
+            </p>
+          </Reveal>
+        ) : (
+          <h2 id="selected-work" className="visually-hidden">
             Selected work
           </h2>
-          <p className={styles.sub} data-text="small">
-            {LAB_IN_WORK
-              ? "Case studies, with experiments and side projects from the lab in between."
-              : "Case studies in product design, front-end development, packaging and visual design."}
-          </p>
-        </Reveal>
+        )}
 
         <ul className={styles.list}>
           {items.map((item) =>

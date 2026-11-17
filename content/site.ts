@@ -57,6 +57,34 @@ export const site = {
   // shows beside a piece when someone hovers it.
   // Add `src` (an image) or `video` (a muted loop) to replace a placeholder.
   lab: [
+    // The lab trimmed to four (Noah, Nov 14: "Super sweet, lets add a preview card to the lab section. No interactivity
+    // yet. Lets also remove everything else from the lab section, other than outcome logo generator, the monograms, and
+    // dels bridge"). A study of the WØRKS website, The Hellp + Sombr tour poster, Carmelle Safdie and Día de los Muertos
+    // came off; their loops stay in public/lab.
+    {
+      // Built in the lab-pieces session (Nov 14), public at noahohstudio.github.io/flipbook-scroll: an endless strip of
+      // frames from moments of Noah's life that plays like a flipbook when scrolled fast enough. Its preview is the piece's
+      // own card mode, one screen refresh per video frame, so it must stay 60fps: any frame-rate change undoes the effect.
+      // It starts and ends on white; the still is for reduced motion. No interactivity yet (Noah, Nov 14). Newest first.
+      title: "Flipbook Scroll",
+      context: "Interactive piece, 2026", // [? Noah to confirm]
+      ratio: "16 / 9",
+      // Noah's own words, from the piece's About
+      note: "Lately, I've been interested in taking the moments of my life I value, and finding new ways to play with them, reliving them as I do.",
+      // Since Nov 14 its card is the whole experience, filmed start to finish, in a desktop window the site draws (Noah:
+      // "I think the overview inside our lab could be much prettier. Maybe it's shown on a surface, maybe as a desktop
+      // window"; "film the entire experience from start to finish ... send that off to the website session so that it can
+      // make it look prettier with maybe a frame"): the live page at 1280 × 720, drawn at 1.5×, 60fps, 12s, from white
+      // to white. The card-mode loop before it (flipbook-scroll.*) stays in public/lab.
+      video: "/lab/flipbook-scroll-experience.mp4",
+      webm: "/lab/flipbook-scroll-experience.webm",
+      poster: "/lab/flipbook-scroll-experience-poster.jpg",
+      still: "/lab/flipbook-scroll-experience-still.jpg",
+      window: true,
+      // "Try it" in its open frame, to the live piece in a new tab (Noah, Nov 14: "I'm curious on how we can allow users
+      // to try it if they want to. Maybe that's in the caption somewhere")
+      tryIt: "https://noahohstudio.github.io/flipbook-scroll/",
+    },
     {
       // Noah, Nov 2: "my Outcome logo generator. I love the way the icons fluidly morph into eachother when you swap between
       // the saved tabs, and I want the lab overview card to be just that - the morphing, fluid logos changing colors, as
@@ -70,52 +98,6 @@ export const site = {
       // of their own. Reach out to me if you'd like to try it."
       note: "Inspired by the circular, organic logos associated with Japanese trance DJs Minna No Kimochi, I built a web tool that fluidly mimics the style, letting anyone create exportable versions of their own. Reach out if you'd like to try it.",
       video: "/lab/outcome-logos.mp4",
-    },
-    {
-      // Right under the Outcome Web Tool, apart from Del's Bridge, so the two short, wide pieces don't read as one (Noah,
-      // Nov 2: "Let's put one right underneath the Outcome Web Tool").
-      // Noah, Nov 2: "a fully hand-coded HTML website that studies a creative agency I look up to, trying to figure out how
-      // they did their website in code using the inspect element on it. Its a front-end code deepdive in a sense ... just
-      // scrolling through the website, then scrolling through my handwritten code". The site, then its index.html as
-      // GitHub shows code, byte for byte, then back.
-      title: "A study of the WØRKS website",
-      context: "Front-end study, 2026",
-      ratio: "16 / 10",
-      note: "A fully hand-coded website studying a creative agency I look up to. Using inspect element, I worked out how they built their site in code: a front-end deep dive, in a sense.",
-      video: "/lab/wrks-study.mp4",
-    },
-    {
-      // Noah, Nov 2: "this poster series for The Hellp opening for Sombr, that was nearly picked by management. Wasn't the
-      // final choice, but I was in talks with marketing management and worked with a deadline and revisions." The four
-      // posters, two colorways by two layouts, with photos of The Hellp between them (Noah's picks, Nov 2: "Use these instead
-      // for The Hellp"), clean cuts, nothing moving ("I don't want any fades - just clear cuts").
-      title: "The Hellp + Sombr tour poster",
-      context: "Tour poster pitch",
-      ratio: "4 / 5",
-      note: "A poster series for The Hellp opening for Sombr. It wasn't management's final pick, but it came close: I was in talks with their marketing team, working to a deadline through revisions.",
-      video: "/lab/hellp-posters.mp4",
-    },
-    {
-      // Noah, Nov 2: "I also did the visual identity for a contemporary artist, Carmelle Safdie. Separate the brandmark with
-      // the blue dot in the "i", and put that over slightly blurred, grainy black and white images of crowds in gallery
-      // settings ... posters, with the shots in between. Vary the order". The mark lifted from the poster exports, the
-      // poster dot in its blue; gallery crowds from Pexels (free to use, no credit needed), black and white, blurred, grained.
-      // Clean cuts, nothing zooms or slides (Noah, Nov 2).
-      title: "Carmelle Safdie",
-      context: "Visual identity, 2026",
-      ratio: "3 / 4",
-      note: "I did the visual identity for Carmelle Safdie, a contemporary artist, along with the posters for the open studio.",
-      video: "/lab/carmelle-safdie.mp4",
-    },
-    {
-      // Noah, Nov 2: "An announcment card series i did for a Dia De Los Muertos celebration party - meant to be holistically
-      // collected and shown. Maybe it just loops in order?" The six cards from their PDFs, in reading order, cut from one
-      // to the next ("no slides either").
-      title: "Día de los Muertos",
-      context: "Announcement cards, 2026",
-      ratio: "4 / 3",
-      note: "An announcement card series I did for a Día de los Muertos celebration, meant to be collected and shown as a whole.",
-      video: "/lab/dia-de-los-muertos.mp4",
     },
     {
       // Noah, Nov 2: "monogram designs I did - maybe for the lab?"; "Monograms should only be the script monograms I designed,
@@ -140,7 +122,19 @@ export const site = {
       note: "A web experience I designed that dives deep into a story about fatherhood, loss, and objective goals. An algorithm I engineered tracks your responses and replies from a giant file of handwritten lines and scenarios. In a way, it's a locally hosted AI.",
       video: "/lab/cascadia.mp4",
     },
-  ] as { title: string; context: string; ratio: string; note: string; src?: string; video?: string }[],
+  ] as {
+    title: string;
+    context: string;
+    ratio: string;
+    note: string;
+    src?: string;
+    video?: string;
+    webm?: string;
+    poster?: string;
+    still?: string;
+    tryIt?: string; // where to try the piece itself; its open frame links there
+    window?: boolean; // shown in a desktop window the site draws around it (components/v2/lab/LabC.tsx)
+  }[],
 
   email: "hello@noaoh.com", // the site's own address, on Google mail (Noah, Nov 1: "hello@noaoh.com is my website email")
 

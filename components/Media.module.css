@@ -8,10 +8,7 @@
 /* Project cards sit just off the page: a very soft, low shadow around the
    card itself, never on the mockup inside it */
 .shadow {
-  box-shadow:
-    0 1px 2px rgb(0 0 0 / 0.03),
-    0 6px 16px rgb(0 0 0 / 0.035),
-    0 24px 56px rgb(0 0 0 / 0.045);
+  box-shadow: var(--shadow-card);
 }
 
 /* Pictures are never part of an effect. While the Konami code's colors sweep

@@ -338,16 +338,17 @@ export const projects: Project[] = [
     card: "5 / 3",
     cover: {
       ratio: "16 / 9",
-      // The hero, round 10 (case-studies/kino-workshop): round 7 with its last line reading "Vertical Network for Film
-      // Lovers" (Noah, Oct 28: "social commerce for film lovers isn't accurate. Vertical network for film lovers is much
-      // better"). Round 9: no bumps; the numbers stretch a little as they count and spring back as they land ("Like a rubber
-      // band being pulled, then let go"). Round 10 ("the phones are a little crowded - the kino brandmark seems to be cut
-      // off"): smaller phones with twice the gap, and each Home under its own status row, so the wordmark clears the
-      // corner. Made by the Kino session.
-      video: "/work/kino/video/hero-r10.mp4",
-      webm: "/work/kino/video/hero-r10.webm",
-      poster: "/work/kino/video/hero-r10-poster.jpg", // the wordmark, from the splash
-      alt: "Kino's splash gathers its dots into the wordmark; Home in four versions on iPhones, from a colorless sketch to the final; ten friends as colored dots pop into rows, arc into groups and spin; a match between two friends counts up to 86%; Interstellar with three friends' scores; then the line Vertical Network for Film Lovers",
+      // The hero, round 11 (case-studies/kino-workshop, rounds 18–20): Noah, Nov 11: "I want to revisit the Kino overview
+      // card - I want to make it a little more mature and component/screen focused". Two renditions went up; Noah took A, then:
+      // "Lets make it a little more dynamic - like our prior one, just losing the numbers going up, the groups coming together,
+      // the unnecessary animations that dont show the product. The header and kino splash was cool to include though"; then
+      // "honestly, we could lose the section with the three phones showing their work. Ship afterwards". So round 10's splash,
+      // its four versions of Home and its closing line, without the people, the match or the scores. 6.1 s. Made by the Kino
+      // session. Round 10 (hero-r10.*) stays in public/work/kino/video.
+      video: "/work/kino/video/hero-r11-a-r3.mp4",
+      webm: "/work/kino/video/hero-r11-a-r3.webm",
+      poster: "/work/kino/video/hero-r11-a-r3-poster.jpg", // the four versions, all in
+      alt: "Kino's splash gathers its dots into the wordmark; Home in four versions on iPhones, from a colorless sketch to the final; then the line Vertical Network for Film Lovers",
     },
     slate: [
       { label: "Role", value: "Designer and frontend developer: language and system" },
@@ -1261,10 +1262,14 @@ export const projects: Project[] = [
       // own markup and data (20261015-2219). Round 6 (a fixed frame, cuts) misread Noah's note and went back. Round 7 ("I'd
       // rather just have them appear whole ... we could lean into it more"): every component fades in whole, never revealed
       // edge by edge, and round 5's eased motion and camera drift return, softer and longer.
-      video: "/work/rfc/video/rfc-card-r7.mp4",
-      webm: "/work/rfc/video/rfc-card-r7.webm",
-      poster: "/work/rfc/video/rfc-card-r7-poster.jpg",
-      alt: "The RFC Editor redesign's wordmark breaks apart into its design system: era dots, status marks, chips and type glide into a legend, a search field and an RFC row, which resolve into a search dropdown, an era banner and an RFC header card, before columns of the archive's real lists stream past and dissolve back into the wordmark",
+      // Round 8, a still placeholder for a while (Noah, Nov 11: "not liking the RFC overview card - can we have a static
+      // placeholder for a bit instead? Maybe the dots change colors within their positions - no movement"): round 7's
+      // wordmark frame, nothing moving; two dots at a time, never side by side, trade colors in a 500ms crossfade every
+      // 1.6s, three trades out and three back, 9.6s round. Drawn by scripts/rfc-card-r8 over rfc-card-r7-poster.jpg.
+      video: "/work/rfc/video/rfc-card-r8.mp4",
+      webm: "/work/rfc/video/rfc-card-r8.webm",
+      poster: "/work/rfc/video/rfc-card-r8-poster.jpg",
+      alt: "The RFC Editor wordmark: six colored dots beside the name, two at a time trading colors in place",
     },
     slate: [
       { label: "Role", value: "[Product designer]" },

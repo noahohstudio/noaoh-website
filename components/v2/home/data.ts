@@ -40,8 +40,8 @@ export const studies: Study[] = projects.map((p) => ({
 
 export type LabPiece = { key: string; title: string; line: string; ratio: string; video?: string; src?: string };
 
-// The live lab's pieces, until the new lab projects are built (Noah, Nov 11, choosing "The live lab's seven" for v2's
-// lab): the first six in Noah's order, two after each case study but the last; the whole lab has all seven
+// The lab's pieces (content/site.ts `lab`, four since Nov 14), for between the case studies once LAB_IN_WORK is back
+// on (HomeB2.tsx): up to six, two after each case study but the last
 export const lab: LabPiece[] = site.lab
   .filter((piece) => piece.src || piece.video)
   .slice(0, 6)

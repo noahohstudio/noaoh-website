@@ -71,6 +71,54 @@
   width: 100%;
 }
 
+/* A desktop window around a piece that asks for one (LabC.tsx, Framed; Noah, Nov 14: "Maybe it's shown on a surface,
+   maybe as a desktop window"). Drawn at macOS's own scale for the 1280-wide page inside it, so it's the same window at
+   any size: a 28px title bar (WINDOW_BAR in shared.tsx), three 12px dots 8px apart, centered in its height, and 10px
+   corners. The bar is a tile's gray, the dots the site's placeholder gray, never traffic-light colors; a hairline of
+   the same gray and the cards' soft shadow (--shadow-card) set it off the white page. It sits whole in its box, so the
+   box's gray gives way to the page */
+.window {
+  container-type: inline-size;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pane {
+  --px: calc(100cqw / 1280);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: calc(10 * var(--px));
+  background: var(--bg);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--ink) 6%, transparent),
+    var(--shadow-card);
+}
+
+.bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: calc(8 * var(--px));
+  height: calc(28 * var(--px));
+  padding-inline: calc(8 * var(--px));
+  background: color-mix(in srgb, var(--ink) 6%, var(--bg));
+}
+
+.bar > i {
+  width: calc(12 * var(--px));
+  height: calc(12 * var(--px));
+  border-radius: 50%;
+  background: var(--placeholder);
+}
+
+.box[data-window],
+.figure .frame[data-window] {
+  background: none;
+}
+
 /* Hovered or reached with the keyboard, it rises 2px, nothing more */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .tile {
@@ -159,9 +207,20 @@
 }
 
 .kind {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  column-gap: var(--space-4);
   color: var(--muted);
   font-size: var(--size-small);
   letter-spacing: 0;
+}
+
+/* "Try it", after what it is and when, in the same size and weight: only its color sets it apart (Noah, Nov 14:
+   "colored so that users can try clicking on it"). Under the context when the line runs out of room */
+.try {
+  color: var(--link);
+  text-decoration: none;
 }
 
 .note {
