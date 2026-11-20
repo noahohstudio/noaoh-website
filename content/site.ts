@@ -57,6 +57,31 @@ export const site = {
   // shows beside a piece when someone hovers it.
   // Add `src` (an image) or `video` (a muted loop) to replace a placeholder.
   lab: [
+    {
+      // From the lab-pieces sandbox's visual-language work for a producer Noah works with (Nov 16). Noah asked for "a screen
+      // recording of yourself exploring the modules, then maybe 2 interesting parts ... They should fade out and fade in when
+      // you're done with each. For this no cursor should be visible, and the glow could be slightly stronger. This is for the
+      // lab page, titled something that relates to a hardware opacity study"; then "First one is enough" of the module
+      // explorations, and "Yes, send it". A speaker module through thin light-gray plastic, a heat-colored light moving
+      // under it, then the shield can and the speaker wires up close. Since Nov 17 brighter so it reads at tile size (Noah:
+      // "make the film brighter so it reads at tile size, background should be near white"): a #fbfbfb surface, each view
+      // dissolving into the next over 0.8s and the last back into the first, so it never goes blank; 13.5s.
+      // 60fps, silent, nothing of the producer's track; no live link, since the live pages use that private track.
+      // Newest first.
+      // Noah, Nov 17, seeing it in the lab: "caption is far too long, and title should be a little more specific and
+      // contextual". Title and note are Noah's picks; the files keep their first name
+      title: "Speaker Module Opacity Study",
+      context: "Visual study, 2026", // [? Noah to confirm]
+      ratio: "16 / 9",
+      note: "An x-ray study of a speaker module, for a producer's visual language.",
+      // Later, a link to the producer's case study once it exists (Noah, Nov 17: "Lets link the lab to the case study later,
+      // since it was experimentation we conducted. this will be informative towards the case study itself too"): the
+      // producer's website, visual language and branding, starting from the Unmute button
+      video: "/lab/hardware-opacity-study.mp4",
+      webm: "/lab/hardware-opacity-study.webm",
+      poster: "/lab/hardware-opacity-study-poster.jpg",
+      still: "/lab/hardware-opacity-study-still.jpg",
+    },
     // The lab trimmed to four (Noah, Nov 14: "Super sweet, lets add a preview card to the lab section. No interactivity
     // yet. Lets also remove everything else from the lab section, other than outcome logo generator, the monograms, and
     // dels bridge"). A study of the WØRKS website, The Hellp + Sombr tour poster, Carmelle Safdie and Día de los Muertos
@@ -120,7 +145,13 @@ export const site = {
       context: "Interactive story, 2026",
       ratio: "16 / 10",
       note: "A web experience I designed that dives deep into a story about fatherhood, loss, and objective goals. An algorithm I engineered tracks your responses and replies from a giant file of handwritten lines and scenarios. In a way, it's a locally hosted AI.",
-      video: "/lab/cascadia.mp4",
+      // Since Nov 17 the intro is gone (Noah: "could dels bridge lose the intro hero section? Just loop it with input and
+      // response"): the story page with its empty prompt, the typed "get out and walk to the booth", the reply, then the
+      // reply fades from the text column and the prompt fades back in, the portrait and bar staying put. 9.1s at 60fps,
+      // cut from the old loop (cascadia.*, kept) by scripts/dels-bridge-loop/build.sh
+      video: "/lab/dels-bridge-loop.mp4",
+      webm: "/lab/dels-bridge-loop.webm",
+      poster: "/lab/dels-bridge-loop-poster.jpg",
     },
   ] as {
     title: string;

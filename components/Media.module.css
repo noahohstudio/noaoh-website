@@ -31,6 +31,12 @@
   object-fit: cover;
 }
 
+/* Once a loop plays it covers its box whole, so the gray waiting behind it goes: at a fraction of a pixel's offset, the
+   browser draws the video a hair short of its edge and the gray showed there as a line (the lab's Monograms, Nov 17) */
+.media:has(> video[data-playing]) {
+  background-color: transparent;
+}
+
 /* A transparent piece sits on the page itself, whole: no gray behind it,
    never cropped */
 .clear {

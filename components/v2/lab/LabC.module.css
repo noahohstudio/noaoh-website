@@ -67,8 +67,17 @@
 }
 
 .box {
+  --corner: var(--radius-lab);
   display: block;
   width: 100%;
+}
+
+/* Every lab piece's corners, rounded just slightly (Noah, Nov 17: "could we round the edges on all lab pieces, just
+   slightly?"; tokens.css): the tile, and a little more once it's open. Clipped with clip-path, which takes a playing
+   video's corners in every browser. A piece in a window rounds the window instead, so its shadow isn't cut */
+.box:not([data-window]),
+.figure .frame:not([data-window]) {
+  clip-path: inset(0 round var(--corner));
 }
 
 /* A desktop window around a piece that asks for one (LabC.tsx, Framed; Noah, Nov 14: "Maybe it's shown on a surface,
@@ -90,7 +99,8 @@
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  border-radius: calc(10 * var(--px));
+  isolation: isolate;
+  border-radius: max(calc(10 * var(--px)), var(--corner, 0px));
   background: var(--bg);
   box-shadow:
     0 0 0 1px color-mix(in srgb, var(--ink) 6%, transparent),
@@ -129,6 +139,11 @@
   .tile:focus-visible {
     translate: 0 -2px;
   }
+}
+
+/* A tile's gray waits only until its loop plays, so no sliver of it shows at the loop's edge (Media.module.css) */
+.tile .box:has(video[data-playing]) {
+  background: none;
 }
 
 /* While it's open, its spot stands empty */
@@ -179,6 +194,7 @@
 /* The piece itself: it grows from and goes back into its tile from its top left corner. Opaque, the same gray as a
    tile on the paper, so nothing behind shows through it. */
 .figure .frame {
+  --corner: var(--radius-lab-open);
   display: block;
   width: 100%;
   background: color-mix(in srgb, var(--ink) 6%, var(--bg));

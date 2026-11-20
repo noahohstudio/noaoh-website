@@ -27,7 +27,9 @@ export function Media({
   const set = (ext: string) => media.widths?.map((w) => `${media.src}-${w}.${ext} ${w}w`).join(", ");
   const loop = Boolean(media.video || media.mov);
   const still = loop && media.still;
-  const className = [styles.media, shadow && styles.shadow, media.transparent && styles.clear].filter(Boolean).join(" ");
+  const className = [styles.media, (shadow || media.shadow) && styles.shadow, media.transparent && styles.clear]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <div

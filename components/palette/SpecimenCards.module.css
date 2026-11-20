@@ -1,0 +1,149 @@
+/* Palit's specimen cards, clicked open. The loop's board is 1280 x 720: a card at rest is 440 x 290 (v3's card, 880 x 580,
+   at half), two by two, 40 apart, at (180, 50), (660, 50), (180, 380) and (660, 380); open, it's 880 x 580 at (200, 70).
+   Every length here is a share of that board, so it reads the same at every width (cqw for the shadows and the blur). */
+.board {
+  --spring: linear(0, 0.0229, 0.079, 0.1535, 0.2365, 0.3214, 0.4037, 0.481, 0.5518, 0.6156, 0.6721, 0.7217, 0.7649, 0.8021,
+    0.834, 0.8612, 0.8843, 0.9038, 0.9202, 0.934, 0.9456, 0.9552, 0.9632, 0.9699, 0.9754, 0.9799, 0.9837, 0.9868, 0.9894, 0.9915,
+    0.9932, 0.9947, 0.9958, 0.9968, 0.9976, 0.9982, 0.9987, 0.9991, 0.9995, 0.9998, 1);
+  --in: 660ms;
+  --out: 580ms;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  container-type: inline-size;
+  background: #fff;
+  overflow: hidden;
+}
+
+.grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.spec {
+  position: absolute;
+  z-index: 1;
+  left: var(--x);
+  top: var(--y);
+  width: 34.375%;
+  height: 40.2778%;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: #fff;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.16),
+    0 0.47cqw 1.4cqw rgba(0, 0, 0, 0.06);
+  transition:
+    left var(--out) var(--spring),
+    top var(--out) var(--spring),
+    width var(--out) var(--spring),
+    height var(--out) var(--spring),
+    box-shadow var(--out) var(--spring),
+    transform 180ms ease-out,
+    z-index 0s linear var(--out);
+}
+
+.spec[data-at="0"] { --x: 14.0625%; --y: 6.9444%; }
+.spec[data-at="1"] { --x: 51.5625%; --y: 6.9444%; }
+.spec[data-at="2"] { --x: 14.0625%; --y: 52.7778%; }
+.spec[data-at="3"] { --x: 51.5625%; --y: 52.7778%; }
+
+.spec picture,
+.spec img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.spec img {
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .spec:not([data-open]):hover {
+    transform: translateY(-0.16cqw);
+    box-shadow:
+      0 0 0 0.5px rgba(0, 0, 0, 0.18),
+      0 0.94cqw 2.2cqw rgba(0, 0, 0, 0.09);
+  }
+}
+
+.spec:focus-visible {
+  outline: 2px solid #1d1d1f;
+  outline-offset: 4px;
+}
+
+.spec[data-open] {
+  left: 15.625%;
+  top: 9.7222%;
+  width: 68.75%;
+  height: 80.5556%;
+  z-index: 20;
+  cursor: default;
+  transform: none;
+  box-shadow:
+    0 0 0 0.5px rgba(0, 0, 0, 0.18),
+    0 2.03cqw 5cqw rgba(0, 0, 0, 0.22);
+  transition:
+    left var(--in) var(--spring),
+    top var(--in) var(--spring),
+    width var(--in) var(--spring),
+    height var(--in) var(--spring),
+    box-shadow var(--in) var(--spring),
+    transform 180ms ease-out,
+    z-index 0s;
+}
+
+/* The card's own ×, where v3 draws it at the card's top right */
+.x {
+  position: absolute;
+  left: 93.9%;
+  top: 2.5%;
+  width: 4.2%;
+  height: 6.3%;
+  cursor: pointer;
+  display: none;
+}
+
+.spec[data-open] .x {
+  display: block;
+}
+
+/* Behind an open card: the board blurs softly and dims a touch (Noah asked for this; the rest of the page is untouched) */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: rgba(28, 28, 30, 0);
+  -webkit-backdrop-filter: blur(0);
+  backdrop-filter: blur(0);
+  pointer-events: none;
+  transition:
+    background var(--out) var(--spring),
+    backdrop-filter var(--out) var(--spring),
+    -webkit-backdrop-filter var(--out) var(--spring);
+}
+
+.scrim[data-on] {
+  background: rgba(28, 28, 30, 0.08);
+  -webkit-backdrop-filter: blur(0.78cqw);
+  backdrop-filter: blur(0.78cqw);
+  pointer-events: auto;
+  transition:
+    background var(--in) var(--spring),
+    backdrop-filter var(--in) var(--spring),
+    -webkit-backdrop-filter var(--in) var(--spring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board {
+    --in: 1ms;
+    --out: 1ms;
+  }
+  .spec,
+  .spec[data-open] {
+    transition-duration: 1ms;
+  }
+}

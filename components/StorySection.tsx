@@ -6,6 +6,8 @@ import { InteractiveMark } from "./InteractiveMark";
 import { ZineBook } from "./boomloom/ZineBook";
 import { GlyphViewer } from "./boomloom/GlyphViewer";
 import { BeforeBoard } from "./boomloom/BeforeBoard";
+import { DeckStage } from "./palette/DeckStage";
+import { SpecimenCards } from "./palette/SpecimenCards";
 import { TurnDot } from "./TurnDot";
 import { RowControls } from "./RowControls";
 import styles from "./CaseStudy.module.css";
@@ -54,9 +56,13 @@ export function StorySection({ section }: { section: Section }) {
             <ZineBook spreads={interactive.spreads} />
           ) : interactive.kind === "glyphs" ? (
             <GlyphViewer font={interactive.font} construction={interactive.construction} />
-          ) : (
+          ) : interactive.kind === "deck" ? (
+            <DeckStage slides={interactive.slides} widths={interactive.widths} label={interactive.label} />
+          ) : interactive.kind === "specimens" ? (
+            <SpecimenCards cards={interactive.cards} widths={interactive.widths} />
+          ) : interactive.kind === "board" ? (
             <BeforeBoard pieces={interactive.pieces} />
-          )}
+          ) : null}
         </figure>
       )}
 

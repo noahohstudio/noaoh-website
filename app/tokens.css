@@ -70,10 +70,14 @@
   --leading-title: 1.25;
   --leading-body: 1.5;
 
-  /* Shape. Pictures stay square, so nothing frames the work; the one asked-for exception is the desktop window a lab
-     piece can sit in (LabC.module.css, Noah, Nov 14) */
+  /* Shape. Pictures stay square, so nothing frames the work; the asked-for exceptions are the lab's: the desktop window
+     a piece can sit in (Noah, Nov 14), and every lab piece's corners, rounded just slightly (Noah, Nov 17: "could we
+     round the edges on all lab pieces, just slightly?"), on the spacing scale, a little more once a piece is open
+     (LabC.module.css). A case study's pictures stay square */
   --radius-nav: 14px;
   --radius-pill: 999px;
+  --radius-lab: var(--space-1);
+  --radius-lab-open: var(--space-2);
 
   /* Space: 4px base */
   --space-1: 4px;
