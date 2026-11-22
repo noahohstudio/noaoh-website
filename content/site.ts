@@ -184,7 +184,7 @@ export const site = {
     // Its last sentence, Noah, Nov 11: "I want to say that I do my best work within a system, and when I don't see one, I
     // like to build one ... reword it to make it professional and elegant and clean." It was "I do my best work at the
     // messy early stage, when a team has a product but not yet a system, a brand or a story to tell about it."
-    "I'm a product designer who dabbles in front-end development and design engineering. I founded Palit, an SVSD 2026 finalist, designed and coded for Kino, and built BoomLoom Looms its first brand system and packaging. I do my best work within a system, and where there isn't one, I build it.",
+    "I'm a product designer who dabbles in front-end development and design engineering. I founded Palit, an SVSD 2026 finalist, designed and coded for Kino, and built BoomLoom its first brand system and packaging. I do my best work within a system, and where there isn't one, I build it.",
     // Where Noah is now, workshopped from their line (Nov 1): "I'm currently studying at the Cooper Union School of Art,
     // honing my eye for design, color, and composition through mixed design and photography courses."
     "I've helped teams launch products, rebuild design systems, and grow into better brands. I'm studying at the Cooper Union School of Art, where design and photography courses keep sharpening my eye for color and composition.",
@@ -205,7 +205,7 @@ export const site = {
   ] as { caption: string; ratio: string; src?: string }[],
 
   experience: [
-    { years: "2026–now", org: "BoomLoom Looms", role: "Visual & Packaging Designer" },
+    { years: "2026–now", org: "BoomLoom", role: "Visual & Packaging Designer" }, // not BoomLoom Looms (Noah, Nov 21)
     { years: "[Year]", org: "[Company]", role: "[Role]" },
   ],
 

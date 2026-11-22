@@ -1518,8 +1518,10 @@ export const projects: Project[] = [
       ] satisfies Project[]),
   {
     // Written from the BoomLoom copy and Noah's answers; every fact as written there. [?] is still open.
-    slug: "boom-loom-looms",
-    title: "BoomLoom Looms",
+    // BoomLoom, not BoomLoom Looms, everywhere (Noah, Nov 21: "Boomloom Looms should be reworded just to Boomloom, on all
+    // fronts"; "BoomLoom"), the address too: /work/boom-loom-looms redirects here (next.config.ts)
+    slug: "boomloom",
+    title: "BoomLoom",
     summary: "Analog product design for a small art-tool company.",
     shape: "product",
     discipline: "Packaging + visual designer, product strategy", // the card's line, Noah's words (Oct 29)

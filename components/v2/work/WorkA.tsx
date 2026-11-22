@@ -19,11 +19,11 @@ type Size = "lead" | "tall" | "half";
 
 // BoomLoom's tall tile can't be its card: the wordmark loop is wide, and a tall crop cuts the wordmark. It's the
 // case study's own photo of the manual instead, the 4 : 5 one, read from its page so there's one source.
-const manual = projects.find((p) => p.slug === "boom-loom-looms")?.story.find((s) => s.id === "manual")?.media?.[0];
+const manual = projects.find((p) => p.slug === "boomloom")?.story.find((s) => s.id === "manual")?.media?.[0];
 
 const TILES: Record<string, { size: Size; ratio?: string; media?: MediaType }> = {
   kino: { size: "lead", ratio: "16 / 10" },
-  "boom-loom-looms": { size: "tall", media: manual },
+  boomloom: { size: "tall", media: manual },
   palette: { size: "half", ratio: "16 / 9" },
   rfc: { size: "half", ratio: "16 / 9" },
 };

@@ -95,12 +95,12 @@ export const rows: Row[] = [
   },
   {
     id: "boomloom",
-    title: project("boom-loom-looms")?.title ?? "BoomLoom Looms",
+    title: project("boomloom")?.title ?? "BoomLoom",
     role: "Visual and packaging designer",
     context: "Art-tool company",
-    year: project("boom-loom-looms")?.year ?? "2026",
-    href: live("boom-loom-looms"),
-    pics: card("boom-loom-looms"),
+    year: project("boomloom")?.year ?? "2026",
+    href: live("boomloom"),
+    pics: card("boomloom"),
   },
   {
     id: "rfc",
