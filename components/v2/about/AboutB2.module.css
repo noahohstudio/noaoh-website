@@ -19,7 +19,8 @@
   padding: calc(var(--nav-clear) + var(--space-9)) var(--gutter) 0;
 }
 
-@media (min-width: 1100px) {
+/* With the rail, no top bar to clear (globals.css, "The rail and the stage") */
+@media (min-width: 760px) {
   .page {
     padding-top: 152px;
   }

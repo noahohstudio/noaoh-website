@@ -224,16 +224,16 @@ html[data-hl="yellow"] {
   color: var(--hl-ink);
 }
 
-/* The index and the stage (Noah, Oct 29: "I approve of the index, lets integrate that as the standard"; from the
-   formatting workshop, option D): on screens 1100px and up, the index runs down the left (IndexRail.tsx) in place of the
-   top bar, and everything is centered on one stage, 1040px at most: the page's gutter grows until what's between them
-   is the stage, leaving the index at least 200px, so the lander, the work, a case study's pictures and the footer all
-   sit inside it, and a case study's words keep their 680px column within. Not on the desk's own pages. */
-@media (min-width: 1100px) {
+/* The rail and the stage (Noah, Oct 29: "I approve of the index, lets integrate that as the standard"; from the
+   formatting workshop, option D): the rail runs down the left (SiteRail.tsx) in place of the top bar, and a case
+   study's words keep their 680px column. Not on the desk's own pages.
+   Everywhere but phones (Noah, Nov 24: "I don't want the top bar to show unless absolutely necessary ... Maybe at
+   smaller sizes we shrink everything but still have the sidebar there ... I don't want smaller screens to experience
+   the top navbar unless absolutely necessary, like on phone"): from 760px, where the phone layout ends, not 1100px as
+   it was. */
+@media (min-width: 760px) {
   body:not(:has(main[data-desk])) {
-    --stage: 1040px;
     --column: 680px;
-    --gutter: max(200px, calc((100vw - var(--stage)) / 2));
   }
 
   body:not(:has(main[data-desk])) [data-nav] {
@@ -243,5 +243,26 @@ html[data-hl="yellow"] {
   /* Chapter headers fit the stage */
   body:not(:has(main[data-desk])) [data-chapter] > p:first-child {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
+  }
+}
+
+/* From 1100px everything is centered on one stage, 1040px at most: the page's gutter grows until what's between them
+   is the stage, leaving the rail its room, so the lander, the work, a case study's pictures and the footer all sit
+   inside it */
+@media (min-width: 1100px) {
+  body:not(:has(main[data-desk])) {
+    --stage: 1040px;
+    --gutter: max(var(--rail-room), calc((100vw - var(--stage)) / 2));
+  }
+}
+
+/* Below that the page moves over beside the rail rather than squeezing between two rail-wide gutters: it keeps the
+   stage it has at 1100px (700px) and slides right as the window narrows, until its right gutter is the usual edge, then
+   shrinks with the window, always starting where the rail's room ends. The body's padding takes up the difference, so
+   every page's own gutter rule holds */
+@media (min-width: 760px) and (max-width: 1099px) {
+  body:not(:has(main[data-desk])) {
+    --gutter: max(calc(100vw - var(--rail-room) - (1100px - 2 * var(--rail-room))), var(--gutter-edge));
+    padding-left: calc(var(--rail-room) - var(--gutter));
   }
 }

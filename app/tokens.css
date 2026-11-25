@@ -92,7 +92,9 @@
   --space-10: 128px;
 
   /* Layout */
-  --gutter: clamp(16px, 3.6vw, 64px);       /* 52px at 1440, the lander's edge */
+  --gutter-edge: clamp(16px, 3.6vw, 64px);  /* 52px at 1440, the lander's edge */
+  --gutter: var(--gutter-edge);             /* the page's gutter; beside the rail it grows (globals.css, "The rail and the stage") */
+  --rail-room: 200px;                       /* what the rail keeps clear down the left: its names reach 191px */
   --column: clamp(785px, 54.5vw, 1000px);   /* the case study text column, 785px at 1440 */
   --nav-h: 36px;
   --nav-top: 0px;
