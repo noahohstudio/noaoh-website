@@ -6,6 +6,7 @@ import { EasterEggs } from "@/components/EasterEggs";
 import { SelectionColor } from "@/components/SelectionColor";
 import { Loader } from "@/components/Loader";
 import { SiteRail } from "@/components/v2/nav/SiteRail";
+import { SoonCursor } from "@/components/SoonCursor";
 import { railStudies } from "@/components/v2/nav/stage";
 import { TypeScope } from "@/components/v2/type/TypeScope";
 import stage from "@/components/v2/nav/Stage.module.css";
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <EasterEggs />
         <SelectionColor />
         <SiteRail studies={railStudies} />
+        <SoonCursor />
       </body>
     </html>
   );

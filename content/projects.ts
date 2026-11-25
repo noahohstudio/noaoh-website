@@ -106,6 +106,10 @@ export type Project = {
   year: string;
   card: string; // card shape on the home page; cards span the lander's width, heights vary a little around 16:9
   soon?: true; // not ready yet: its card says "Coming soon" and leads nowhere, and it has no page
+  // Shown, but not open yet: everywhere a visitor sees it, it's as one coming soon, and the pointer turns into "soon" on
+  // it (SoonCursor.tsx). Its page stays on the local server only, for the desk; a production build has none.
+  locked?: true;
+  parked?: true; // off the site for now: its entry and files stay here for when it comes back
   cover: Media;
   slate: { label: string; value: string }[]; // Role, Team, Timeline, and one that fits
   impact: { headline: string; context: string; proof: string[]; more?: Note[] }; // `more`: what the hero can't say
@@ -337,7 +341,7 @@ const still = (name: string, widths: number[], media: Omit<Media, "src" | "width
   ...media,
 });
 
-export const projects: Project[] = [
+const everyProject: Project[] = [
   // In the order the home page shows them (Noah, Nov 18: "Let's reorder so that Palit is at the top, then Kino, then
   // Gouache, then Boomloomlooms."; before that Kino first and BoomLoom after it, Oct 28); the ones still to come last
   {
@@ -367,24 +371,44 @@ export const projects: Project[] = [
       alt: "Palit's wordmark, a rust-colored card beside the name, slides into a fan of colors; the fan spins once through every hue and comes back to Tenmoku rust, and the card slides back beside the name",
     },
     slate: [
-      { label: "Role", value: "[? Founder, or product design and creative direction]" },
-      { label: "Team", value: "[? Daeun Chung and me, or our roles]" },
+      // Noah, Nov 24: "Roles, I want to do founder and product designer, but I also want it to be concise and I want it to be
+      // in the format of all my other roles on other case studies" (Gouache "Product designer", BoomLoom "Visual and
+      // packaging designer")
+      { label: "Role", value: "Founder and product designer" },
+      // Noah, Nov 24: "let's add Daeun to the team. It's just me and Daeun. Format it again like our other case studies and how
+      // we name other people … maybe marketing and branding could be Daeun's, but again, this is kind of all my zone in my
+      // territory. Lets test it". Of three versions, Noah picked the third the same day ("Me, with Daeun"), after BoomLoom's
+      // "Me and the founder". "Chung" is from Palit's own docs and the deck's Who we are.
+      { label: "Team", value: "Me, with Daeun Chung on marketing and branding" },
       { label: "Timeline", value: "Q4 2026" },
       { label: "Result", value: "SVSD 2026 finalist" },
     ],
     impact: {
-      headline: "Daeun and I designed Palit in five days for SVSD 2026, and it made the finals.",
+      // Noah, Nov 24: "Built in five days, shipped to the finals". Checked against Palit's record: the SVSD brief came on Oct 16
+      // (docs/13-case-study.md) and the film was submitted on Oct 21 (decisions.js, entry 290), five days; finalist Oct 25
+      // (entry 292), the finals' crit Nov 7. The log also holds a Figma file and a v0 from Oct 4; Noah counts from Oct 16
+      // "to be safe" (entry 208).
+      headline: "Built in five days, shipped to the finals.",
+      // Noah's own words, Nov 24, with "light-weight" as one word and "a" dropped before "software" (uncountable).
+      // "Screenless" with two words of context, since Palit also has its dashboard and the edge palette (Noah, Nov 24:
+      // "screenless is the approach; its utility. But, we can add a word or two or three to give better context").
       context:
-        "Palit is a quiet Mac menu bar tool for visual designers. A keystroke picks a color from anything on screen and keeps it in an archive, with where it came from. The brief asked for a product one group would love, centered on storytelling; we answered with a film, then a live demo at the finals in New York.",
-      // Both from the record: the brief on Oct 16 and the film on Oct 21 (entry 290); 386 decisions counted Nov 7 (entry 393)
-      proof: ["5 days from the brief to the film", "386 decisions logged, each with its reason"],
+        "Palit is screenless by design: lightweight software for visual designers. Taking the form of a Mac menu bar tool, a keystroke turns your cursor into a lens, and picks up a color from anywhere on the screen. Palit's dashboard keeps an archive of the colors you collect, with the context behind them, unfolding features that help you compare, identify, and storytell.",
+      // Noah, Nov 24: the live demo at the finals moved here ("Maybe we move the presenting the live demo at the finals in the
+      // Clay office in New York here, reword"): the crit, Nov 7, at Clay's office in New York, opened on Palit.app live. And
+      // "keep the decision number logged, round to prettiest number": decisions.js holds 399 entries (Nov 24), so "Nearly
+      // 400", never rounded up past the count; 25 have no reason yet, so not "each with its reason".
+      proof: ["Opened the finals with a live demo at Clay's New York office", "Nearly 400 decisions logged"],
     },
     story: [
       {
         id: "idea",
-        chapter: "[Your header …]",
+        // Noah, Nov 24: "I want to do something like "The concept", something short and punchy and memorable encapsulating
+        // what the opener is"; of three options, Noah wrote their own the same day (""The loss of context" may be cool"). With a
+        // period, like the other chapter headers ("Pinpointing the principles.", "The workflow.").
+        chapter: "The loss of context.",
         label: "The idea",
-        headline: "Designers keep the colors they find, but lose where they found them.",
+        headline: "Designers keep colors, but lose context.", // Noah, Nov 24: "Designer keep colors, but lose context", then "Designers*"
         // Round 5 (Nov 17, Noah: "can we use the same slide speed as kino's screens?"): the slides measured from Kino's
         // problem loop (ease-in-out, 0.9 s out, 1.0 s in). After round 3 (Nov 15): the pickers, two notes on what's wrong,
         // then Palit at its full width with three on what's better, after Kino's problem (Noah: "slides the prior
@@ -603,7 +627,8 @@ export const projects: Project[] = [
           how: "click or tap the right of the slide for the next one and the left for the one before, swipe, or use the arrow keys.",
         },
         body: "[The piece in 1 to 3 sentences.]",
-        more: [{ label: "The finals", text: "The crit was on Nov 7 in New York; the talk opened on a live demo of Palit.app, a native Mac shell around the prototype. [? the critique]" }],
+        // The live demo and Clay's office moved up to the impact's first proof (Noah, Nov 24); what's left here is the build
+        more: [{ label: "The finals", text: "For the crit we built Palit.app, a native Mac shell around the prototype that picks real colors. [? the critique]" }],
       },
       {
         id: "horizon",
@@ -1146,6 +1171,9 @@ export const projects: Project[] = [
   ...([
         {
           slug: "gouache",
+          // Locked (Noah, Nov 25: "could we also lock the gouache case study?"; "whenever your cursor is on a locked case
+          // study, it turns into the word "soon""): on the live site its card leads nowhere until it opens again
+          locked: true,
           title: "Gouache",
           summary: "A rail that paints AI agents' work onto your page.",
           shape: "designathon",
@@ -1223,14 +1251,17 @@ export const projects: Project[] = [
               // Round 3 (Noah, Nov 17: "can we just animate a short reel with annotations of different things we tried? Can be lofi and
               // hyperbolated, and simple representations"; "with of course, the captions very concisely explaining why they didnt work"). Round 4
               // (Noah, Nov 17: "I don't want this to look generated ... No crossouts"): redrawn with care, each take fading to gray as its
-              // reason comes in on its own line. 16.2 s
+              // reason comes in on its own line. Round 6 (Noah, Nov 19: "Can we rework this in the review panel?"; Nov 24 on round 3 of
+              // "Gouache · 2 · First takes": "so much better", "ship this"): the move, told against the page it was for. The
+              // visualizer in a window of its own fades where it is, the browser comes to the middle, and the rail opens inside it,
+              // nothing crossing anything (gouache-workshop/sketches/s2-takes-a.html). Round 4's reel is in superseded/site-r6/. 12.2 s
               media: [
                 {
                   ratio: "16 / 9",
-                  video: "/work/gouache/video/v2-s2-first-takes.mp4",
-                  webm: "/work/gouache/video/v2-s2-first-takes.webm",
-                  poster: "/work/gouache/video/v2-s2-first-takes-poster.jpg",
-                  alt: "Clean line drawings of Gouache's first takes, each fading to gray as its reason appears: a visualizer that could only watch, a dashboard of its own away from the work, a rewrite behind your words that changed as you typed; then the rail beside the page, chosen",
+                  video: "/work/gouache/video/v2-s2-first-takes-move.mp4",
+                  webm: "/work/gouache/video/v2-s2-first-takes-move.webm",
+                  poster: "/work/gouache/video/v2-s2-first-takes-move-poster.jpg",
+                  alt: "Juniper in a browser window, with a visualizer in a window of its own beside it, the agents' droplets going round their colored rings: A visualizer, apart from your page. It could only watch. The visualizer fades, the browser moves to the middle, and a rail opens inside it, its agents reporting while Claude draws a pencil line round the signup form: A rail beside your page. Chosen, Nov 9.",
                 },
               ],
               body: "Our first answer was a visualizer that only watched and answered. On Nov 9 it moved beside the page itself, called from the agent you already use, and the rewrite of your ask moved from behind your typing to when you're ready to send.",
@@ -1919,6 +1950,9 @@ export const projects: Project[] = [
   },
   {
     slug: "rfc",
+    // Parked: off the site and the desk's lists for now (Noah, Nov 25: "remove RFC entirely for now - we'll come back
+    // to it soon"). Take this line out to bring it back as it was
+    parked: true,
     soon: true, // "Coming soon" on its card, with no page yet (Noah, Oct 28)
     title: "RFC Editor", // Noah, Nov 2: "Lets rename RFC editor redesign into simply RFC Editor" (was "RFC editor redesign", Oct 29)
     summary: "[One line on what it is, up to 10 words.]",
@@ -1955,10 +1989,19 @@ export const projects: Project[] = [
   },
 ];
 
-// The case studies with pages, in order: the ones coming soon have none
-export const published = projects.filter((p) => !p.soon);
+// Every case study on the site, in order; the parked ones are kept above but left out
+export const projects = everyProject.filter((p) => !p.parked);
 
-export const getProject = (slug: string) => published.find((p) => p.slug === slug);
+// The case studies a visitor can open, in order: the ones coming soon have no page, and the locked ones none live
+export const published = projects.filter((p) => !p.soon && !p.locked);
+
+// Not open to a visitor: coming soon, or locked
+export const closed = (p: Pick<Project, "soon" | "locked">) => !!(p.soon || p.locked);
+
+// A case study's page: the published ones, and on the local server the locked ones too, so the desk can keep working on
+// them (production has no page for them; app/work/[slug]/page.tsx sends their address home)
+const pages = projects.filter((p) => !p.soon && (!p.locked || process.env.NODE_ENV !== "production"));
+export const getProject = (slug: string) => pages.find((p) => p.slug === slug);
 
 export const nextProject = (slug: string) => {
   const i = published.findIndex((p) => p.slug === slug);

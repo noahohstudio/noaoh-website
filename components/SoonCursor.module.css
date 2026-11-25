@@ -1,0 +1,40 @@
+/* The word the pointer turns into over a case study that isn't open yet (SoonCursor.tsx): a pill of the nav's glass,
+   as the loops' pause control (Loop.module.css), centered on the pointer's tip, over the rail (40) */
+.word {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  height: 28px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--radius-pill);
+  background: var(--glass-fill);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+  color: var(--ink);
+  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.word[data-on] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .word {
+    transition: opacity var(--dur-fast) linear;
+  }
+}
+
+/* A touch screen, or a pen: no pointer to turn */
+@media not ((hover: hover) and (pointer: fine)) {
+  .word {
+    display: none;
+  }
+}

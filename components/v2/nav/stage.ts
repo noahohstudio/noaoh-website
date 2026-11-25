@@ -1,4 +1,4 @@
-import { projects, published } from "@/content/projects";
+import { closed, projects, published } from "@/content/projects";
 import type { RailStudy } from "./RailShell";
 
 /*
@@ -17,8 +17,8 @@ export const PAGES = ["home", "work", ...published.map((p) => p.slug), "lab", "a
 export const railStudies: RailStudy[] = projects.map((p) => ({
   slug: p.slug,
   title: p.title,
-  soon: p.soon,
-  sections: p.soon
+  soon: closed(p), // coming soon, or locked: named, not a link
+  sections: closed(p)
     ? []
     : [
         { id: "impact", title: "Impact" },

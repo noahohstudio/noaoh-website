@@ -1,5 +1,5 @@
 import { labOpen, site } from "@/content/site";
-import { projects } from "@/content/projects";
+import { closed, projects } from "@/content/projects";
 
 /*
   The about page's index, for the v2 renditions (AboutA.tsx, AboutB.tsx), after sleutelaar.xyz/index: one row per piece
@@ -32,7 +32,7 @@ const card = (slug: string): Pic[] => {
 };
 const live = (slug: string) => {
   const p = project(slug);
-  return p && !p.soon ? `/work/${p.slug}` : undefined;
+  return p && !closed(p) ? `/work/${p.slug}` : undefined;
 };
 const photo = (src: string): Pic => {
   const p = site.photos.find((ph) => ph.src === src);
@@ -102,15 +102,20 @@ export const rows: Row[] = [
     href: live("boomloom"),
     pics: card("boomloom"),
   },
-  {
-    id: "rfc",
-    title: project("rfc")?.title ?? "RFC Editor",
-    role: project("rfc")?.discipline ?? "Product design, web",
-    context: "[Organization]",
-    year: "[Year]",
-    href: live("rfc"),
-    pics: card("rfc"),
-  },
+  // RFC Editor's row, while it's on the site: parked for now (content/projects.ts), so the row goes with it
+  ...(project("rfc")
+    ? [
+        {
+          id: "rfc",
+          title: project("rfc")?.title ?? "RFC Editor",
+          role: project("rfc")?.discipline ?? "Product design, web",
+          context: "[Organization]",
+          year: "[Year]",
+          href: live("rfc"),
+          pics: card("rfc"),
+        },
+      ]
+    : []),
   {
     id: "cooper",
     title: "Cooper Union School of Art",

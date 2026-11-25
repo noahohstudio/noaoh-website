@@ -1,8 +1,8 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { getProject, nextProject, published } from "@/content/projects";
+import { notFound, redirect } from "next/navigation";
+import { getProject, nextProject, projects, published } from "@/content/projects";
 import { Nav } from "@/components/Nav";
 import { Media } from "@/components/Media";
 import { StorySection } from "@/components/StorySection";
@@ -28,6 +28,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CaseStudy({ params }: Props) {
   const { slug } = await params;
   const project = getProject(slug);
+  // A locked case study has no page live, so its address goes home, for now, rather than to "page not found" (Noah,
+  // Nov 25, of noaoh.com/work/gouache: "Go to Home"). For now, so a 307: the address comes back when it's unlocked
+  if (!project && projects.some((p) => p.slug === slug && p.locked)) redirect("/");
   if (!project) notFound();
 
   const { impact, story, lessons, credits } = project;

@@ -20,7 +20,7 @@ export const site = {
   // that?"); hover the © in the footer to see days since
   launched: "2026-10-23",
   title: "Noah Oh, product designer",
-  description: "Noah Oh is a product designer who tinkers and builds tools, focused on systems and interactions.", // as the line
+  description: "Noah Oh is a product designer who tinkers and builds tools for moments anyone can have, heading into spatial tech.", // as the line
 
   lander: {
     // Fills the first screen. " " (a no-break space) keeps words on one line.
@@ -28,7 +28,9 @@ export const site = {
     // systems focal point. Maybe we even do it something like Noah Oh is a product designer who tinkers and tool-builds
     // focused on systems and interactions"; "tool-builds" set as "builds tools". It was "…who helps early-stage
     // startups scale, focused on systems and interactions."
-    sentence: "noah oh is a product designer who tinkers and builds tools, focused on systems and interactions.",
+    // Noah, Nov 24: "redo my lander description to match my North Star"; of the drafts, chosen the same day: "Draft 2".
+    // It was "…who tinkers and builds tools, focused on systems and interactions." (Nov 11 to Nov 24).
+    sentence: "noah oh is a product designer who tinkers and builds tools for moments anyone can have, heading into spatial tech.",
     // Top to bottom: the first piece sits near the top, the last near the bottom.
     glass: [
       { id: "blue", color: "#5b77e8" },

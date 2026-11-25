@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { projects, type Media as MediaType } from "@/content/projects";
+import { closed, projects, type Media as MediaType } from "@/content/projects";
 import { Media } from "@/components/Media";
 import { FlipText } from "@/components/Flip";
 import { Reveal } from "@/components/Reveal";
@@ -34,8 +34,8 @@ const tiles = projects.map((p) => {
     slug: p.slug,
     title: p.title,
     line: p.discipline,
-    meta: p.soon ? "Coming soon" : p.year,
-    href: p.soon ? undefined : `/work/${p.slug}`,
+    meta: closed(p) ? "Coming soon" : p.year,
+    href: closed(p) ? undefined : `/work/${p.slug}`,
     size: tile.size,
     media: tile.media ?? p.cover,
     ratio: tile.ratio,

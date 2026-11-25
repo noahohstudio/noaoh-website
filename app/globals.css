@@ -266,3 +266,12 @@ html[data-hl="yellow"] {
     padding-left: calc(var(--rail-room) - var(--gutter));
   }
 }
+
+/* A case study that isn't open yet, coming soon or locked: the arrow gives way to the word "soon" (SoonCursor.tsx,
+   Noah, Nov 25), only once that's running and only for a mouse */
+@media (hover: hover) and (pointer: fine) {
+  :root[data-soon-cursor] [data-soon],
+  :root[data-soon-cursor] [data-soon] * {
+    cursor: none;
+  }
+}

@@ -1,4 +1,4 @@
-import { projects, type Media } from "@/content/projects";
+import { closed, projects, type Media } from "@/content/projects";
 import { site } from "@/content/site";
 
 /*
@@ -23,7 +23,7 @@ export type Study = {
   title: string;
   line: string; // the card's line: the discipline
   meta: string; // the year, or "Coming soon"
-  href?: string; // none while it's coming soon
+  href?: string; // none while it's coming soon or locked
   cover: Media;
   card: string; // its card shape on the home page
 };
@@ -32,8 +32,8 @@ export const studies: Study[] = projects.map((p) => ({
   slug: p.slug,
   title: p.title,
   line: p.discipline,
-  meta: p.soon ? "Coming soon" : p.year,
-  href: p.soon ? undefined : `/work/${p.slug}`,
+  meta: closed(p) ? "Coming soon" : p.year, // coming soon, or locked: the same to a visitor
+  href: closed(p) ? undefined : `/work/${p.slug}`,
   cover: p.cover,
   card: p.card,
 }));
